@@ -127,6 +127,7 @@
                             android:textColor="@color/Secondary"/>
 
                         <TextView
+                            android:gravity="center"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="HOURS ONLINE"
@@ -159,6 +160,7 @@
                             android:textColor="@color/Secondary"/>
 
                         <TextView
+                            android:gravity="center"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="TOTAL DISTANCE"
@@ -189,6 +191,7 @@
                             android:textColor="@color/Secondary"/>
 
                         <TextView
+                            android:gravity="center"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="TOTAL JOBS"

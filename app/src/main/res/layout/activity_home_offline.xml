@@ -28,6 +28,7 @@
             />
 
         <TextView
+            android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -40,6 +41,7 @@
             />
 
         <Switch
+            android:id="@+id/switchbtn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:theme="@style/SCBSwitch"
@@ -48,11 +50,12 @@
     </LinearLayout>
 
     <LinearLayout
+        android:visibility="visible"
         android:padding="30dp"
         android:background="@color/orange"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/container_2"
+        android:id="@+id/homeOffline"
         android:layout_below="@id/container_1"
         android:orientation="horizontal">
 
@@ -85,7 +88,30 @@
 
     </LinearLayout>
 
+        <LinearLayout
+            android:layout_below="@id/container_1"
+            android:visibility="visible"
+            android:id="@+id/homeOnline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+
+
+
+            <StackView
+                android:id="@+id/stackview"
+                android:layout_centerInParent="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:animateLayoutChanges="true"
+                />
+        </RelativeLayout>
+        </LinearLayout>
 
 </RelativeLayout>
 

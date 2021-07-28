@@ -9,10 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Setting"></activity>
-        <activity android:name=".InviteFriendList">
-
-        </activity>
+        <activity android:name=".HomeSwipeUp"></activity>
+        <activity android:name=".HomeOnlineBookingDetails"></activity>
+        <activity android:name=".History" />
+        <activity android:name=".Setting" />
+        <activity android:name=".InviteFriendList" />
         <activity android:name=".EditInformation" />
         <activity android:name=".MyAccount" />
         <activity android:name=".Message" />

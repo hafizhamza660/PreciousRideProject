@@ -26,6 +26,7 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
+                    android:onClick="back_button"
                     android:id="@+id/back_button"
                     android:layout_width="28dp"
                     android:layout_height="28dp"

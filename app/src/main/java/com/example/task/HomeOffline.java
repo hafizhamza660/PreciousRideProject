@@ -11,17 +11,31 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.StackView;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.task.adapters.StackAdapter;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeOffline extends AppCompatActivity  {
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
 
+    Switch switchbtn;
+    LinearLayout homeOffline,homeOnline;
+    StackView stackView;
+    TextView toolbar_title;
 
     // Make sure to be using androidx.appcompat.app.ActionBarDrawerToggle version.
     private ActionBarDrawerToggle drawerToggle;
@@ -71,6 +85,45 @@ public class HomeOffline extends AppCompatActivity  {
 
         /*ToolBar With NavBar End*/
 
+
+        switchbtn= findViewById(R.id.switchbtn);
+        homeOffline= findViewById(R.id.homeOffline);
+        homeOnline= findViewById(R.id.homeOnline);
+
+
+        stackView= findViewById(R.id.stackview);
+        toolbar_title= findViewById(R.id.toolbar_title);
+
+        StackAdapter adapter = new StackAdapter(numberWord(),HomeOffline.this,R.layout.item_stack);
+
+
+
+        switchbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // The toggle is enabled
+                    homeOffline.setVisibility(View.GONE);
+                    homeOnline.setVisibility(View.VISIBLE);
+                    toolbar_title.setText("Online");
+                    stackView.setAdapter(adapter);
+                } else {
+                    // The toggle is disabled
+                    homeOffline.setVisibility(View.VISIBLE);
+                    homeOnline.setVisibility(View.GONE);
+                    toolbar_title.setText("Offline");
+                }
+            }
+        });
+    }
+
+    private List<String> numberWord(){
+        List<String> word = new ArrayList<>();
+        word.add("one");
+        word.add("two");
+        word.add("three");
+        word.add("four");
+        return word;
     }
 
 

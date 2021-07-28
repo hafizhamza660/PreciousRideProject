@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.task.adapters.InviteFiendListAdapter;
 import com.example.task.adapters.NotificationAdapter;
@@ -30,5 +31,14 @@ public class InviteFriendList extends AppCompatActivity {
 
         InviteFiendListAdapter inviteFiendListAdapter = new InviteFiendListAdapter(InviteFriendList.this, friends_name,mutual_friend_count);
         recyclerView.setAdapter(inviteFiendListAdapter);
+    }
+
+    public void back_button(View view) {
+        onBackPressed();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }
