@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/main_Image"
+        android:layout_width="251dp"
+        android:layout_height="248dp"
+        android:layout_marginTop="80dp"
+        android:src="@drawable/ic_enable_your_location"
+        android:layout_centerHorizontal="true"
+        android:scaleType="centerInside" />
+    <TextView
+        android:id="@+id/text_Heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/main_Image"
+        android:layout_marginTop="80dp"
+        android:layout_centerHorizontal="true"
+        android:text="Enable Your Location"
+        android:fontFamily="@font/se_ui_display"
+        android:textColor="@color/black"
+        android:textSize="28dp"
+        android:textFontWeight="600"
+        />
+    <TextView
+        android:id="@+id/text_Info"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_Heading"
+        android:text="Choose your location to start find the request around you."
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_marginTop="20dp"/>
+    <Button
+        android:id="@+id/btn_GetStarted"
+        android:layout_below="@id/text_Info"
+        android:layout_width="200dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="60dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/button_yellow_background"
+        android:text="Get Started"
+        android:textSize="14dp"
+        android:fontFamily="@font/se_ui_display"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        />
+    <TextView
+        android:id="@+id/text_Skip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_GetStarted"
+        android:layout_marginTop="30dp"
+        android:text="Skip"
+        android:fontFamily="@font/se_ui_display"
+        android:textColor="@color/light_blue_text_color"
+        android:textSize="16dp"
+        android:layout_centerHorizontal="true"
+        />
+</RelativeLayout>
