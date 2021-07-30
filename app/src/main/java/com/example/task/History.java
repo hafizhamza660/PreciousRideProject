@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -316,5 +317,7 @@ public class History extends AppCompatActivity {
     }
 
 
-
+    public void history_details(View view) {
+        startActivity(new Intent(History.this,Recipt.class));
+    }
 }

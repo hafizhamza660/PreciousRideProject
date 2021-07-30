@@ -48,13 +48,13 @@ public class StackAdapter extends ArrayAdapter {
         }
 
         CardView card_stack = convertView.findViewById(R.id.card_stack);
-
-        card_stack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                c.startActivity(new Intent(getContext(), HomeSwipeUp.class));
-            }
-        });
+//
+//        card_stack.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                c.startActivity(new Intent(getContext(), HomeSwipeUp.class));
+//            }
+//        });
 
         return convertView;
     }

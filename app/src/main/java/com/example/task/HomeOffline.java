@@ -1,8 +1,10 @@
 package com.example.task;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -10,11 +12,13 @@ import androidx.fragment.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.StackView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -27,15 +31,23 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.ArrayList;
 import java.util.List;
 
+import in.arjsna.swipecardlib.SwipeCardView;
+
 public class HomeOffline extends AppCompatActivity  {
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
 
     Switch switchbtn;
-    LinearLayout homeOffline,homeOnline;
-    StackView stackView;
+    LinearLayout homeOnline;
+    RelativeLayout homeOffline;
+    SwipeCardView stackView;
     TextView toolbar_title;
+
+    public static final String TAG ="HomeONline";
+
+    BottomSheetBehavior bottomSheetBehavior;
+    ConstraintLayout bottomSheetLayout;
 
     // Make sure to be using androidx.appcompat.app.ActionBarDrawerToggle version.
     private ActionBarDrawerToggle drawerToggle;
@@ -44,8 +56,13 @@ public class HomeOffline extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_offline);
 
-        BottomFragment bottomFragment = new BottomFragment();
-        bottomFragment.show(getSupportFragmentManager(),bottomFragment.getTag());
+        Configuration config = getResources().getConfiguration();
+
+
+
+
+//        BottomFragment bottomFragment = new BottomFragment();
+//        bottomFragment.show(getSupportFragmentManager(),bottomFragment.getTag());
 
 
 
@@ -86,6 +103,53 @@ public class HomeOffline extends AppCompatActivity  {
         /*ToolBar With NavBar End*/
 
 
+        bottomSheetLayout = findViewById(R.id.bottom_sheet);
+
+        // init the bottom sheet behavior
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetLayout);
+        // set callback for changes
+        bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                switch (newState) {
+                    case BottomSheetBehavior.STATE_HIDDEN:
+//                        textViewBottomSheetState.setText("STATE HIDDEN");
+                        break;
+                    case BottomSheetBehavior.STATE_EXPANDED:
+//                        textViewBottomSheetState.setText("STATE EXPANDED");
+                        // update toggle button text
+//                        toggleBottomSheet.setText("Expand BottomSheet");
+                        break;
+                    case BottomSheetBehavior.STATE_COLLAPSED:
+//                        textViewBottomSheetState.setText("STATE COLLAPSED");
+                        // update collapsed button text
+//                        toggleBottomSheet.setText("Collapse BottomSheet");
+                        break;
+                    case BottomSheetBehavior.STATE_DRAGGING:
+//                        textViewBottomSheetState.setText("STATE DRAGGING");
+                        break;
+                    case BottomSheetBehavior.STATE_SETTLING:
+//                        textViewBottomSheetState.setText("STATE SETTLING");
+                        break;
+                }
+                Log.d(TAG, "onStateChanged: " + newState);
+            }
+            @Override public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+            }
+        });
+        // set listener on button click
+//        toggleBottomSheet.setOnClickListener(new View.OnClickListener() {
+//            @Override public void onClick(View view) {
+//                if (bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+//                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+//                    toggleBottomSheet.setText("Collapse BottomSheet");
+//                } else {
+//                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+//                    toggleBottomSheet.setText("Expand BottomSheet");
+//                }
+//            }
+//        });
+
+
         switchbtn= findViewById(R.id.switchbtn);
         homeOffline= findViewById(R.id.homeOffline);
         homeOnline= findViewById(R.id.homeOnline);
@@ -93,8 +157,6 @@ public class HomeOffline extends AppCompatActivity  {
 
         stackView= findViewById(R.id.stackview);
         toolbar_title= findViewById(R.id.toolbar_title);
-
-        StackAdapter adapter = new StackAdapter(numberWord(),HomeOffline.this,R.layout.item_stack);
 
 
 
@@ -104,12 +166,50 @@ public class HomeOffline extends AppCompatActivity  {
                 if (isChecked) {
                     // The toggle is enabled
                     homeOffline.setVisibility(View.GONE);
+                    bottomSheetLayout.setVisibility(View.GONE);
                     homeOnline.setVisibility(View.VISIBLE);
                     toolbar_title.setText("Online");
+                    StackAdapter adapter = new StackAdapter(numberWord(),HomeOffline.this,R.layout.item_stack);
+
                     stackView.setAdapter(adapter);
+                    stackView.setFlingListener(new SwipeCardView.OnCardFlingListener() {
+                        @Override
+                        public void onCardExitLeft(Object dataObject) {
+                            Log.i(TAG, "Left Exit");
+                        }
+
+                        @Override
+                        public void onCardExitRight(Object dataObject) {
+                            Log.i(TAG, "Right Exit");
+                        }
+
+                        @Override
+                        public void onAdapterAboutToEmpty(int itemsInAdapter) {
+                            Log.i(TAG, "Adater to be empty");
+                            //add more items to adapter and call notifydatasetchanged
+                        }
+
+                        @Override
+                        public void onScroll(float scrollProgressPercent) {
+                            Log.i(TAG, "Scroll");
+                        }
+
+                        @Override
+                        public void onCardExitTop(Object dataObject) {
+                            Log.i(TAG, "Top Exit");
+                            startActivity(new Intent(HomeOffline.this, HomeSwipeUp.class));
+                        }
+
+                        @Override
+                        public void onCardExitBottom(Object dataObject) {
+                            Log.i(TAG, "Bottom Exit");
+                        }
+                    });
+
                 } else {
                     // The toggle is disabled
                     homeOffline.setVisibility(View.VISIBLE);
+                    bottomSheetLayout.setVisibility(View.VISIBLE);
                     homeOnline.setVisibility(View.GONE);
                     toolbar_title.setText("Offline");
                 }
@@ -168,7 +268,7 @@ public class HomeOffline extends AppCompatActivity  {
 //                finish();
                 break;
             case R.id.history:
-                i = new Intent(HomeOffline.this,Recipt.class);
+                i = new Intent(HomeOffline.this,History.class);
                 startActivity(i);
                 break;
             case R.id.notification_toolbar:

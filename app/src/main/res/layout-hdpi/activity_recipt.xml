@@ -13,6 +13,7 @@
         android:padding="10dp"
         android:id="@+id/container_1">
         <ImageView
+            android:onClick="back_button"
             android:layout_width="38dp"
             android:layout_height="38dp"
             android:src="@drawable/back_icon"

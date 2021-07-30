@@ -9,9 +9,13 @@
     tools:openDrawer="start"
     >
 
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
 
     <LinearLayout
         android:id="@+id/container_1"
@@ -48,6 +52,20 @@
             />
 
     </LinearLayout>
+        <fragment
+            android:layout_below="@id/container_1"
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/homeOffline"
+            android:layout_below="@id/container_1">
+
 
     <LinearLayout
         android:visibility="visible"
@@ -55,8 +73,7 @@
         android:background="@color/orange"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/homeOffline"
-        android:layout_below="@id/container_1"
+        android:id="@+id/first"
         android:orientation="horizontal">
 
         <ImageView
@@ -86,35 +103,58 @@
                 />
         </LinearLayout>
 
+
+
+
     </LinearLayout>
+
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_below="@id/container_1"
-            android:visibility="visible"
+            android:visibility="gone"
             android:id="@+id/homeOnline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <RelativeLayout
+
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
 
-
-
-            <StackView
-                android:id="@+id/stackview"
-                android:layout_centerInParent="true"
+            <in.arjsna.swipecardlib.SwipeCardView
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:id="@+id/stackview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:animateLayoutChanges="true"
-                />
+                android:layout_height="400dp"
+                app:rotation_degrees="15.5"
+                app:bottom_swipe_detect="false"
+                app:right_swipe_detect="false"
+                app:left_swipe_detect="false"
+                tools:context=".CardSwipeActivity" />
+
+
+<!--            <StackView-->
+<!--                android:id="@+id/stackview"-->
+<!--                android:layout_centerInParent="true"-->
+<!--                android:layout_alignParentBottom="true"-->
+<!--                android:layout_marginBottom="10dp"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:animateLayoutChanges="true"-->
+<!--                />-->
         </RelativeLayout>
         </LinearLayout>
 
+
+
 </RelativeLayout>
 
+    <include layout="@layout/bottom_layout"/>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nvView"

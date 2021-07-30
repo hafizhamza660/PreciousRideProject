@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeOnlineBookingDetails">
+    >
 
     <RelativeLayout
         android:id="@+id/container_1"
@@ -409,6 +409,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:onClick="back_button"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
                     android:layout_width="0dp"
@@ -451,8 +452,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/container_2"
+        android:layout_height="80dp"
+
         android:layout_alignParentBottom="true"
         android:layout_marginTop="30dp"
         android:background="@color/Primary"
