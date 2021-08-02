@@ -6,4 +6,10 @@
     <string name="navigation_open">Open Navigation Drawer</string>
     <string name="navigation_close">Close Navigation Drawer</string>
     <string name="title_activity_maps">Map</string>
+
+
+
+    <string name="sign_up_text"><b>Sign up</b> with email and phone number</string>
+    <string name="login_text"><b>Login</b> with your phone number</string>
+<!--    <string name="title_activity_maps">Map</string>-->
 </resources>

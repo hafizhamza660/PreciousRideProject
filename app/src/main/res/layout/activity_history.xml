@@ -309,7 +309,7 @@
                             android:fontFamily="@font/se_ui_display"
                             android:text="Total Jobs"
                             android:textColor="#50242A37"
-                            android:textSize="15dp" />
+                            android:textSize="15sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -318,7 +318,7 @@
                             android:text="10"
                             android:textColor="#242A37"
                             android:textStyle="bold"
-                            android:textSize="20dp" />
+                            android:textSize="15sp" />
                     </LinearLayout>
 
                 </RelativeLayout>
@@ -359,7 +359,7 @@
                             android:fontFamily="@font/se_ui_display"
                             android:text="Earned"
                             android:textColor="#50242A37"
-                            android:textSize="15dp" />
+                            android:textSize="15sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -368,7 +368,7 @@
                             android:text="$325.00"
                             android:textColor="#242A37"
                             android:textStyle="bold"
-                            android:textSize="20dp" />
+                            android:textSize="15sp" />
                     </LinearLayout>
 
                 </RelativeLayout>
@@ -739,5 +739,15 @@
         </ScrollView>
 
     </RelativeLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/nvView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:itemTextColor="@color/nav_selection_define"
+        app:itemIconTint="@color/nav_selection_define"
+        app:menu="@menu/main_menu"
+        app:headerLayout="@layout/header_toolbar" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.example.task.adapters.StackAdapter;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.navigation.NavigationView;
+import com.wenchao.cardstack.CardStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,7 @@ public class HomeOffline extends AppCompatActivity  {
     Switch switchbtn;
     LinearLayout homeOnline;
     RelativeLayout homeOffline;
-    SwipeCardView stackView;
+    CardStack stackView;
     TextView toolbar_title;
 
     public static final String TAG ="HomeONline";
@@ -136,18 +137,7 @@ public class HomeOffline extends AppCompatActivity  {
             @Override public void onSlide(@NonNull View bottomSheet, float slideOffset) {
             }
         });
-        // set listener on button click
-//        toggleBottomSheet.setOnClickListener(new View.OnClickListener() {
-//            @Override public void onClick(View view) {
-//                if (bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
-//                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-//                    toggleBottomSheet.setText("Collapse BottomSheet");
-//                } else {
-//                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-//                    toggleBottomSheet.setText("Expand BottomSheet");
-//                }
-//            }
-//        });
+
 
 
         switchbtn= findViewById(R.id.switchbtn);
@@ -172,39 +162,41 @@ public class HomeOffline extends AppCompatActivity  {
                     StackAdapter adapter = new StackAdapter(numberWord(),HomeOffline.this,R.layout.item_stack);
 
                     stackView.setAdapter(adapter);
-                    stackView.setFlingListener(new SwipeCardView.OnCardFlingListener() {
-                        @Override
-                        public void onCardExitLeft(Object dataObject) {
-                            Log.i(TAG, "Left Exit");
-                        }
-
-                        @Override
-                        public void onCardExitRight(Object dataObject) {
-                            Log.i(TAG, "Right Exit");
-                        }
-
-                        @Override
-                        public void onAdapterAboutToEmpty(int itemsInAdapter) {
-                            Log.i(TAG, "Adater to be empty");
-                            //add more items to adapter and call notifydatasetchanged
-                        }
-
-                        @Override
-                        public void onScroll(float scrollProgressPercent) {
-                            Log.i(TAG, "Scroll");
-                        }
-
-                        @Override
-                        public void onCardExitTop(Object dataObject) {
-                            Log.i(TAG, "Top Exit");
-                            startActivity(new Intent(HomeOffline.this, HomeSwipeUp.class));
-                        }
-
-                        @Override
-                        public void onCardExitBottom(Object dataObject) {
-                            Log.i(TAG, "Bottom Exit");
-                        }
-                    });
+                    YourListner yourListner = new YourListner();
+                    stackView.setListener(yourListner);
+//                    stackView.setFlingListener(new SwipeCardView.OnCardFlingListener() {
+//                        @Override
+//                        public void onCardExitLeft(Object dataObject) {
+//                            Log.i(TAG, "Left Exit");
+//                        }
+//
+//                        @Override
+//                        public void onCardExitRight(Object dataObject) {
+//                            Log.i(TAG, "Right Exit");
+//                        }
+//
+//                        @Override
+//                        public void onAdapterAboutToEmpty(int itemsInAdapter) {
+//                            Log.i(TAG, "Adater to be empty");
+//                            //add more items to adapter and call notifydatasetchanged
+//                        }
+//
+//                        @Override
+//                        public void onScroll(float scrollProgressPercent) {
+//                            Log.i(TAG, "Scroll");
+//                        }
+//
+//                        @Override
+//                        public void onCardExitTop(Object dataObject) {
+//                            Log.i(TAG, "Top Exit");
+//                            startActivity(new Intent(HomeOffline.this, HomeSwipeUp.class));
+//                        }
+//
+//                        @Override
+//                        public void onCardExitBottom(Object dataObject) {
+//                            Log.i(TAG, "Bottom Exit");
+//                        }
+//                    });
 
                 } else {
                     // The toggle is disabled
@@ -309,4 +301,52 @@ public class HomeOffline extends AppCompatActivity  {
         // Pass any configuration change to the drawer toggles
         drawerToggle.onConfigurationChanged(newConfig);
     }
+
+    public class YourListner implements CardStack.CardEventListener {
+        //implement card event interface
+        @Override
+        public boolean swipeEnd(int direction, float distance) {
+            //if "return true" the dismiss animation will be triggered
+            //if false, the card will move back to stack
+            //distance is finger swipe distance in dp
+
+            //the direction indicate swipe direction
+            //there are four directions
+            //  0  |  1
+            // ----------
+            //  2  |  3
+
+            if (direction ==0 || direction ==1)
+            {
+                startActivity(new Intent(HomeOffline.this,HomeSwipeUp.class));
+            }
+
+            return (distance>300)? true : false;
+        }
+
+        @Override
+        public boolean swipeStart(int direction, float distance) {
+
+            return true;
+        }
+
+        @Override
+        public boolean swipeContinue(int direction, float distanceX, float distanceY) {
+
+            return true;
+        }
+
+        @Override
+        public void discarded(int id, int direction) {
+            //this callback invoked when dismiss animation is finished.
+        }
+
+        @Override
+        public void topCardTapped() {
+            //this callback invoked when a top card is tapped by user.
+        }
+    }
+
+
 }
+

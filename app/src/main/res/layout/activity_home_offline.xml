@@ -122,19 +122,35 @@
             android:layout_height="match_parent">
 
 
-            <in.arjsna.swipecardlib.SwipeCardView
-                android:layout_alignParentBottom="true"
+<!--            <in.arjsna.swipecardlib.SwipeCardView-->
+<!--                android:layout_alignParentBottom="true"-->
+<!--                android:layout_marginBottom="10dp"-->
+<!--                android:layout_marginLeft="20dp"-->
+<!--                android:layout_marginRight="20dp"-->
+<!--                android:id="@+id/stackview"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="400dp"-->
+<!--                app:rotation_degrees="15.5"-->
+<!--                app:bottom_swipe_detect="false"-->
+<!--                app:right_swipe_detect="false"-->
+<!--                app:left_swipe_detect="false"-->
+
+<!--                 />-->
+
+            <com.wenchao.cardstack.CardStack
                 android:layout_marginBottom="10dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:id="@+id/stackview"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
-                app:rotation_degrees="15.5"
-                app:bottom_swipe_detect="false"
-                app:right_swipe_detect="false"
-                app:left_swipe_detect="false"
-                tools:context=".CardSwipeActivity" />
+                android:layout_height="match_parent"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:gravity="bottom"
+                android:padding="10dp"
+                app:card_enable_loop="true"
+                app:card_enable_rotation="true"
+                app:card_gravity="top"
+                app:card_margin="10dp"
+                app:card_stack_size="4"/>
 
 
 <!--            <StackView-->
@@ -161,8 +177,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:itemShapeFillColor="@color/Primary"
-        app:itemIconTint="@color/icon_toolbar_color"
+        app:itemTextColor="@color/nav_selection_define"
+        app:itemIconTint="@color/nav_selection_define"
         app:menu="@menu/main_menu"
-        app:headerLayout="@layout/header_toolbar"/>
+        app:headerLayout="@layout/header_toolbar" />
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -52,6 +52,7 @@ dependencies {
     implementation 'in.arjsna:swipecardlib:1.0.2'
 
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation 'com.github.wenchaojiang:AndroidSwipeableCardStack:0.1.6'
 
 
 }
