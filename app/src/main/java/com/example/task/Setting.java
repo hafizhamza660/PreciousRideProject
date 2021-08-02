@@ -22,4 +22,12 @@ RelativeLayout container_2;
             }
         });
     }
+
+    public void vehicle_click(View view) {
+        startActivity(new Intent(Setting.this,VehicleManagement.class));
+    }
+
+    public void document(View view) {
+        startActivity(new Intent(Setting.this,DocumentManagement.class));
+    }
 }

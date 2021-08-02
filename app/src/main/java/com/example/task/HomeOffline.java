@@ -263,9 +263,8 @@ public class HomeOffline extends AppCompatActivity  {
                 startActivity(i);
                 break;
             case R.id.my_wallet:
-                Toast.makeText(this, "Wallet Coming Soon...", Toast.LENGTH_SHORT).show();
-//                startActivity(i);
-//                finish();
+                i = new Intent(HomeOffline.this,Wallet.class);
+                startActivity(i);
                 break;
             case R.id.history:
                 i = new Intent(HomeOffline.this,History.class);

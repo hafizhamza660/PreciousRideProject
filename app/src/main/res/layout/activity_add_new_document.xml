@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/background"
+    android:layout_height="match_parent"
+    tools:context=".AddNewDocument">
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:id="@+id/container_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+        <ImageView
+            android:onClick="back_button"
+            android:layout_centerVertical="true"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/back_icon"
+            android:padding="8dp"/>
+        <TextView
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Driving license"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:fontFamily="@font/se_ui_display"
+            android:textColor="@color/Secondary"
+            />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/container_1"
+        android:id="@id/container_2"
+        android:orientation="vertical"
+        >
+    <androidx.cardview.widget.CardView
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="10dp"
+        app:contentPadding="10dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="4"
+                android:padding="10dp"
+                >
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:cardElevation="4dp"
+                    app:cardBackgroundColor="@color/orange"
+                    app:contentPadding="20dp"
+                    app:cardCornerRadius="10dp"
+                    >
+                    <ImageView
+                        android:layout_gravity="bottom"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/ic_profile_dp"/>
+                </androidx.cardview.widget.CardView>
+                <LinearLayout
+                    android:layout_weight="4"
+                    android:layout_marginLeft="15dp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@drawable/textview_background"
+                        />
+
+                    <EditText
+                        android:layout_marginTop="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/textview_background"
+                        />
+                    <EditText
+                        android:layout_marginTop="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/textview_background"
+                        />
+                    <EditText
+                        android:layout_marginTop="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/textview_background"
+                        />
+
+                </LinearLayout>
+            </LinearLayout>
+            <Button
+                android:onClick="add_pic"
+                android:background="@android:color/transparent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Update photo"
+                android:textSize="20dp"
+                android:layout_margin="10dp"
+                android:textColor="@color/Primary"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@id/container_3"
+        android:layout_below="@id/container_2"
+        android:orientation="vertical">
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CARD NUMBER"
+            />
+        <EditText
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edt_text_white"
+            android:textColor="@color/Secondary"
+            android:hint="1234 567 890"
+            android:textSize="15dp"
+            android:padding="15dp" />
+    </LinearLayout>
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="EXPIRATION DATE"
+                />
+            <EditText
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edt_text_white"
+                android:textColor="@color/Secondary"
+                android:hint="MM/DD/YYYY"
+                android:textSize="15dp"
+                android:padding="15dp"
+                android:drawableEnd="@drawable/indicator"
+                android:drawableRight="@drawable/indicator" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:onClick="complete_add_document"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="30dp"
+        android:background="@color/Primary"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="COMPLETE"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/Secondary"
+            android:fontFamily="@font/se_ui_display"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".VehicleManagement">
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:id="@+id/container_1"
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:onClick="back_button"
+            android:id="@+id/back_button"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/back_icon"
+            />
+
+        <TextView
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Vehicle Management"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:fontFamily="@font/se_ui_display"
+            android:textColor="@color/Secondary"
+            />
+
+
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_vehicle"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/container_1" />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:onClick="add_vehicle_document"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        app:backgroundTint="@color/Primary"
+        android:src="@drawable/ic_add"
+
+        />
+
+
+</RelativeLayout>
