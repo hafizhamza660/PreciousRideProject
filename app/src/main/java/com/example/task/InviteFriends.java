@@ -59,6 +59,7 @@ public class InviteFriends extends AppCompatActivity {
         setupDrawerContent(nvDrawer);
 
         /*ToolBar With NavBar End*/
+        nvDrawer.getMenu().getItem(4).setChecked(true);
     }
 
     public void invite_firend(View view) {

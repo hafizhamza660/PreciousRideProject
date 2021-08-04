@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 
 import com.example.task.adapters.StackAdapter;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.wenchao.cardstack.CardStack;
 
@@ -52,6 +54,7 @@ public class HomeOffline extends AppCompatActivity  {
 
     // Make sure to be using androidx.appcompat.app.ActionBarDrawerToggle version.
     private ActionBarDrawerToggle drawerToggle;
+    FloatingActionButton floatingActionButton,floatingActionButton_online;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,9 +81,9 @@ public class HomeOffline extends AppCompatActivity  {
 
 
         // This will display an Up icon (<-), we will replace it with hamburger later
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_burger_icon);
+//        getSupportActionBar().setHomeButtonEnabled(true);
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_burger_icon);
 
 
         // Find our drawer view
@@ -102,9 +105,16 @@ public class HomeOffline extends AppCompatActivity  {
         setupDrawerContent(nvDrawer);
 
         /*ToolBar With NavBar End*/
-
+        nvDrawer.getMenu().getItem(0).setChecked(true);
 
         bottomSheetLayout = findViewById(R.id.bottom_sheet);
+        floatingActionButton = findViewById(R.id.floatingActionButton);
+        floatingActionButton_online = findViewById(R.id.floatingActionButton_online);
+
+//        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) floatingActionButton.getLayoutParams();
+
+
+
 
         // init the bottom sheet behavior
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetLayout);
@@ -144,7 +154,6 @@ public class HomeOffline extends AppCompatActivity  {
         homeOffline= findViewById(R.id.homeOffline);
         homeOnline= findViewById(R.id.homeOnline);
 
-
         stackView= findViewById(R.id.stackview);
         toolbar_title= findViewById(R.id.toolbar_title);
 
@@ -164,6 +173,10 @@ public class HomeOffline extends AppCompatActivity  {
                     stackView.setAdapter(adapter);
                     YourListner yourListner = new YourListner();
                     stackView.setListener(yourListner);
+                    floatingActionButton.setVisibility(View.GONE);
+                    floatingActionButton_online.setVisibility(View.VISIBLE);
+//                    floatingActionButton.setY(800);
+
 //                    stackView.setFlingListener(new SwipeCardView.OnCardFlingListener() {
 //                        @Override
 //                        public void onCardExitLeft(Object dataObject) {
@@ -204,6 +217,9 @@ public class HomeOffline extends AppCompatActivity  {
                     bottomSheetLayout.setVisibility(View.VISIBLE);
                     homeOnline.setVisibility(View.GONE);
                     toolbar_title.setText("Offline");
+//                    Log.d("FloatingParam",""+params.getAnchorId());
+                    floatingActionButton_online.setVisibility(View.GONE);
+                    floatingActionButton.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -247,6 +263,8 @@ public class HomeOffline extends AppCompatActivity  {
 
 
     public void selectDrawerItem(MenuItem menuItem) {
+
+
 
         Intent i;
         switch(menuItem.getItemId()) {

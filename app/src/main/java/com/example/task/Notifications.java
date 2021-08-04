@@ -76,6 +76,7 @@ public class Notifications extends AppCompatActivity {
         setupDrawerContent(nvDrawer);
 
         /*ToolBar With NavBar End*/
+        nvDrawer.getMenu().getItem(3).setChecked(true);
 
 
         recyclerView = findViewById(R.id.recycler_view_notification);

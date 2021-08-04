@@ -12,7 +12,21 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <RelativeLayout
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            android:clickable="true"
+            app:backgroundTint="#FFFFFF"
+            app:layout_anchor="@id/bottom_sheet"
+            app:layout_anchorGravity="bottom|right|top"
+            app:srcCompat="@drawable/ic_location"
+            tools:ignore="VectorDrawableCompat" />
+
+        <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -27,7 +41,7 @@
             android:id="@+id/toolbar"
             android:layout_width="wrap_content"
             android:layout_height="?attr/actionBarSize"
-            app:navigationIcon="@drawable/ic_burger_icon"
+            app:navigationIcon="@drawable/ic_burger_icon_yellow"
 
             />
 
@@ -60,7 +74,9 @@
             android:layout_height="match_parent"
             />
 
+
         <RelativeLayout
+            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/homeOffline"
@@ -68,7 +84,7 @@
 
 
     <LinearLayout
-        android:visibility="visible"
+
         android:padding="30dp"
         android:background="@color/orange"
         android:layout_width="match_parent"
@@ -108,6 +124,9 @@
 
     </LinearLayout>
 
+
+
+
         </RelativeLayout>
 
         <LinearLayout
@@ -121,27 +140,26 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floatingActionButton_online"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                app:backgroundTint="#FFFFFF"
+                android:layout_alignParentRight="true"
+                android:layout_margin="16dp"
 
-<!--            <in.arjsna.swipecardlib.SwipeCardView-->
-<!--                android:layout_alignParentBottom="true"-->
-<!--                android:layout_marginBottom="10dp"-->
-<!--                android:layout_marginLeft="20dp"-->
-<!--                android:layout_marginRight="20dp"-->
-<!--                android:id="@+id/stackview"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="400dp"-->
-<!--                app:rotation_degrees="15.5"-->
-<!--                app:bottom_swipe_detect="false"-->
-<!--                app:right_swipe_detect="false"-->
-<!--                app:left_swipe_detect="false"-->
+                app:srcCompat="@drawable/ic_location"
+                tools:ignore="VectorDrawableCompat" />
 
-<!--                 />-->
 
             <com.wenchao.cardstack.CardStack
+                android:layout_alignParentBottom="true"
+                android:layout_below="@id/floatingActionButton_online"
                 android:layout_marginBottom="10dp"
                 android:id="@+id/stackview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:clipChildren="false"
                 android:clipToPadding="false"
                 android:gravity="bottom"
@@ -153,23 +171,23 @@
                 app:card_stack_size="4"/>
 
 
-<!--            <StackView-->
-<!--                android:id="@+id/stackview"-->
-<!--                android:layout_centerInParent="true"-->
-<!--                android:layout_alignParentBottom="true"-->
-<!--                android:layout_marginBottom="10dp"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:animateLayoutChanges="true"-->
-<!--                />-->
         </RelativeLayout>
         </LinearLayout>
 
 
 
+
 </RelativeLayout>
 
-    <include layout="@layout/bottom_layout"/>
+        <include
+
+            android:id="@+id/bottom_sheet"
+            layout="@layout/bottom_layout" />
+
+
+
+
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.navigation.NavigationView

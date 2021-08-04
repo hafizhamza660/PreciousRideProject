@@ -72,6 +72,7 @@ public class Wallet extends AppCompatActivity {
         setupDrawerContent(nvDrawer);
 
         /*ToolBar With NavBar End*/
+        nvDrawer.getMenu().getItem(1).setChecked(true);
 
         recyclerView = findViewById(R.id.recycler_view_payment);
         linearLayoutManager = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false);

@@ -57,9 +57,10 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:itemShapeFillColor="@color/Primary"
-        app:itemIconTint="@color/icon_toolbar_color"
+        app:itemTextColor="@color/nav_selection_define"
+        app:itemIconTint="@color/nav_selection_define"
         app:menu="@menu/main_menu"
-        app:headerLayout="@layout/header_toolbar"/>
+        android:fitsSystemWindows="false"
+        app:headerLayout="@layout/header_toolbar" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

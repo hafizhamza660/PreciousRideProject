@@ -76,6 +76,7 @@ public class History extends AppCompatActivity {
         setupDrawerContent(nvDrawer);
 
         /*ToolBar With NavBar End*/
+        nvDrawer.getMenu().getItem(2).setChecked(true);
 
         initView();
 
