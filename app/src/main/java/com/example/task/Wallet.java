@@ -128,6 +128,14 @@ public class Wallet extends AppCompatActivity {
                 i = new Intent(Wallet.this,Wallet.class);
                 startActivity(i);
                 break;
+            case R.id.travel_request:
+                i = new Intent(Wallet.this,TravelRequest.class);
+                startActivity(i);
+                break;
+            case R.id.inter_city:
+                i = new Intent(Wallet.this,InterCityRequests.class);
+                startActivity(i);
+                break;
             case R.id.history:
                 i = new Intent(Wallet.this,History.class);
                 startActivity(i);
@@ -142,6 +150,10 @@ public class Wallet extends AppCompatActivity {
                 break;
             case R.id.setting:
                 i = new Intent(Wallet.this,Setting.class);
+                startActivity(i);
+                break;
+            case R.id.campaign_menu:
+                i = new Intent(Wallet.this,CampaignView.class);
                 startActivity(i);
                 break;
 

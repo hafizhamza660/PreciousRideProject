@@ -10,13 +10,17 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.task.Dialog.CurrencySelection;
+import com.example.task.Dialog.Rules;
 import com.google.android.material.navigation.NavigationView;
 
 public class Setting extends AppCompatActivity {
-RelativeLayout container_2;
+RelativeLayout container_2,currency_button,bank_button,campaign_button;
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
@@ -61,15 +65,41 @@ RelativeLayout container_2;
         setupDrawerContent(nvDrawer);
 
         /*ToolBar With NavBar End*/
-        nvDrawer.getMenu().getItem(5).setChecked(true);
+        nvDrawer.getMenu().getItem(7).setChecked(true);
 
         container_2 = findViewById(R.id.container_2);
+        currency_button = findViewById(R.id.currency_button);
+        bank_button = findViewById(R.id.bank_button);
+//        campaign_button = findViewById(R.id.campaign_button);
         container_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Setting.this,MyAccount.class));
             }
         });
+        currency_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CurrencySelection exitDialog = new CurrencySelection(Setting.this);
+                exitDialog.show();
+                Window window = exitDialog.getWindow();
+                window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+            }
+        });
+
+        bank_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Setting.this,PaymentMethod.class));
+            }
+        });
+
+//        campaign_button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(Setting.this,CampaignView.class));
+//            }
+//        });
     }
 
     public void vehicle_click(View view) {
@@ -120,6 +150,14 @@ RelativeLayout container_2;
                 i = new Intent(Setting.this,Wallet.class);
                 startActivity(i);
                 break;
+            case R.id.travel_request:
+                i = new Intent(Setting.this,TravelRequest.class);
+                startActivity(i);
+                break;
+            case R.id.inter_city:
+                i = new Intent(Setting.this,InterCityRequests.class);
+                startActivity(i);
+                break;
             case R.id.history:
                 i = new Intent(Setting.this,History.class);
                 startActivity(i);
@@ -134,6 +172,10 @@ RelativeLayout container_2;
                 break;
             case R.id.setting:
                 i = new Intent(Setting.this,Setting.class);
+                startActivity(i);
+                break;
+            case R.id.campaign_menu:
+                i = new Intent(Setting.this,CampaignView.class);
                 startActivity(i);
                 break;
 

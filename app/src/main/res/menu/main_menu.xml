@@ -14,6 +14,18 @@
             android:iconTint="@color/icon_toolbar_color"
             />
         <item
+            android:id="@+id/travel_request"
+            android:title="Travel Request"
+            android:icon="@drawable/ic_travel"
+            android:iconTint="@color/icon_toolbar_color"
+            />
+        <item
+            android:id="@+id/inter_city"
+            android:title="Inter City Request"
+            android:icon="@drawable/ic_city_travel"
+            android:iconTint="@color/icon_toolbar_color"
+            />
+        <item
             android:id="@+id/history"
             android:title="History"
             android:icon="@drawable/ic_history"
@@ -35,6 +47,13 @@
             android:id="@+id/setting"
             android:title="Setting"
             android:icon="@drawable/setting"
+            android:iconTint="@color/icon_toolbar_color"
+            />
+
+        <item
+            android:id="@+id/campaign_menu"
+            android:title="Campaign"
+            android:icon="@drawable/ic_campaign"
             android:iconTint="@color/icon_toolbar_color"
             />
         <item

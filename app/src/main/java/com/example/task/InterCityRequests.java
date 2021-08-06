@@ -9,7 +9,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -17,13 +16,9 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import com.example.task.adapters.StackAdapter;
 import com.google.android.material.navigation.NavigationView;
 
-import in.arjsna.swipecardlib.SwipeCardView;
-
-public class HomeSwipeUp extends AppCompatActivity {
-
+public class InterCityRequests extends AppCompatActivity {
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
@@ -36,8 +31,7 @@ public class HomeSwipeUp extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_swipe_up);
-
+        setContentView(R.layout.activity_inter_city_requests);
         /*ToolBar With NavBar*/
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -72,7 +66,7 @@ public class HomeSwipeUp extends AppCompatActivity {
         setupDrawerContent(nvDrawer);
 
         /*ToolBar With NavBar End*/
-
+        nvDrawer.getMenu().getItem(3).setChecked(true);
         card_offer_1 = findViewById(R.id.card_offer_1);
         card_offer_2 = findViewById(R.id.card_offer_2);
         card_offer_3 = findViewById(R.id.card_offer_3);
@@ -163,37 +157,37 @@ public class HomeSwipeUp extends AppCompatActivity {
         accept_btn_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomeSwipeUp.this, HomeOnlineBookingDetails.class));
+                startActivity(new Intent(InterCityRequests.this, HomeOnlineBookingDetails.class));
             }
         });
         accept_btn_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomeSwipeUp.this, HomeOnlineBookingDetails.class));
+                startActivity(new Intent(InterCityRequests.this, HomeOnlineBookingDetails.class));
             }
         });
         accept_btn_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomeSwipeUp.this, HomeOnlineBookingDetails.class));
+                startActivity(new Intent(InterCityRequests.this, HomeOnlineBookingDetails.class));
             }
         });
         accept_btn_4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomeSwipeUp.this, HomeOnlineBookingDetails.class));
+                startActivity(new Intent(InterCityRequests.this, HomeOnlineBookingDetails.class));
             }
         });
         accept_btn_5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomeSwipeUp.this, HomeOnlineBookingDetails.class));
+                startActivity(new Intent(InterCityRequests.this, HomeOnlineBookingDetails.class));
             }
         });
         accept_btn_6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomeSwipeUp.this, HomeOnlineBookingDetails.class));
+                startActivity(new Intent(InterCityRequests.this, HomeOnlineBookingDetails.class));
             }
         });
 
@@ -203,7 +197,7 @@ public class HomeSwipeUp extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                 } else {
-                    startActivity(new Intent(HomeSwipeUp.this, HomeOffline.class));
+                    startActivity(new Intent(InterCityRequests.this, HomeOffline.class));
                 }
             }
         });
@@ -241,39 +235,35 @@ public class HomeSwipeUp extends AppCompatActivity {
         Intent i;
         switch(menuItem.getItemId()) {
             case R.id.home:
-                i = new Intent(HomeSwipeUp.this,HomeOffline.class);
+                i = new Intent(InterCityRequests.this,HomeOffline.class);
                 startActivity(i);
                 break;
             case R.id.my_wallet:
-                i = new Intent(HomeSwipeUp.this,Wallet.class);
+                i = new Intent(InterCityRequests.this,Wallet.class);
                 startActivity(i);
                 break;
             case R.id.travel_request:
-                i = new Intent(HomeSwipeUp.this,TravelRequest.class);
+                i = new Intent(InterCityRequests.this,HomeSwipeUp.class);
                 startActivity(i);
                 break;
             case R.id.inter_city:
-                i = new Intent(HomeSwipeUp.this,InterCityRequests.class);
+                i = new Intent(InterCityRequests.this,InterCityRequests.class);
                 startActivity(i);
                 break;
             case R.id.history:
-                i = new Intent(HomeSwipeUp.this,History.class);
+                i = new Intent(InterCityRequests.this,History.class);
                 startActivity(i);
                 break;
             case R.id.notification_toolbar:
-                i = new Intent(HomeSwipeUp.this,Notifications.class);
+                i = new Intent(InterCityRequests.this,Notifications.class);
                 startActivity(i);
                 break;
             case R.id.invite_friends:
-                i = new Intent(HomeSwipeUp.this,InviteFriends.class);
+                i = new Intent(InterCityRequests.this,InviteFriends.class);
                 startActivity(i);
                 break;
             case R.id.setting:
-                i = new Intent(HomeSwipeUp.this,Setting.class);
-                startActivity(i);
-                break;
-            case R.id.campaign_menu:
-                i = new Intent(HomeSwipeUp.this,CampaignView.class);
+                i = new Intent(InterCityRequests.this,Setting.class);
                 startActivity(i);
                 break;
 

@@ -76,7 +76,7 @@ public class History extends AppCompatActivity {
         setupDrawerContent(nvDrawer);
 
         /*ToolBar With NavBar End*/
-        nvDrawer.getMenu().getItem(2).setChecked(true);
+        nvDrawer.getMenu().getItem(4).setChecked(true);
 
         initView();
 
@@ -414,6 +414,14 @@ public class History extends AppCompatActivity {
                 i = new Intent(History.this,Wallet.class);
                 startActivity(i);
                 break;
+            case R.id.travel_request:
+                i = new Intent(History.this,TravelRequest.class);
+                startActivity(i);
+                break;
+            case R.id.inter_city:
+                i = new Intent(History.this,InterCityRequests.class);
+                startActivity(i);
+                break;
             case R.id.history:
                 i = new Intent(History.this,History.class);
                 startActivity(i);
@@ -428,6 +436,10 @@ public class History extends AppCompatActivity {
                 break;
             case R.id.setting:
                 i = new Intent(History.this,Setting.class);
+                startActivity(i);
+                break;
+            case R.id.campaign_menu:
+                i = new Intent(History.this,CampaignView.class);
                 startActivity(i);
                 break;
 

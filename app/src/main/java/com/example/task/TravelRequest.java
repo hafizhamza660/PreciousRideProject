@@ -9,21 +9,21 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import com.example.task.adapters.StackAdapter;
+import com.example.task.Dialog.AmountEnter;
+import com.example.task.Dialog.CurrencySelection;
 import com.google.android.material.navigation.NavigationView;
 
-import in.arjsna.swipecardlib.SwipeCardView;
-
-public class HomeSwipeUp extends AppCompatActivity {
-
+public class TravelRequest extends AppCompatActivity {
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
@@ -31,13 +31,13 @@ public class HomeSwipeUp extends AppCompatActivity {
 
     Button accept_btn_1,accept_btn_2,accept_btn_3,accept_btn_4,accept_btn_5,accept_btn_6;
     CardView card_offer_1,card_offer_2,card_offer_3,card_offer_4,card_offer_5,card_offer_6;
+    LinearLayout nego_layout_1,nego_layout_2,nego_layout_3,nego_layout_4,nego_layout_5,nego_layout_6;
     Switch switchbtn;
     public static final String TAG ="HomeONline";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_swipe_up);
-
+        setContentView(R.layout.activity_travel_request);
         /*ToolBar With NavBar*/
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -72,7 +72,7 @@ public class HomeSwipeUp extends AppCompatActivity {
         setupDrawerContent(nvDrawer);
 
         /*ToolBar With NavBar End*/
-
+        nvDrawer.getMenu().getItem(2).setChecked(true);
         card_offer_1 = findViewById(R.id.card_offer_1);
         card_offer_2 = findViewById(R.id.card_offer_2);
         card_offer_3 = findViewById(R.id.card_offer_3);
@@ -85,16 +85,31 @@ public class HomeSwipeUp extends AppCompatActivity {
         accept_btn_4 = findViewById(R.id.accept_btn_4);
         accept_btn_5 = findViewById(R.id.accept_btn_5);
         accept_btn_6 = findViewById(R.id.accept_btn_6);
+        nego_layout_1 = findViewById(R.id.nego_layout_1);
+        nego_layout_2 = findViewById(R.id.nego_layout_2);
+        nego_layout_3 = findViewById(R.id.nego_layout_3);
+        nego_layout_4 = findViewById(R.id.nego_layout_4);
+        nego_layout_5 = findViewById(R.id.nego_layout_5);
+        nego_layout_6 = findViewById(R.id.nego_layout_6);
         switchbtn = findViewById(R.id.switchbtn);
         card_offer_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                nego_layout_1.setVisibility(View.VISIBLE);
                 accept_btn_1.setVisibility(View.VISIBLE);
+
                 accept_btn_2.setVisibility(View.GONE);
                 accept_btn_3.setVisibility(View.GONE);
                 accept_btn_4.setVisibility(View.GONE);
                 accept_btn_5.setVisibility(View.GONE);
                 accept_btn_6.setVisibility(View.GONE);
+
+
+                nego_layout_2.setVisibility(View.GONE);
+                nego_layout_3.setVisibility(View.GONE);
+                nego_layout_4.setVisibility(View.GONE);
+                nego_layout_5.setVisibility(View.GONE);
+                nego_layout_6.setVisibility(View.GONE);
             }
         });
 
@@ -107,6 +122,13 @@ public class HomeSwipeUp extends AppCompatActivity {
                 accept_btn_4.setVisibility(View.GONE);
                 accept_btn_5.setVisibility(View.GONE);
                 accept_btn_6.setVisibility(View.GONE);
+
+                nego_layout_1.setVisibility(View.GONE);
+                nego_layout_2.setVisibility(View.VISIBLE);
+                nego_layout_3.setVisibility(View.GONE);
+                nego_layout_4.setVisibility(View.GONE);
+                nego_layout_5.setVisibility(View.GONE);
+                nego_layout_6.setVisibility(View.GONE);
             }
         });
 
@@ -119,6 +141,14 @@ public class HomeSwipeUp extends AppCompatActivity {
                 accept_btn_4.setVisibility(View.GONE);
                 accept_btn_5.setVisibility(View.GONE);
                 accept_btn_6.setVisibility(View.GONE);
+
+
+                nego_layout_1.setVisibility(View.GONE);
+                nego_layout_2.setVisibility(View.GONE);
+                nego_layout_3.setVisibility(View.VISIBLE);
+                nego_layout_4.setVisibility(View.GONE);
+                nego_layout_5.setVisibility(View.GONE);
+                nego_layout_6.setVisibility(View.GONE);
             }
         });
 
@@ -131,6 +161,13 @@ public class HomeSwipeUp extends AppCompatActivity {
                 accept_btn_4.setVisibility(View.VISIBLE);
                 accept_btn_5.setVisibility(View.GONE);
                 accept_btn_6.setVisibility(View.GONE);
+
+                nego_layout_1.setVisibility(View.GONE);
+                nego_layout_2.setVisibility(View.GONE);
+                nego_layout_3.setVisibility(View.GONE);
+                nego_layout_4.setVisibility(View.VISIBLE);
+                nego_layout_5.setVisibility(View.GONE);
+                nego_layout_6.setVisibility(View.GONE);
             }
         });
 
@@ -143,6 +180,13 @@ public class HomeSwipeUp extends AppCompatActivity {
                 accept_btn_4.setVisibility(View.GONE);
                 accept_btn_5.setVisibility(View.VISIBLE);
                 accept_btn_6.setVisibility(View.GONE);
+
+                nego_layout_1.setVisibility(View.GONE);
+                nego_layout_2.setVisibility(View.GONE);
+                nego_layout_3.setVisibility(View.GONE);
+                nego_layout_4.setVisibility(View.GONE);
+                nego_layout_5.setVisibility(View.VISIBLE);
+                nego_layout_6.setVisibility(View.GONE);
             }
         });
 
@@ -155,6 +199,13 @@ public class HomeSwipeUp extends AppCompatActivity {
                 accept_btn_4.setVisibility(View.GONE);
                 accept_btn_5.setVisibility(View.GONE);
                 accept_btn_6.setVisibility(View.VISIBLE);
+
+                nego_layout_1.setVisibility(View.GONE);
+                nego_layout_2.setVisibility(View.GONE);
+                nego_layout_3.setVisibility(View.GONE);
+                nego_layout_4.setVisibility(View.GONE);
+                nego_layout_5.setVisibility(View.GONE);
+                nego_layout_6.setVisibility(View.VISIBLE);
             }
         });
 
@@ -163,37 +214,37 @@ public class HomeSwipeUp extends AppCompatActivity {
         accept_btn_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomeSwipeUp.this, HomeOnlineBookingDetails.class));
+                startActivity(new Intent(TravelRequest.this, HomeOnlineBookingDetails.class));
             }
         });
         accept_btn_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomeSwipeUp.this, HomeOnlineBookingDetails.class));
+                startActivity(new Intent(TravelRequest.this, HomeOnlineBookingDetails.class));
             }
         });
         accept_btn_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomeSwipeUp.this, HomeOnlineBookingDetails.class));
+                startActivity(new Intent(TravelRequest.this, HomeOnlineBookingDetails.class));
             }
         });
         accept_btn_4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomeSwipeUp.this, HomeOnlineBookingDetails.class));
+                startActivity(new Intent(TravelRequest.this, HomeOnlineBookingDetails.class));
             }
         });
         accept_btn_5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomeSwipeUp.this, HomeOnlineBookingDetails.class));
+                startActivity(new Intent(TravelRequest.this, HomeOnlineBookingDetails.class));
             }
         });
         accept_btn_6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomeSwipeUp.this, HomeOnlineBookingDetails.class));
+                startActivity(new Intent(TravelRequest.this, HomeOnlineBookingDetails.class));
             }
         });
 
@@ -203,7 +254,7 @@ public class HomeSwipeUp extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                 } else {
-                    startActivity(new Intent(HomeSwipeUp.this, HomeOffline.class));
+                    startActivity(new Intent(TravelRequest.this, HomeOffline.class));
                 }
             }
         });
@@ -241,39 +292,39 @@ public class HomeSwipeUp extends AppCompatActivity {
         Intent i;
         switch(menuItem.getItemId()) {
             case R.id.home:
-                i = new Intent(HomeSwipeUp.this,HomeOffline.class);
+                i = new Intent(TravelRequest.this,HomeOffline.class);
                 startActivity(i);
                 break;
             case R.id.my_wallet:
-                i = new Intent(HomeSwipeUp.this,Wallet.class);
+                i = new Intent(TravelRequest.this,Wallet.class);
                 startActivity(i);
                 break;
             case R.id.travel_request:
-                i = new Intent(HomeSwipeUp.this,TravelRequest.class);
+                i = new Intent(TravelRequest.this,TravelRequest.class);
                 startActivity(i);
                 break;
             case R.id.inter_city:
-                i = new Intent(HomeSwipeUp.this,InterCityRequests.class);
+                i = new Intent(TravelRequest.this,InterCityRequests.class);
                 startActivity(i);
                 break;
             case R.id.history:
-                i = new Intent(HomeSwipeUp.this,History.class);
+                i = new Intent(TravelRequest.this,History.class);
                 startActivity(i);
                 break;
             case R.id.notification_toolbar:
-                i = new Intent(HomeSwipeUp.this,Notifications.class);
+                i = new Intent(TravelRequest.this,Notifications.class);
                 startActivity(i);
                 break;
             case R.id.invite_friends:
-                i = new Intent(HomeSwipeUp.this,InviteFriends.class);
+                i = new Intent(TravelRequest.this,InviteFriends.class);
                 startActivity(i);
                 break;
             case R.id.setting:
-                i = new Intent(HomeSwipeUp.this,Setting.class);
+                i = new Intent(TravelRequest.this,Setting.class);
                 startActivity(i);
                 break;
             case R.id.campaign_menu:
-                i = new Intent(HomeSwipeUp.this,CampaignView.class);
+                i = new Intent(TravelRequest.this,CampaignView.class);
                 startActivity(i);
                 break;
 
@@ -302,5 +353,12 @@ public class HomeSwipeUp extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggles
         drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    public void negotiate(View view) {
+        AmountEnter exitDialog = new AmountEnter(TravelRequest.this);
+        exitDialog.show();
+        Window window = exitDialog.getWindow();
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 }

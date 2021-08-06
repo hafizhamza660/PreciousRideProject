@@ -8,8 +8,21 @@
     <string name="title_activity_maps">Map</string>
 
 
-
     <string name="sign_up_text"><b>Sign up</b> with email and phone number</string>
     <string name="login_text"><b>Login</b> with your phone number</string>
-<!--    <string name="title_activity_maps">Map</string>-->
+    <!--    <string name="title_activity_maps">Map</string>-->
+
+    <string name="create_floating_widget">Create Floating Widget</string>
+    <string name="floating_widget_label">Floating Widget Label</string>
+    <string name="floating_widget_details">Floating Widget Details</string>
+    <string name="draw_other_app_permission_denied">Draw over other app permission not available. App won\'t work without permission. Please try again.</string>
+
+    <string-array name="currency_arrays">
+        <item>USD</item>
+        <item>EUR</item>
+        <item>GBP</item>
+        <item>INR</item>
+        <item>AUD</item>
+        <item>CAD</item>
+    </string-array>
 </resources>

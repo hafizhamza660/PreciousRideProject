@@ -76,7 +76,7 @@ public class Notifications extends AppCompatActivity {
         setupDrawerContent(nvDrawer);
 
         /*ToolBar With NavBar End*/
-        nvDrawer.getMenu().getItem(3).setChecked(true);
+        nvDrawer.getMenu().getItem(5).setChecked(true);
 
 
         recyclerView = findViewById(R.id.recycler_view_notification);
@@ -129,12 +129,19 @@ public class Notifications extends AppCompatActivity {
                 startActivity(i);
                 break;
             case R.id.my_wallet:
-                Toast.makeText(this, "Wallet Coming Soon...", Toast.LENGTH_SHORT).show();
-//                startActivity(i);
-//                finish();
+                i = new Intent(Notifications.this,Wallet.class);
+                startActivity(i);
+                break;
+            case R.id.travel_request:
+                i = new Intent(Notifications.this,TravelRequest.class);
+                startActivity(i);
+                break;
+            case R.id.inter_city:
+                i = new Intent(Notifications.this,InterCityRequests.class);
+                startActivity(i);
                 break;
             case R.id.history:
-                i = new Intent(Notifications.this,Recipt.class);
+                i = new Intent(Notifications.this,History.class);
                 startActivity(i);
                 break;
             case R.id.notification_toolbar:
@@ -143,6 +150,14 @@ public class Notifications extends AppCompatActivity {
                 break;
             case R.id.invite_friends:
                 i = new Intent(Notifications.this,InviteFriends.class);
+                startActivity(i);
+                break;
+            case R.id.setting:
+                i = new Intent(Notifications.this,Setting.class);
+                startActivity(i);
+                break;
+            case R.id.campaign_menu:
+                i = new Intent(Notifications.this,CampaignView.class);
                 startActivity(i);
                 break;
 

@@ -8,11 +8,11 @@
 
 
     <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/card_start_guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/card_start_guideline"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.20"/>
+        app:layout_constraintGuide_begin="146dp" />
 
 
     <androidx.cardview.widget.CardView
@@ -160,6 +160,7 @@
     </androidx.cardview.widget.CardView>
 
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="@id/card_end_guideline"

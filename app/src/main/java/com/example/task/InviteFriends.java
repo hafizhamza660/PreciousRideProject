@@ -59,7 +59,7 @@ public class InviteFriends extends AppCompatActivity {
         setupDrawerContent(nvDrawer);
 
         /*ToolBar With NavBar End*/
-        nvDrawer.getMenu().getItem(4).setChecked(true);
+        nvDrawer.getMenu().getItem(6).setChecked(true);
     }
 
     public void invite_firend(View view) {
@@ -105,6 +105,14 @@ public class InviteFriends extends AppCompatActivity {
                 i = new Intent(InviteFriends.this,Wallet.class);
                 startActivity(i);
                 break;
+            case R.id.travel_request:
+                i = new Intent(InviteFriends.this,HomeSwipeUp.class);
+                startActivity(i);
+                break;
+            case R.id.inter_city:
+                i = new Intent(InviteFriends.this,InterCityRequests.class);
+                startActivity(i);
+                break;
             case R.id.history:
                 i = new Intent(InviteFriends.this,History.class);
                 startActivity(i);
@@ -119,6 +127,10 @@ public class InviteFriends extends AppCompatActivity {
                 break;
             case R.id.setting:
                 i = new Intent(InviteFriends.this,Setting.class);
+                startActivity(i);
+                break;
+            case R.id.campaign_menu:
+                i = new Intent(InviteFriends.this,CampaignView.class);
                 startActivity(i);
                 break;
 

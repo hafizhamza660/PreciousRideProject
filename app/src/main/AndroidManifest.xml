@@ -7,6 +7,7 @@
          location permissions for the "MyLocation" functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:allowBackup="true"
@@ -15,7 +16,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".PaymentMethod"></activity>
+        <activity android:name=".Dialog.AmountEnter"></activity>
+        <activity android:name=".CampaignView" />
+        <activity android:name=".BankDetailsAdd" />
+        <activity android:name=".Dialog.CurrencySelection" />
+        <activity android:name=".TravelRequest" />
+        <activity android:name=".Dialog.Rules" />
+        <activity android:name=".InterCityRequests" />
+        <activity android:name=".PaymentMethod" />
         <activity android:name=".Wallet" />
         <activity android:name=".AddNewDocument" />
         <activity android:name=".DocumentManagement" />
@@ -62,6 +70,12 @@
         <activity android:name=".HomeOffline" />
         <activity android:name=".PhoneVerification" />
         <activity android:name=".MainActivity" />
+
+
+        <service
+            android:name=".Floating.FloatingViewService"
+            android:enabled="true"
+            android:exported="false" />
     </application>
 
 </manifest>

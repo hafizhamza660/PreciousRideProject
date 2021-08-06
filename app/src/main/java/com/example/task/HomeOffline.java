@@ -12,10 +12,16 @@ import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -25,6 +31,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.task.Dialog.Rules;
+import com.example.task.Floating.FloatingViewService;
 import com.example.task.adapters.StackAdapter;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -33,10 +41,13 @@ import com.wenchao.cardstack.CardStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import in.arjsna.swipecardlib.SwipeCardView;
 
 public class HomeOffline extends AppCompatActivity  {
+    private static final int SYSTEM_ALERT_WINDOW_PERMISSION = 2084;
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
@@ -46,11 +57,17 @@ public class HomeOffline extends AppCompatActivity  {
     RelativeLayout homeOffline;
     CardStack stackView;
     TextView toolbar_title;
+    TextView timer;
 
     public static final String TAG ="HomeONline";
-
+//    public int counter;
     BottomSheetBehavior bottomSheetBehavior;
     ConstraintLayout bottomSheetLayout;
+//    private static final long START_TIME_IN_MILLIS = 600000;
+//    private CountDownTimer mCountDownTimer;
+//    private boolean mTimerRunning;
+//    private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
+
 
     // Make sure to be using androidx.appcompat.app.ActionBarDrawerToggle version.
     private ActionBarDrawerToggle drawerToggle;
@@ -63,10 +80,11 @@ public class HomeOffline extends AppCompatActivity  {
         Configuration config = getResources().getConfiguration();
 
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
+            askPermission();
+        }
 
 
-//        BottomFragment bottomFragment = new BottomFragment();
-//        bottomFragment.show(getSupportFragmentManager(),bottomFragment.getTag());
 
 
 
@@ -108,6 +126,7 @@ public class HomeOffline extends AppCompatActivity  {
         nvDrawer.getMenu().getItem(0).setChecked(true);
 
         bottomSheetLayout = findViewById(R.id.bottom_sheet);
+        timer = findViewById(R.id.timer);
         floatingActionButton = findViewById(R.id.floatingActionButton);
         floatingActionButton_online = findViewById(R.id.floatingActionButton_online);
 
@@ -163,7 +182,30 @@ public class HomeOffline extends AppCompatActivity  {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
+
+                    Rules exitDialog = new Rules(HomeOffline.this);
+                    exitDialog.show();
+                    Window window = exitDialog.getWindow();
+                    window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
                     // The toggle is enabled
+                    long duration = TimeUnit.MINUTES.toMillis(1);
+//                  new CountDownTimer(duration, 1000){
+//            public void onTick(long millisUntilFinished){
+//                String sDuration = String.format(Locale.ENGLISH,"%02d:%02d"
+//                ,TimeUnit.MILLISECONDS.toMinutes(1)
+//                ,TimeUnit.MILLISECONDS.toSeconds(1)-
+//                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(1)));
+//
+//                timer.setText(sDuration);
+////                counter++;
+//            }
+//            public  void onFinish(){
+////                stackView.setVisibility(View.GONE);
+////                size = size-1;
+//                timer.setText("");
+//            }
+//        }.start();
+//                    startTimer();
                     homeOffline.setVisibility(View.GONE);
                     bottomSheetLayout.setVisibility(View.GONE);
                     homeOnline.setVisibility(View.VISIBLE);
@@ -225,12 +267,33 @@ public class HomeOffline extends AppCompatActivity  {
         });
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            startService(new Intent(HomeOffline.this, FloatingViewService.class));
+            finish();
+        } else if (Settings.canDrawOverlays(this)) {
+            startService(new Intent(HomeOffline.this, FloatingViewService.class));
+            finish();
+        } else {
+            askPermission();
+            Toast.makeText(this, "You need System Alert Window Permission to do this", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void askPermission() {
+        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                Uri.parse("package:" + getPackageName()));
+        startActivityForResult(intent, SYSTEM_ALERT_WINDOW_PERMISSION);
+    }
+
     private List<String> numberWord(){
         List<String> word = new ArrayList<>();
         word.add("one");
-        word.add("two");
-        word.add("three");
-        word.add("four");
+//        word.add("two");
+//        word.add("three");
+//        word.add("four");
         return word;
     }
 
@@ -276,6 +339,14 @@ public class HomeOffline extends AppCompatActivity  {
                 i = new Intent(HomeOffline.this,Wallet.class);
                 startActivity(i);
                 break;
+            case R.id.travel_request:
+                i = new Intent(HomeOffline.this,TravelRequest.class);
+                startActivity(i);
+                break;
+            case R.id.inter_city:
+                i = new Intent(HomeOffline.this,InterCityRequests.class);
+                startActivity(i);
+                break;
             case R.id.history:
                 i = new Intent(HomeOffline.this,History.class);
                 startActivity(i);
@@ -290,6 +361,10 @@ public class HomeOffline extends AppCompatActivity  {
                 break;
             case R.id.setting:
                 i = new Intent(HomeOffline.this,Setting.class);
+                startActivity(i);
+                break;
+            case R.id.campaign_menu:
+                i = new Intent(HomeOffline.this,CampaignView.class);
                 startActivity(i);
                 break;
 
@@ -334,10 +409,10 @@ public class HomeOffline extends AppCompatActivity  {
             // ----------
             //  2  |  3
 
-            if (direction ==0 || direction ==1)
-            {
-                startActivity(new Intent(HomeOffline.this,HomeSwipeUp.class));
-            }
+//            if (direction ==0 || direction ==1)
+//            {
+//                startActivity(new Intent(HomeOffline.this,HomeSwipeUp.class));
+//            }
 
             return (distance>300)? true : false;
         }
@@ -365,6 +440,44 @@ public class HomeOffline extends AppCompatActivity  {
         }
     }
 
+
+//    private void startTimer() {
+//        mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
+//            @Override
+//            public void onTick(long millisUntilFinished) {
+//                mTimeLeftInMillis = millisUntilFinished;
+//                updateCountDownText();
+//            }
+//            @Override
+//            public void onFinish() {
+//                mTimerRunning = false;
+////                mButtonStartPause.setText("Start");
+////                mButtonStartPause.setVisibility(View.INVISIBLE);
+////                mButtonReset.setVisibility(View.VISIBLE);
+//            }
+//        }.start();
+//        mTimerRunning = true;
+////        mButtonStartPause.setText("pause");
+////        mButtonReset.setVisibility(View.INVISIBLE);
+//    }
+//    private void pauseTimer() {
+//        mCountDownTimer.cancel();
+//        mTimerRunning = false;
+////        mButtonStartPause.setText("Start");
+////        mButtonReset.setVisibility(View.VISIBLE);
+//    }
+//    private void resetTimer() {
+//        mTimeLeftInMillis = START_TIME_IN_MILLIS;
+//        updateCountDownText();
+////        mButtonReset.setVisibility(View.INVISIBLE);
+////        mButtonStartPause.setVisibility(View.VISIBLE);
+//    }
+//    private void updateCountDownText() {
+//        int minutes = (int) (mTimeLeftInMillis / 1000) / 60;
+//        int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
+//        String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
+//        timer.setText(timeLeftFormatted);
+//    }
 
 }
 
