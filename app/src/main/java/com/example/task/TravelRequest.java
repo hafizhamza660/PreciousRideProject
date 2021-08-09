@@ -303,10 +303,10 @@ public class TravelRequest extends AppCompatActivity {
                 i = new Intent(TravelRequest.this,TravelRequest.class);
                 startActivity(i);
                 break;
-            case R.id.inter_city:
-                i = new Intent(TravelRequest.this,InterCityRequests.class);
-                startActivity(i);
-                break;
+//            case R.id.inter_city:
+//                i = new Intent(TravelRequest.this,InterCityRequests.class);
+//                startActivity(i);
+//                break;
             case R.id.history:
                 i = new Intent(TravelRequest.this,History.class);
                 startActivity(i);

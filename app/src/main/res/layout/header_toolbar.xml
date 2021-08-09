@@ -67,7 +67,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="10dp"
                         android:fontFamily="@font/se_ui_display"
-                        android:text="Gold Member"
+                        android:text="Normal Member"
                         android:textColor="@color/Primary"
                         android:textSize="15dp" />
 

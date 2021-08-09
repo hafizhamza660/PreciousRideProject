@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.StackView;
@@ -59,6 +60,9 @@ public class HomeOffline extends AppCompatActivity  {
     TextView toolbar_title;
     TextView timer;
 
+    ImageView minus_range,add_range;
+    TextView km_range;
+
     public static final String TAG ="HomeONline";
 //    public int counter;
     BottomSheetBehavior bottomSheetBehavior;
@@ -68,6 +72,8 @@ public class HomeOffline extends AppCompatActivity  {
 //    private boolean mTimerRunning;
 //    private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
 
+
+    int counter=0;
 
     // Make sure to be using androidx.appcompat.app.ActionBarDrawerToggle version.
     private ActionBarDrawerToggle drawerToggle;
@@ -177,6 +183,42 @@ public class HomeOffline extends AppCompatActivity  {
         toolbar_title= findViewById(R.id.toolbar_title);
 
 
+        minus_range= findViewById(R.id.minus_range);
+        add_range= findViewById(R.id.add_range);
+        km_range= findViewById(R.id.km_range);
+
+
+        km_range.setText(counter+" KM");
+
+            minus_range.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    counter--;
+                    km_range.setText(counter+" KM");
+                    if (counter == 0)
+                    {
+                        minus_range.setEnabled(false);
+
+
+                    }
+
+                }
+            });
+            add_range.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    counter++;
+                    km_range.setText(counter+" KM");
+                    if (counter>0)
+                    {
+                        minus_range.setEnabled(true);
+                    }
+                }
+            });
+
+
+
+
 
         switchbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -267,9 +309,36 @@ public class HomeOffline extends AppCompatActivity  {
         });
     }
 
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+//            startService(new Intent(HomeOffline.this, FloatingViewService.class));
+//            finish();
+//        } else if (Settings.canDrawOverlays(this)) {
+//            startService(new Intent(HomeOffline.this, FloatingViewService.class));
+//            finish();
+//        } else {
+//            askPermission();
+//            Toast.makeText(this, "You need System Alert Window Permission to do this", Toast.LENGTH_SHORT).show();
+//        }
+//    }
+
+    private void askPermission() {
+        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                Uri.parse("package:" + getPackageName()));
+        startActivityForResult(intent, SYSTEM_ALERT_WINDOW_PERMISSION);
+    }
+
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onStart() {
+        super.onStart();
+        stopService(new Intent(HomeOffline.this, FloatingViewService.class));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             startService(new Intent(HomeOffline.this, FloatingViewService.class));
             finish();
@@ -282,10 +351,11 @@ public class HomeOffline extends AppCompatActivity  {
         }
     }
 
-    private void askPermission() {
-        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                Uri.parse("package:" + getPackageName()));
-        startActivityForResult(intent, SYSTEM_ALERT_WINDOW_PERMISSION);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+//        stopService(new Intent(HomeOffline.this, FloatingViewService.class));
+
     }
 
     private List<String> numberWord(){
@@ -343,10 +413,10 @@ public class HomeOffline extends AppCompatActivity  {
                 i = new Intent(HomeOffline.this,TravelRequest.class);
                 startActivity(i);
                 break;
-            case R.id.inter_city:
-                i = new Intent(HomeOffline.this,InterCityRequests.class);
-                startActivity(i);
-                break;
+//            case R.id.inter_city:
+//                i = new Intent(HomeOffline.this,InterCityRequests.class);
+//                startActivity(i);
+//                break;
             case R.id.history:
                 i = new Intent(HomeOffline.this,History.class);
                 startActivity(i);

@@ -15,14 +15,15 @@
             android:layout_height="wrap_content">
 
             <ImageView
+                android:layout_centerVertical="true"
                 android:id="@+id/notification_image"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:src="@drawable/oval_2"/>
 
 
             <LinearLayout
-                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/notification_image"
                 android:layout_width="match_parent"
@@ -34,7 +35,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Notification Name"
-                    android:textSize="20dp"
+                    android:textSize="16sp"
                     android:fontFamily="@font/se_ui_display"
                     android:textStyle="bold"
                     android:textColor="@color/Secondary"/>
@@ -43,7 +44,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Notification Text"
-                    android:textSize="17dp"
+                    android:textSize="14sp"
                     android:textColor="@color/Secondary"/>
 
             </LinearLayout>

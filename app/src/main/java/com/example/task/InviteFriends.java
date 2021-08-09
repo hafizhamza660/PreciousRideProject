@@ -109,10 +109,10 @@ public class InviteFriends extends AppCompatActivity {
                 i = new Intent(InviteFriends.this,HomeSwipeUp.class);
                 startActivity(i);
                 break;
-            case R.id.inter_city:
-                i = new Intent(InviteFriends.this,InterCityRequests.class);
-                startActivity(i);
-                break;
+//            case R.id.inter_city:
+//                i = new Intent(InviteFriends.this,InterCityRequests.class);
+//                startActivity(i);
+//                break;
             case R.id.history:
                 i = new Intent(InviteFriends.this,History.class);
                 startActivity(i);

@@ -132,10 +132,10 @@ public class Wallet extends AppCompatActivity {
                 i = new Intent(Wallet.this,TravelRequest.class);
                 startActivity(i);
                 break;
-            case R.id.inter_city:
-                i = new Intent(Wallet.this,InterCityRequests.class);
-                startActivity(i);
-                break;
+//            case R.id.inter_city:
+//                i = new Intent(Wallet.this,InterCityRequests.class);
+//                startActivity(i);
+//                break;
             case R.id.history:
                 i = new Intent(Wallet.this,History.class);
                 startActivity(i);

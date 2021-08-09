@@ -418,10 +418,10 @@ public class History extends AppCompatActivity {
                 i = new Intent(History.this,TravelRequest.class);
                 startActivity(i);
                 break;
-            case R.id.inter_city:
-                i = new Intent(History.this,InterCityRequests.class);
-                startActivity(i);
-                break;
+//            case R.id.inter_city:
+//                i = new Intent(History.this,InterCityRequests.class);
+//                startActivity(i);
+//                break;
             case R.id.history:
                 i = new Intent(History.this,History.class);
                 startActivity(i);

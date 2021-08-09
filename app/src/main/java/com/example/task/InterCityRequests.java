@@ -246,10 +246,10 @@ public class InterCityRequests extends AppCompatActivity {
                 i = new Intent(InterCityRequests.this,HomeSwipeUp.class);
                 startActivity(i);
                 break;
-            case R.id.inter_city:
-                i = new Intent(InterCityRequests.this,InterCityRequests.class);
-                startActivity(i);
-                break;
+//            case R.id.inter_city:
+//                i = new Intent(InterCityRequests.this,InterCityRequests.class);
+//                startActivity(i);
+//                break;
             case R.id.history:
                 i = new Intent(InterCityRequests.this,History.class);
                 startActivity(i);

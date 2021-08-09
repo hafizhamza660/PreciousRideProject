@@ -54,6 +54,7 @@ public class FloatingViewService extends Service implements View.OnClickListener
         //getting the collapsed and expanded view from the floating view
         collapsedView = mFloatingView.findViewById(R.id.layoutCollapsed);
         expandedView = mFloatingView.findViewById(R.id.layoutExpanded);
+        collapsedView.setAlpha(0.7F);
 
         //adding click listener to close button and expanded view
         mFloatingView.findViewById(R.id.buttonClose).setOnClickListener(this);

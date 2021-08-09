@@ -54,7 +54,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Basic level"
+                    android:text="Rating: 4.8"
                     android:fontFamily="@font/se_ui_display"/>
             </LinearLayout>
 
@@ -84,13 +84,69 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/container_2"
+            android:layout_below="@id/container_1"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:fontFamily="@font/se_ui_display"
+                android:text="Range in KM"
+                android:textSize="16sp"
+                android:textColor="@color/Secondary"
+                android:textStyle="bold" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:weightSum="3"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/minus_range"
+                android:layout_weight="1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_minus"
+                android:background="@android:color/transparent"
+                app:tint="@color/Secondary" />
+            <TextView
+                android:id="@+id/km_range"
+                android:gravity="center"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:text="Earned"
+                android:fontFamily="@font/se_ui_display"/>
+
+            <ImageView
+                android:id="@+id/add_range"
+                android:layout_weight="1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_plus"
+                android:background="@android:color/transparent"
+                app:tint="@color/Secondary"
+                />
+        </LinearLayout>
+        </LinearLayout>
+
 
         <LinearLayout
             android:padding="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/container_2"
-            android:layout_below="@id/container_1"
+            android:id="@+id/container_3"
+            android:layout_below="@id/container_2"
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView

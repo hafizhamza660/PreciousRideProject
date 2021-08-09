@@ -19,12 +19,12 @@
             android:icon="@drawable/ic_travel"
             android:iconTint="@color/icon_toolbar_color"
             />
-        <item
-            android:id="@+id/inter_city"
-            android:title="Inter City Request"
-            android:icon="@drawable/ic_city_travel"
-            android:iconTint="@color/icon_toolbar_color"
-            />
+<!--        <item-->
+<!--            android:id="@+id/inter_city"-->
+<!--            android:title="Inter City Request"-->
+<!--            android:icon="@drawable/ic_city_travel"-->
+<!--            android:iconTint="@color/icon_toolbar_color"-->
+<!--            />-->
         <item
             android:id="@+id/history"
             android:title="History"

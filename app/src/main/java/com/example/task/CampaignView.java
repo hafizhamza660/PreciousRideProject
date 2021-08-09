@@ -1,7 +1,6 @@
 package com.example.task;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.tabs.TabLayout;
 import androidx.fragment.app.Fragment;
@@ -14,11 +13,10 @@ import androidx.viewpager.widget.ViewPager;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.task.Fragment.CurrentCampaign;
 import com.example.task.Fragment.UpcomingCampaign;
-import com.example.task.Fragment.Weekly;
+import com.example.task.Fragment.History;
 
 
 import java.util.ArrayList;
@@ -73,8 +71,9 @@ public class CampaignView extends AppCompatActivity {
 
 
             adapter.addFragment(new CurrentCampaign(), "Currently Campaign");
-            adapter.addFragment(new Weekly(), "Weekly Campaign");
-            adapter.addFragment(new UpcomingCampaign(), "Upcoming Campaign");
+        adapter.addFragment(new UpcomingCampaign(), "Upcoming Campaign");
+            adapter.addFragment(new History(), "History Campaign");
+
             viewPager.setAdapter(adapter);
 
     }

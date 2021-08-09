@@ -252,10 +252,10 @@ public class HomeSwipeUp extends AppCompatActivity {
                 i = new Intent(HomeSwipeUp.this,TravelRequest.class);
                 startActivity(i);
                 break;
-            case R.id.inter_city:
-                i = new Intent(HomeSwipeUp.this,InterCityRequests.class);
-                startActivity(i);
-                break;
+//            case R.id.inter_city:
+//                i = new Intent(HomeSwipeUp.this,InterCityRequests.class);
+//                startActivity(i);
+//                break;
             case R.id.history:
                 i = new Intent(HomeSwipeUp.this,History.class);
                 startActivity(i);

@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     tools:context=".Dialog.AmountEnter">
 
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Minimum $50 ~ Maximum $150"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/se_ui_display"
+        android:padding="10dp"
+        />
 
     <EditText
         android:layout_width="match_parent"
@@ -18,9 +29,17 @@
         android:background="@drawable/background_edit_text_dark"
         android:hint="Enter amount"
         android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/send"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Send"
+        android:fontFamily="@font/se_ui_display"
+        android:textSize="16sp"
+        android:background="@drawable/button_yellow_background"
+        android:layout_margin="10dp"
+        />
+
+</LinearLayout>

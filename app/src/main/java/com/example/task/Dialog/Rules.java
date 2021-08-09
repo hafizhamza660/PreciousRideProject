@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.task.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -28,7 +29,7 @@ public class Rules extends Dialog {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_rules);
          Button accept_yes = findViewById(R.id.accept_yes);
-        FloatingActionButton floatingActionButton2 = findViewById(R.id.floatingActionButton2);
+        ImageView cancel_btn = findViewById(R.id.cancel_btn);
 
         accept_yes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,7 +38,7 @@ public class Rules extends Dialog {
             }
         });
 
-        floatingActionButton2.setOnClickListener(new View.OnClickListener() {
+        cancel_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();

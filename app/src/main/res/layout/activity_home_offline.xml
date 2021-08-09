@@ -75,59 +75,55 @@
             />
 
 
-        <RelativeLayout
-            android:visibility="visible"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/homeOffline"
-            android:layout_below="@id/container_1">
+            <RelativeLayout
+                android:id="@+id/homeOffline"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/container_1"
+                android:visibility="visible">
 
 
-    <LinearLayout
+                <LinearLayout
 
-        android:padding="30dp"
-        android:background="@color/orange"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/first"
-        android:orientation="horizontal">
+                    android:id="@+id/first"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/orange"
+                    android:orientation="horizontal"
+                    android:padding="30dp">
 
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_moon"
-            />
-        <LinearLayout
-            android:layout_marginLeft="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="You are offline !"
-                android:textColor="@color/Secondary"
-                android:fontFamily="@font/se_ui_display"
-                android:textSize="20dp"
-                android:textStyle="bold"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Go online to start accepting jobs."
-                android:fontFamily="@font/se_ui_display"
-                />
-        </LinearLayout>
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/ic_moon" />
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:orientation="vertical">
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/se_ui_display"
+                            android:text="You are offline !"
+                            android:textColor="@color/Secondary"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/se_ui_display"
+                            android:text="Go online to start accepting jobs." />
+                    </LinearLayout>
 
 
-    </LinearLayout>
+                </LinearLayout>
 
 
-
-
-        </RelativeLayout>
+            </RelativeLayout>
 
         <LinearLayout
             android:layout_below="@id/container_1"
