@@ -10,8 +10,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.location.LocationManager;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -62,6 +65,7 @@ public class HomeOffline extends AppCompatActivity  {
 
     ImageView minus_range,add_range;
     TextView km_range;
+    Context context;
 
     public static final String TAG ="HomeONline";
 //    public int counter;
@@ -82,9 +86,22 @@ public class HomeOffline extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_offline);
-
+        context=this;
         Configuration config = getResources().getConfiguration();
-
+        if(isNetworkConnected())
+        {
+            Toast.makeText(this, "Internet connected successfully", Toast.LENGTH_SHORT).show();
+            if(locationServicesEnabled(context))
+            {
+                Toast.makeText(this, "True", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(this, "False", Toast.LENGTH_SHORT).show();
+            }
+        }
+        else{
+            startActivity(new Intent(HomeOffline.this,SetupGPSLocationActivity.class));
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
             askPermission();
@@ -324,6 +341,31 @@ public class HomeOffline extends AppCompatActivity  {
 //        }
 //    }
 
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+    }
+
+
+    public static boolean locationServicesEnabled(Context context) {
+        LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        boolean gps_enabled = false;
+        boolean net_enabled = false;
+
+        try {
+            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        } catch (Exception ex) {
+            Log.e(TAG,"Exception gps_enabled");
+        }
+
+        try {
+            net_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+        } catch (Exception ex) {
+            Log.e(TAG,"Exception network_enabled");
+        }
+        return gps_enabled || net_enabled;
+    }
     private void askPermission() {
         Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                 Uri.parse("package:" + getPackageName()));

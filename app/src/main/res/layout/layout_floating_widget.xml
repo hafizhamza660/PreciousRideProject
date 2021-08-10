@@ -42,7 +42,7 @@
             android:id="@+id/layoutExpanded"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#a0c3d7"
+
             android:orientation="horizontal"
             android:padding="8dp"
             android:visibility="gone">
@@ -59,37 +59,37 @@
                 android:src="@drawable/ic_logo"
                 tools:ignore="ContentDescription" />
 
-            <LinearLayout
-                android:id="@+id/buttonSimplifiedCoding"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+<!--            <LinearLayout-->
+<!--                android:id="@+id/buttonSimplifiedCoding"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical">-->
 
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:paddingTop="15dp"
-                    android:text="Aber Driver"
-                    android:textAlignment="center"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                    android:textColor="#ffffff"
-                    android:textStyle="bold"
-                    android:gravity="center_horizontal" />
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:paddingLeft="15dp"-->
+<!--                    android:paddingRight="15dp"-->
+<!--                    android:paddingTop="15dp"-->
+<!--                    android:text="Aber Driver"-->
+<!--                    android:textAlignment="center"-->
+<!--                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"-->
+<!--                    android:textColor="#ffffff"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:gravity="center_horizontal" />-->
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Resume app"
-                    android:textAlignment="center"
-                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                    android:textColor="#ffffff"
-                    android:textStyle="bold"
-                    android:gravity="center_horizontal" />
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Resume app"-->
+<!--                    android:textAlignment="center"-->
+<!--                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"-->
+<!--                    android:textColor="#ffffff"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:gravity="center_horizontal" />-->
 
-            </LinearLayout>
+<!--            </LinearLayout>-->
 
 
         </LinearLayout>

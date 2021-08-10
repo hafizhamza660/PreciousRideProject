@@ -8,6 +8,8 @@
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -16,7 +18,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Dialog.AmountEnter"></activity>
+        <activity
+            android:name=".WelcomeScreen"
+            android:exported="true" />
+        <activity android:name=".Dialog.AmountEnter" />
         <activity android:name=".CampaignView" />
         <activity android:name=".BankDetailsAdd" />
         <activity android:name=".Dialog.CurrencySelection" />
@@ -70,7 +75,6 @@
         <activity android:name=".HomeOffline" />
         <activity android:name=".PhoneVerification" />
         <activity android:name=".MainActivity" />
-
 
         <service
             android:name=".Floating.FloatingViewService"

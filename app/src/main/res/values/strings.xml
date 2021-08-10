@@ -16,6 +16,7 @@
     <string name="floating_widget_label">Floating Widget Label</string>
     <string name="floating_widget_details">Floating Widget Details</string>
     <string name="draw_other_app_permission_denied">Draw over other app permission not available. App won\'t work without permission. Please try again.</string>
+    <string name="first_name">First Name</string>
 
     <string-array name="currency_arrays">
         <item>USD</item>
@@ -25,4 +26,11 @@
         <item>AUD</item>
         <item>CAD</item>
     </string-array>
+
+
+    <string name="link_a">
+        By proceeding, I agree to Aber <a href="#">Terms of User</a> and acknowledge that i have read the <a href="#">Privacy Policy</a>
+    </string>
+
+    <string name="last_text">I also agree that Aber or its representatives may contact me by email,phone or SMS(including by automated means) at the email address or number i provide, including for marketing purposes.</string>
 </resources>

@@ -1,244 +1,260 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUp">
-
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/card_start_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="146dp" />
-
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="4dp"
-        app:layout_constraintBottom_toBottomOf="@id/card_end_guideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/card_start_guideline">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_yellow_background"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/sign_txt"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/se_ui_display"
-                            android:textColor="@color/Secondary"
-                            android:textSize="30dp"
-                            />
-
-<!--                        <TextView-->
-<!--                            android:layout_marginLeft="5dp"-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:fontFamily="@font/se_ui_display"-->
-<!--                            android:text="with email and"-->
-<!--                            android:textSize="30dp" />-->
-                    </LinearLayout>
-
-                </LinearLayout>
-
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:src="@drawable/artwork"
-                    android:scaleType="centerCrop"/>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_marginTop="15dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="10dp">
-
-
-                <EditText
-                    android:padding="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/background_edit_text_dark"
-                    android:hint="name@example.com"
-                    android:textColor="@color/Secondary" />
-
-
-                <LinearLayout
-                    android:padding="10dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:weightSum="3"
-                    android:background="@drawable/background_edit_text_dark"
-                    android:orientation="horizontal">
-
-                    <com.rilixtech.widget.countrycodepicker.CountryCodePicker
-                        android:id="@+id/ccp"
-                        android:layout_weight="0.2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        />
-
-                    <View
-                        android:layout_marginRight="5dp"
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/background" />
-
-                    <EditText
-                        android:id="@+id/number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.2"
-                        android:background="@android:color/transparent"
-                        android:hint="00000000"
-                        android:inputType="phone"
-                        android:textColor="@color/Secondary"
-                        />
-
-                    <ImageView
-                        android:onClick="clear"
-                        android:layout_weight="1.1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="end"
-                        android:src="@drawable/ic_cancel" />
-                </LinearLayout>
-
-
-
-
-                <Button
-                    android:layout_marginTop="20dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/button_background"
-                    android:onClick="sign_up"
-                    android:text="Next"
-                    android:textColor="@color/white" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
+    android:background="@color/white">
 
     <LinearLayout
-        android:visibility="gone"
+        android:id="@+id/toolbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@id/card_end_guideline"
-        app:layout_constraintBottom_toBottomOf="@id/signin_layout"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_margin="20dp"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:weightSum="3"
-        >
-
-            <ImageView
-                android:onClick="google_sign_in"
-                android:layout_weight="1"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_google"/>
-
-
-
-
-            <ImageView
-                android:onClick="facebook_sign_in"
-                android:layout_weight="1"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_facebook"
-                />
-
-
-            <ImageView
-                android:onClick="worldgrin_sign_in"
-                android:layout_weight="1"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/worldgrin"/>
-
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/signin_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/Primary"
+        android:gravity="start"
         android:orientation="horizontal"
         android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:weightSum="2"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintVertical_bias="0.65999997">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="start"
+            android:src="@drawable/ic_close" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Already have an account?"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/se_ui_display"
+            android:gravity="center_vertical"
+            android:text="Aber | SignUp"
             android:textColor="@color/Secondary"
-            android:textSize="15dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:onClick="sign_in"
-            android:text="Sign In"
-            android:textColor="@color/Secondary"
-            android:textSize="15dp"
+            android:textSize="20sp"
             android:textStyle="bold" />
+
     </LinearLayout>
 
-    <androidx.constraintlayout.widget.Guideline
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/card_end_guideline"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.75"/>
+    <ScrollView
+
+        android:id="@+id/scrollView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_layout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_edit_text_dark"
+                    android:hint="First Name"
+                    android:padding="10dp"
+                    android:textColor="@color/Secondary" />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_edit_text_dark"
+                    android:hint="Last Name"
+                    android:padding="10dp"
+                    android:textColor="@color/Secondary" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_edit_text_dark"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    android:padding="10dp"
+                    android:textColor="@color/Secondary" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"
+                android:background="@drawable/background_edit_text_dark"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <com.rilixtech.widget.countrycodepicker.CountryCodePicker
+                    android:padding="10dp"
+                    android:id="@+id/ccp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="5dp"
+                    android:background="@color/background" />
+
+                <EditText
+                    android:padding="10dp"
+                    android:id="@+id/number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.2"
+                    android:background="@android:color/transparent"
+                    android:hint="00000000"
+                    android:inputType="phone"
+                    android:textColor="@color/Secondary" />
+
+                <ImageView
+                    android:padding="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.1"
+                    android:gravity="end"
+                    android:onClick="clear"
+                    android:src="@drawable/ic_cancel" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_edit_text_dark"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:padding="10dp"
+                    android:textColor="@color/Secondary" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/city_name"
+                    android:onClick="city_get"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_edit_text_dark"
+                    android:hint="City"
+                    android:padding="12dp"
+                    android:textColor="@color/Secondary" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/background_edit_text_dark"
+                    android:hint="Invite Code"
+                    android:padding="10dp"
+                    android:textColor="@color/Secondary" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Optional"
+                    android:textColor="@color/light_blue_text_color"
+                    android:layout_marginLeft="10dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/link_a"
+                    android:textColor="@color/Secondary"
+                    />
+
+                <TextView
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/last_text"
+                    android:textColor="@color/Secondary"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+
+               <Button
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:padding="10dp"
+                   android:text="Continue"
+                   android:background="@drawable/button_yellow_background"
+                   android:onClick="sign_up"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+
