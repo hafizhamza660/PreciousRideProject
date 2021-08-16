@@ -35,7 +35,7 @@ public class OnBoardingActivity extends AppCompatActivity {
         text_Skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(OnBoardingActivity.this, SetupGPSLocationActivity.class);
+                Intent intent = new Intent(OnBoardingActivity.this, WelcomeScreen.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
@@ -69,7 +69,7 @@ public class OnBoardingActivity extends AppCompatActivity {
                 btn_GetStarted.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(OnBoardingActivity.this, SetupGPSLocationActivity.class);
+                        Intent intent = new Intent(OnBoardingActivity.this, WelcomeScreen.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                     }

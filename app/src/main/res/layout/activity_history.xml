@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:openDrawer="start">
+    tools:openDrawer="g">
 
 
     <RelativeLayout
@@ -293,7 +293,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/total_jobs" />
+                        android:src="@drawable/ic_car_history" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -343,7 +343,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_centerVertical="true"
-                        android:src="@drawable/dollar_shape" />
+                        android:src="@drawable/ic_dollar_shape" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"

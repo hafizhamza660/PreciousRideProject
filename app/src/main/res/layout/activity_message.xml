@@ -69,20 +69,20 @@
 
 
         <EditText
-            android:padding="10dp"
-            android:layout_marginStart="16dp"
             android:id="@+id/edit_gchat_message"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
             android:layout_toStartOf="@+id/button_gchat_send"
+            android:layout_toLeftOf="@+id/button_gchat_send"
             android:background="@drawable/background_edit_text_dark"
             android:hint="Enter Message"
             android:inputType="text"
             android:maxLines="6"
-            tools:ignore="Autofill"
-            android:layout_marginLeft="16dp"
-            android:layout_toLeftOf="@+id/button_gchat_send" />
+            android:padding="10dp"
+            tools:ignore="Autofill" />
 
         <ImageButton
             android:id="@+id/button_gchat_send"

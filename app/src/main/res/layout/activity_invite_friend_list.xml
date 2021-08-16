@@ -63,13 +63,13 @@
             android:layout_centerVertical="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true" />
+
         <EditText
-            android:layout_marginLeft="30dp"
             android:layout_width="match_parent"
-            android:background="@android:color/transparent"
             android:layout_height="wrap_content"
-            android:hint="Search"
-            />
+            android:layout_marginLeft="30dp"
+            android:background="@android:color/transparent"
+            android:hint="Search" />
         <ImageButton
             android:layout_width="20dp"
             android:layout_height="20dp"
@@ -90,10 +90,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_notification"
-        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/linevertical" />
+        android:layout_below="@id/linevertical"
+        android:padding="10dp" />
 
 
 </RelativeLayout>
