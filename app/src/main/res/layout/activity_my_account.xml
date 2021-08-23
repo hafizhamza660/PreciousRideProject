@@ -11,109 +11,105 @@
         android:id="@+id/maincontiner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="4dp"
-        >
+        app:cardElevation="4dp">
+
         <RelativeLayout
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            >
+            android:padding="10dp">
 
             <RelativeLayout
                 android:id="@+id/container_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-           <ImageView
-               android:onClick="back_button"
-               android:id="@+id/back_button"
-               android:layout_width="38dp"
-               android:layout_height="38dp"
-               android:src="@drawable/back_icon"
-               />
+                <ImageView
+                    android:id="@+id/back_button"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:onClick="back_button"
+                    android:src="@drawable/back_icon" />
 
-               <Button
-                   android:onClick="edit_profile"
-                   android:textSize="15dp"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="Edit"
-                   android:background="@android:color/transparent"
-                   android:textColor="@color/orange"
-                   android:layout_alignParentEnd="true"
-                   android:layout_alignParentRight="true" />
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@android:color/transparent"
+                    android:gravity="end|center_vertical"
+                    android:onClick="edit_profile"
+                    android:text="Edit"
+                    android:textColor="@color/orange"
+                    android:textSize="15dp" />
 
 
             </RelativeLayout>
 
 
             <RelativeLayout
+                android:id="@id/container_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@id/container_2"
                 android:layout_below="@id/container_1"
-                android:padding="20dp"
-                >
+                android:padding="20dp">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/image"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    app:cardCornerRadius="40dp"
                     android:layout_centerHorizontal="true"
+                    app:cardCornerRadius="40dp"
                     app:cardElevation="2dp">
+
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@drawable/dp"/>
+                        android:src="@drawable/dp" />
                 </androidx.cardview.widget.CardView>
 
                 <TextView
-                    android:id="@+id/name"
-                    android:layout_below="@id/image"
+                    android:id="@+id/first_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Martha Banks"
+                    android:layout_below="@id/image"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="8dp"
-                    android:textSize="20dp"
                     android:fontFamily="@font/se_ui_display"
-                    android:textStyle="bold"
-                    android:textColor="@color/Secondary"/>
+                    android:text="Martha Banks"
+                    android:textColor="@color/Secondary"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/member_info"
-                    android:layout_below="@id/name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Gold Member"
+                    android:layout_below="@id/first_name"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="4dp"
-                    android:textSize="15dp"
                     android:fontFamily="@font/se_ui_display"
-                    android:textStyle="bold"
-                    android:textColor="@color/light_blue_text_color"/>
+                    android:text="Gold Member"
+                    android:textColor="@color/light_blue_text_color"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
 
             </RelativeLayout>
 
 
-
-
-
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
+
     <TextView
         android:id="@+id/information_txt"
-        android:layout_marginTop="20dp"
-        android:padding="10dp"
-        android:layout_below="@id/maincontiner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="INFORMATIONS"
+        android:layout_below="@id/maincontiner"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/se_ui_display"
-        android:textSize="20dp"
-        />
+        android:padding="10dp"
+        android:text="INFORMATIONS"
+        android:textSize="20dp" />
 
 
     <androidx.cardview.widget.CardView
@@ -126,215 +122,208 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="10dp">
+
                 <TextView
-                    android:layout_marginLeft="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:fontFamily="@font/se_ui_display"
                     android:text="Username"
-                    android:fontFamily="@font/se_ui_display"
-                    android:textSize="20dp"
                     android:textColor="@color/Secondary"
-                    />
+                    android:textSize="20dp" />
 
                 <TextView
-                   android:layout_weight="1"
+                    android:id="@+id/fullname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/se_ui_display"
                     android:gravity="end"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Martha Banks"
-                android:fontFamily="@font/se_ui_display"
-                android:textSize="20dp"
-                android:textColor="@color/light_blue_text_color"
-                />
+                    android:text="Martha Banks"
+                    android:textColor="@color/light_blue_text_color"
+                    android:textSize="20dp" />
+
                 <ImageView
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="center"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/indicator"
-                     />
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/indicator" />
 
             </LinearLayout>
 
             <View
-                android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@color/light_blue_text_color"
-                />
+                android:layout_marginLeft="10dp"
+                android:background="@color/light_blue_text_color" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="10dp">
+
                 <TextView
-                    android:layout_marginLeft="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:fontFamily="@font/se_ui_display"
                     android:text="Phone number"
-                    android:fontFamily="@font/se_ui_display"
-                    android:textSize="20dp"
                     android:textColor="@color/Secondary"
-                    />
+                    android:textSize="20dp" />
 
                 <TextView
-                    android:layout_weight="1"
-                    android:gravity="end"
+                    android:id="@+id/number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/se_ui_display"
+                    android:gravity="end"
                     android:text="584-490-9153"
-                    android:fontFamily="@font/se_ui_display"
-                    android:textSize="20dp"
                     android:textColor="@color/light_blue_text_color"
-                    />
+                    android:textSize="20dp" />
+
                 <ImageView
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="center"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/indicator"
-                    />
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/indicator" />
 
             </LinearLayout>
 
             <View
-                android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@color/light_blue_text_color"
-                />
+                android:layout_marginLeft="10dp"
+                android:background="@color/light_blue_text_color" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="10dp">
+
                 <TextView
-                    android:layout_marginLeft="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:fontFamily="@font/se_ui_display"
                     android:text="Email"
-                    android:fontFamily="@font/se_ui_display"
-                    android:textSize="20dp"
                     android:textColor="@color/Secondary"
-                    />
+                    android:textSize="20dp" />
 
                 <TextView
-                    android:layout_weight="1"
-                    android:gravity="end"
+                    android:id="@+id/email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/se_ui_display"
+                    android:gravity="end"
                     android:text="freeslab88@gmail.com"
-                    android:fontFamily="@font/se_ui_display"
-                    android:textSize="20dp"
                     android:textColor="@color/light_blue_text_color"
-                    />
+                    android:textSize="20dp" />
+
                 <ImageView
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="center"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/indicator"
-                    />
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/indicator" />
 
             </LinearLayout>
 
             <View
-                android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@color/light_blue_text_color"
-                />
+                android:layout_marginLeft="10dp"
+                android:background="@color/light_blue_text_color" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="10dp">
+
                 <TextView
-                    android:layout_marginLeft="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:fontFamily="@font/se_ui_display"
                     android:text="Gender"
-                    android:fontFamily="@font/se_ui_display"
-                    android:textSize="20dp"
                     android:textColor="@color/Secondary"
-                    />
+                    android:textSize="20dp" />
 
                 <TextView
-                    android:layout_weight="1"
-                    android:gravity="end"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Female"
+                    android:layout_weight="1"
                     android:fontFamily="@font/se_ui_display"
-                    android:textSize="20dp"
+                    android:gravity="end"
+                    android:text="Female"
                     android:textColor="@color/light_blue_text_color"
-                    />
+                    android:textSize="20dp" />
+
                 <ImageView
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="center"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/indicator"
-                    />
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/indicator" />
 
             </LinearLayout>
 
             <View
-                android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@color/light_blue_text_color"
-                />
+                android:layout_marginLeft="10dp"
+                android:background="@color/light_blue_text_color" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Birthday"
-                    android:fontFamily="@font/se_ui_display"
-                    android:textSize="20dp"
-                    android:textColor="@color/Secondary"
-                    />
+                android:orientation="horizontal"
+                android:padding="10dp">
 
                 <TextView
-                    android:layout_weight="1"
-                    android:gravity="end"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="April 16, 1988"
+                    android:layout_marginLeft="5dp"
                     android:fontFamily="@font/se_ui_display"
-                    android:textSize="20dp"
+                    android:text="Birthday"
+                    android:textColor="@color/Secondary"
+                    android:textSize="20dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/se_ui_display"
+                    android:gravity="end"
+                    android:text="April 16, 1988"
                     android:textColor="@color/light_blue_text_color"
-                    />
+                    android:textSize="20dp" />
+
                 <ImageView
-                    android:layout_marginRight="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_gravity="center"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/indicator"
-                    />
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/indicator" />
 
             </LinearLayout>
-
-
 
 
         </LinearLayout>

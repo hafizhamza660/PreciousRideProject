@@ -12,7 +12,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
+        multiDexEnabled = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -54,6 +54,15 @@ dependencies {
 
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.github.wenchaojiang:AndroidSwipeableCardStack:0.1.6'
+
+
+//    implementation 'com.github.mukeshsolanki:android-otpview-pinview:2.1.2'
+
+    implementation 'com.squareup.retrofit2:retrofit:2.8.1'
+    implementation 'com.squareup.retrofit2:converter-gson:2.8.1'
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
+
+    implementation 'com.karumi:dexter:5.0.0'
 
 
 }

@@ -34,14 +34,16 @@
 
 
                 <Button
+                    android:id="@+id/done"
+                    android:gravity="end|center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
-                    android:textSize="15dp"
-                    android:text="Done"
-                    android:background="@android:color/transparent"
-                    android:textColor="@color/light_blue_text_color"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true" />
+                    android:layout_alignParentRight="true"
+                    android:background="@android:color/transparent"
+                    android:text="Done"
+                    android:textColor="@color/light_blue_text_color"
+                    android:textSize="15dp" />
 
 
             </RelativeLayout>
@@ -93,10 +95,12 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <EditText
+                        android:id="@+id/first_name_edt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="First Name"/>
                     <EditText
+                        android:id="@+id/last_name_edt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Last Name"/>
@@ -150,6 +154,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/number"
                     android:layout_weight="1"
                     android:gravity="end"
                     android:layout_width="wrap_content"
@@ -193,6 +198,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/email"
                     android:layout_weight="1"
                     android:gravity="end"
                     android:layout_width="wrap_content"

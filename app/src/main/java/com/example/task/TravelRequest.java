@@ -1,5 +1,12 @@
 package com.example.task;
 
+import static com.example.task.Session.SaveSharedPreference.setCity;
+import static com.example.task.Session.SaveSharedPreference.setClientId;
+import static com.example.task.Session.SaveSharedPreference.setEmail;
+import static com.example.task.Session.SaveSharedPreference.setFirstName;
+import static com.example.task.Session.SaveSharedPreference.setLastName;
+import static com.example.task.Session.SaveSharedPreference.setMobileNumber;
+
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -9,6 +16,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +27,17 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.example.task.API.ApiClass;
 import com.example.task.Dialog.AmountEnter;
 import com.example.task.Dialog.CurrencySelection;
+import com.example.task.FilesLogin.RequestLogin;
+import com.example.task.FilesLogin.ResponseLogin;
+import com.example.task.RideRequestFiles.RideRequestResponse;
 import com.google.android.material.navigation.NavigationView;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class TravelRequest extends AppCompatActivity {
     private DrawerLayout mDrawer;
@@ -258,6 +274,8 @@ public class TravelRequest extends AppCompatActivity {
                 }
             }
         });
+
+        riderequest();
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
@@ -360,5 +378,50 @@ public class TravelRequest extends AppCompatActivity {
         exitDialog.show();
         Window window = exitDialog.getWindow();
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+    }
+
+
+
+
+    public void riderequest() {
+
+
+        Call<RideRequestResponse> signUpResponseCall = ApiClass.getUserServiceRideRequest().userLogin();
+        signUpResponseCall.enqueue(new Callback<RideRequestResponse>() {
+            @Override
+            public void onResponse(Call<RideRequestResponse> call, Response<RideRequestResponse> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(TravelRequest.this, ""+response.body().data, Toast.LENGTH_LONG).show();
+                    Log.d(TAG,"Data : "+response.body().data.get(0).id);
+//                    if (response.body().message.equals("Login Successfully"))
+//                    {
+//
+//                        String idClient = response.body().data.id;
+//                        String firstName = response.body().data.f_name;
+//                        String lastname = response.body().data.l_name;
+//                        String city = response.body().data.city;
+//                        String email = response.body().data.email;
+//                        String number = response.body().data.mobile_number;
+//
+//                        setClientId(context,idClient);
+//                        setFirstName(context,firstName);
+//                        setLastName(context,lastname);
+//                        setMobileNumber(context,number);
+//                        setEmail(context,email);
+//                        setCity(context,city);
+//
+//                    }
+
+                } else {
+                    Toast.makeText(TravelRequest.this, "Register Not Successfull", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RideRequestResponse> call, Throwable t) {
+                Toast.makeText(TravelRequest.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
+                Log.d("TAG", "Error " + t);
+            }
+        });
     }
 }

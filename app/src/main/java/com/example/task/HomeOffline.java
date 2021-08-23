@@ -1,5 +1,19 @@
 package com.example.task;
 
+import static com.example.task.Session.SaveSharedPreference.clearClientId;
+import static com.example.task.Session.SaveSharedPreference.getCity;
+import static com.example.task.Session.SaveSharedPreference.getClientId;
+import static com.example.task.Session.SaveSharedPreference.getEmail;
+import static com.example.task.Session.SaveSharedPreference.getFirstName;
+import static com.example.task.Session.SaveSharedPreference.getLastName;
+import static com.example.task.Session.SaveSharedPreference.getMobileNumber;
+import static com.example.task.Session.SaveSharedPreference.setCity;
+import static com.example.task.Session.SaveSharedPreference.setClientId;
+import static com.example.task.Session.SaveSharedPreference.setEmail;
+import static com.example.task.Session.SaveSharedPreference.setFirstName;
+import static com.example.task.Session.SaveSharedPreference.setLastName;
+import static com.example.task.Session.SaveSharedPreference.setMobileNumber;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,8 +49,14 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.task.API.ApiClass;
 import com.example.task.Dialog.Rules;
+import com.example.task.FilesLogin.RequestLogin;
+import com.example.task.FilesLogin.ResponseLogin;
 import com.example.task.Floating.FloatingViewService;
+import com.example.task.Session.SaveSharedPreference;
+import com.example.task.StatusFiles.RequestStatus;
+import com.example.task.StatusFiles.ResponseStatus;
 import com.example.task.adapters.StackAdapter;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -49,6 +69,9 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import in.arjsna.swipecardlib.SwipeCardView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeOffline extends AppCompatActivity  {
     private static final int SYSTEM_ALERT_WINDOW_PERMISSION = 2084;
@@ -64,7 +87,7 @@ public class HomeOffline extends AppCompatActivity  {
     TextView timer;
 
     ImageView minus_range,add_range;
-    TextView km_range;
+    TextView km_range,id_name;
     Context context;
 
     public static final String TAG ="HomeONline";
@@ -85,135 +108,138 @@ public class HomeOffline extends AppCompatActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_offline);
-        context=this;
-        Configuration config = getResources().getConfiguration();
-        if(isNetworkConnected())
-        {
-            Toast.makeText(this, "Internet connected successfully", Toast.LENGTH_SHORT).show();
-            if(locationServicesEnabled(context))
-            {
-                Toast.makeText(this, "True", Toast.LENGTH_SHORT).show();
+
+        if (SaveSharedPreference.getClientId(HomeOffline.this).length() == 0) {
+            startActivity(new Intent(HomeOffline.this, WelcomeScreen.class));
+            finish();
+        } else {
+            // Stay at the current activity.
+            setContentView(R.layout.activity_home_offline);
+            context = this;
+            Configuration config = getResources().getConfiguration();
+            if (isNetworkConnected()) {
+                Toast.makeText(this, "Internet connected successfully", Toast.LENGTH_SHORT).show();
+                if (locationServicesEnabled(context)) {
+                    Toast.makeText(this, "True", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "False", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                startActivity(new Intent(HomeOffline.this, SetupGPSLocationActivity.class));
             }
-            else {
-                Toast.makeText(this, "False", Toast.LENGTH_SHORT).show();
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
+                askPermission();
             }
-        }
-        else{
-            startActivity(new Intent(HomeOffline.this,SetupGPSLocationActivity.class));
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
-            askPermission();
-        }
 
 
 
 
 
 
-        /*ToolBar With NavBar*/
-        // Set a Toolbar to replace the ActionBar.
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        setTitle("");
+            /*ToolBar With NavBar*/
+            // Set a Toolbar to replace the ActionBar.
+            toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+            setTitle("");
 //        defaultScreen();
 
 
-
-        // This will display an Up icon (<-), we will replace it with hamburger later
+            // This will display an Up icon (<-), we will replace it with hamburger later
 //        getSupportActionBar().setHomeButtonEnabled(true);
 //        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_burger_icon);
 
 
-        // Find our drawer view
-        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawerToggle = setupDrawerToggle();
+            // Find our drawer view
+            mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawerToggle = setupDrawerToggle();
 
-        // Setup toggle to display hamburger icon with nice animation
-        drawerToggle.setDrawerIndicatorEnabled(true);
-        drawerToggle.syncState();
+            // Setup toggle to display hamburger icon with nice animation
+            drawerToggle.setDrawerIndicatorEnabled(true);
+            drawerToggle.syncState();
 
-        // Tie DrawerLayout events to the ActionBarToggle
-        mDrawer.addDrawerListener(drawerToggle);
+            // Tie DrawerLayout events to the ActionBarToggle
+            mDrawer.addDrawerListener(drawerToggle);
 
-        // ...From section above...
-        // Find our drawer view
-        nvDrawer = (NavigationView) findViewById(R.id.nvView);
+            // ...From section above...
+            // Find our drawer view
+            nvDrawer = (NavigationView) findViewById(R.id.nvView);
 
-        // Setup drawer view
-        setupDrawerContent(nvDrawer);
+            // Setup drawer view
+            setupDrawerContent(nvDrawer);
 
-        /*ToolBar With NavBar End*/
-        nvDrawer.getMenu().getItem(0).setChecked(true);
+            /*ToolBar With NavBar End*/
+            nvDrawer.getMenu().getItem(0).setChecked(true);
 
-        bottomSheetLayout = findViewById(R.id.bottom_sheet);
-        timer = findViewById(R.id.timer);
-        floatingActionButton = findViewById(R.id.floatingActionButton);
-        floatingActionButton_online = findViewById(R.id.floatingActionButton_online);
+            bottomSheetLayout = findViewById(R.id.bottom_sheet);
+            timer = findViewById(R.id.timer);
+            floatingActionButton = findViewById(R.id.floatingActionButton);
+            floatingActionButton_online = findViewById(R.id.floatingActionButton_online);
 
 //        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) floatingActionButton.getLayoutParams();
 
 
-
-
-        // init the bottom sheet behavior
-        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetLayout);
-        // set callback for changes
-        bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                switch (newState) {
-                    case BottomSheetBehavior.STATE_HIDDEN:
+            // init the bottom sheet behavior
+            bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetLayout);
+            // set callback for changes
+            bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+                @Override
+                public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                    switch (newState) {
+                        case BottomSheetBehavior.STATE_HIDDEN:
 //                        textViewBottomSheetState.setText("STATE HIDDEN");
-                        break;
-                    case BottomSheetBehavior.STATE_EXPANDED:
+                            break;
+                        case BottomSheetBehavior.STATE_EXPANDED:
 //                        textViewBottomSheetState.setText("STATE EXPANDED");
-                        // update toggle button text
+                            // update toggle button text
 //                        toggleBottomSheet.setText("Expand BottomSheet");
-                        break;
-                    case BottomSheetBehavior.STATE_COLLAPSED:
+                            break;
+                        case BottomSheetBehavior.STATE_COLLAPSED:
 //                        textViewBottomSheetState.setText("STATE COLLAPSED");
-                        // update collapsed button text
+                            // update collapsed button text
 //                        toggleBottomSheet.setText("Collapse BottomSheet");
-                        break;
-                    case BottomSheetBehavior.STATE_DRAGGING:
+                            break;
+                        case BottomSheetBehavior.STATE_DRAGGING:
 //                        textViewBottomSheetState.setText("STATE DRAGGING");
-                        break;
-                    case BottomSheetBehavior.STATE_SETTLING:
+                            break;
+                        case BottomSheetBehavior.STATE_SETTLING:
 //                        textViewBottomSheetState.setText("STATE SETTLING");
-                        break;
+                            break;
+                    }
+                    Log.d(TAG, "onStateChanged: " + newState);
                 }
-                Log.d(TAG, "onStateChanged: " + newState);
-            }
-            @Override public void onSlide(@NonNull View bottomSheet, float slideOffset) {
-            }
-        });
+
+                @Override
+                public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                }
+            });
 
 
+            switchbtn = findViewById(R.id.switchbtn);
+            homeOffline = findViewById(R.id.homeOffline);
+            homeOnline = findViewById(R.id.homeOnline);
 
-        switchbtn= findViewById(R.id.switchbtn);
-        homeOffline= findViewById(R.id.homeOffline);
-        homeOnline= findViewById(R.id.homeOnline);
-
-        stackView= findViewById(R.id.stackview);
-        toolbar_title= findViewById(R.id.toolbar_title);
-
-
-        minus_range= findViewById(R.id.minus_range);
-        add_range= findViewById(R.id.add_range);
-        km_range= findViewById(R.id.km_range);
+            stackView = findViewById(R.id.stackview);
+            toolbar_title = findViewById(R.id.toolbar_title);
 
 
-        km_range.setText(counter+" KM");
+            minus_range = findViewById(R.id.minus_range);
+            add_range = findViewById(R.id.add_range);
+            km_range = findViewById(R.id.km_range);
+            id_name = findViewById(R.id.id_name);
 
+
+            km_range.setText(counter + " KM");
+
+            Toast.makeText(this, ""+"\n"+getFirstName(context)+"\n"+getCity(context)+"\n"+getLastName(context)+"\n"+getEmail(context)+"\n"+getClientId(context)+"\n"+getMobileNumber(context), Toast.LENGTH_SHORT).show();
+            id_name.setText(getFirstName(context));
             minus_range.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     counter--;
-                    km_range.setText(counter+" KM");
-                    if (counter == 0)
-                    {
+                    km_range.setText(counter + " KM");
+                    if (counter == 0) {
                         minus_range.setEnabled(false);
 
 
@@ -225,105 +251,25 @@ public class HomeOffline extends AppCompatActivity  {
                 @Override
                 public void onClick(View v) {
                     counter++;
-                    km_range.setText(counter+" KM");
-                    if (counter>0)
-                    {
+                    km_range.setText(counter + " KM");
+                    if (counter > 0) {
                         minus_range.setEnabled(true);
                     }
                 }
             });
 
 
-
-
-
-        switchbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-
-                    Rules exitDialog = new Rules(HomeOffline.this);
-                    exitDialog.show();
-                    Window window = exitDialog.getWindow();
-                    window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
-                    // The toggle is enabled
-                    long duration = TimeUnit.MINUTES.toMillis(1);
-//                  new CountDownTimer(duration, 1000){
-//            public void onTick(long millisUntilFinished){
-//                String sDuration = String.format(Locale.ENGLISH,"%02d:%02d"
-//                ,TimeUnit.MILLISECONDS.toMinutes(1)
-//                ,TimeUnit.MILLISECONDS.toSeconds(1)-
-//                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(1)));
-//
-//                timer.setText(sDuration);
-////                counter++;
-//            }
-//            public  void onFinish(){
-////                stackView.setVisibility(View.GONE);
-////                size = size-1;
-//                timer.setText("");
-//            }
-//        }.start();
-//                    startTimer();
-                    homeOffline.setVisibility(View.GONE);
-                    bottomSheetLayout.setVisibility(View.GONE);
-                    homeOnline.setVisibility(View.VISIBLE);
-                    toolbar_title.setText("Online");
-                    StackAdapter adapter = new StackAdapter(numberWord(),HomeOffline.this,R.layout.item_stack);
-
-                    stackView.setAdapter(adapter);
-                    YourListner yourListner = new YourListner();
-                    stackView.setListener(yourListner);
-                    floatingActionButton.setVisibility(View.GONE);
-                    floatingActionButton_online.setVisibility(View.VISIBLE);
-//                    floatingActionButton.setY(800);
-
-//                    stackView.setFlingListener(new SwipeCardView.OnCardFlingListener() {
-//                        @Override
-//                        public void onCardExitLeft(Object dataObject) {
-//                            Log.i(TAG, "Left Exit");
-//                        }
-//
-//                        @Override
-//                        public void onCardExitRight(Object dataObject) {
-//                            Log.i(TAG, "Right Exit");
-//                        }
-//
-//                        @Override
-//                        public void onAdapterAboutToEmpty(int itemsInAdapter) {
-//                            Log.i(TAG, "Adater to be empty");
-//                            //add more items to adapter and call notifydatasetchanged
-//                        }
-//
-//                        @Override
-//                        public void onScroll(float scrollProgressPercent) {
-//                            Log.i(TAG, "Scroll");
-//                        }
-//
-//                        @Override
-//                        public void onCardExitTop(Object dataObject) {
-//                            Log.i(TAG, "Top Exit");
-//                            startActivity(new Intent(HomeOffline.this, HomeSwipeUp.class));
-//                        }
-//
-//                        @Override
-//                        public void onCardExitBottom(Object dataObject) {
-//                            Log.i(TAG, "Bottom Exit");
-//                        }
-//                    });
-
-                } else {
-                    // The toggle is disabled
-                    homeOffline.setVisibility(View.VISIBLE);
-                    bottomSheetLayout.setVisibility(View.VISIBLE);
-                    homeOnline.setVisibility(View.GONE);
-                    toolbar_title.setText("Offline");
-//                    Log.d("FloatingParam",""+params.getAnchorId());
-                    floatingActionButton_online.setVisibility(View.GONE);
-                    floatingActionButton.setVisibility(View.VISIBLE);
+            switchbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        status();
+                    } else {
+                      status();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
 //    @Override
@@ -480,6 +426,13 @@ public class HomeOffline extends AppCompatActivity  {
                 startActivity(i);
                 break;
 
+            case R.id.logout:
+                clearClientId(context);
+                i = new Intent(HomeOffline.this, WelcomeScreen.class);
+                startActivity(i);
+                finish();
+                break;
+
             default:
                 Toast.makeText(this, "Coming Soon...", Toast.LENGTH_SHORT).show();
         }
@@ -591,5 +544,69 @@ public class HomeOffline extends AppCompatActivity  {
 //        timer.setText(timeLeftFormatted);
 //    }
 
+
+
+
+
+
+
+
+    public void status() {
+        RequestStatus requestStatus = new RequestStatus();
+        requestStatus.setId(getClientId(context));
+
+
+        Call<ResponseStatus> signUpResponseCall = ApiClass.getUserServiceStatus().userLogin(requestStatus);
+        signUpResponseCall.enqueue(new Callback<ResponseStatus>() {
+            @Override
+            public void onResponse(Call<ResponseStatus> call, Response<ResponseStatus> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(HomeOffline.this, ""+response.body().message, Toast.LENGTH_SHORT).show();
+                    if (response.body().message.equals("1"))
+                    {
+                        Toast.makeText(HomeOffline.this, "You are online", Toast.LENGTH_LONG).show();
+                        Rules exitDialog = new Rules(HomeOffline.this);
+                        exitDialog.show();
+                        Window window = exitDialog.getWindow();
+                        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        // The toggle is enabled
+                        long duration = TimeUnit.MINUTES.toMillis(1);
+
+                        homeOffline.setVisibility(View.GONE);
+                        bottomSheetLayout.setVisibility(View.GONE);
+                        homeOnline.setVisibility(View.VISIBLE);
+                        toolbar_title.setText("Online");
+                        StackAdapter adapter = new StackAdapter(numberWord(), HomeOffline.this, R.layout.item_stack);
+
+                        stackView.setAdapter(adapter);
+                        YourListner yourListner = new YourListner();
+                        stackView.setListener(yourListner);
+                        floatingActionButton.setVisibility(View.GONE);
+                        floatingActionButton_online.setVisibility(View.VISIBLE);
+                    }
+                    else{
+                        Toast.makeText(HomeOffline.this, "You are offline", Toast.LENGTH_LONG).show();
+                        // The toggle is disabled
+                        homeOffline.setVisibility(View.VISIBLE);
+                        bottomSheetLayout.setVisibility(View.VISIBLE);
+                        homeOnline.setVisibility(View.GONE);
+                        toolbar_title.setText("Offline");
+//                    Log.d("FloatingParam",""+params.getAnchorId());
+                        floatingActionButton_online.setVisibility(View.GONE);
+                        floatingActionButton.setVisibility(View.VISIBLE);
+                    }
+
+                } else {
+                    Toast.makeText(HomeOffline.this, "Request Denied", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseStatus> call, Throwable t) {
+                Toast.makeText(HomeOffline.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
+                Log.d("TAG", "Error " + t);
+            }
+        });
+    }
 }
 

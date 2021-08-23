@@ -1,10 +1,14 @@
 package com.example.task;
 
+import static com.example.task.Session.SaveSharedPreference.getFirstName;
+import static com.example.task.Session.SaveSharedPreference.getLastName;
+
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -13,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.task.Dialog.CurrencySelection;
@@ -26,11 +31,13 @@ RelativeLayout container_2,currency_button,bank_button,campaign_button;
     private NavigationView nvDrawer;
     // Make sure to be using androidx.appcompat.app.ActionBarDrawerToggle version.
     private ActionBarDrawerToggle drawerToggle;
+    TextView name;
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
-
+        context=this;
         /*ToolBar With NavBar*/
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -70,6 +77,9 @@ RelativeLayout container_2,currency_button,bank_button,campaign_button;
         container_2 = findViewById(R.id.container_2);
         currency_button = findViewById(R.id.currency_button);
         bank_button = findViewById(R.id.bank_button);
+        name = findViewById(R.id.name);
+
+        name.setText(getFirstName(context)+" "+getLastName(context));
 //        campaign_button = findViewById(R.id.campaign_button);
         container_2.setOnClickListener(new View.OnClickListener() {
             @Override

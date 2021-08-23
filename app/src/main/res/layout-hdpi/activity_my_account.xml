@@ -34,15 +34,16 @@
                     />
 
                 <Button
-                    android:onClick="edit_profile"
+                    android:gravity="end"
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
-                    android:textSize="15dp"
-                    android:text="Edit"
-                    android:background="@android:color/transparent"
-                    android:textColor="@color/orange"
                     android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true" />
+                    android:layout_alignParentRight="true"
+                    android:background="@android:color/transparent"
+                    android:onClick="edit_profile"
+                    android:text="Edit"
+                    android:textColor="@color/orange"
+                    android:textSize="15dp" />
 
 
             </RelativeLayout>
@@ -70,21 +71,21 @@
                 </androidx.cardview.widget.CardView>
 
                 <TextView
-                    android:id="@+id/name"
-                    android:layout_below="@id/image"
+                    android:id="@+id/first_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Martha Banks"
+                    android:layout_below="@id/image"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="8dp"
-                    android:textSize="15dp"
                     android:fontFamily="@font/se_ui_display"
-                    android:textStyle="bold"
-                    android:textColor="@color/Secondary"/>
+                    android:text="Martha Banks"
+                    android:textColor="@color/Secondary"
+                    android:textSize="15dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/member_info"
-                    android:layout_below="@id/name"
+                    android:layout_below="@id/first_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Gold Member"
@@ -142,6 +143,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/fullname"
                     android:layout_weight="1"
                     android:gravity="end"
                     android:layout_width="wrap_content"
@@ -185,6 +187,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/number"
                     android:layout_weight="1"
                     android:gravity="end"
                     android:layout_width="wrap_content"
@@ -228,6 +231,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/email"
                     android:layout_weight="1"
                     android:gravity="end"
                     android:layout_width="wrap_content"
