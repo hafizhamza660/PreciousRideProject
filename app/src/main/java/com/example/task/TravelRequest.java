@@ -12,7 +12,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -32,8 +36,12 @@ import com.example.task.Dialog.AmountEnter;
 import com.example.task.Dialog.CurrencySelection;
 import com.example.task.FilesLogin.RequestLogin;
 import com.example.task.FilesLogin.ResponseLogin;
+import com.example.task.RideRequestFiles.Data;
 import com.example.task.RideRequestFiles.RideRequestResponse;
+import com.example.task.adapters.RideRequestListAdapter;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,16 +52,23 @@ public class TravelRequest extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
+    TravelRequest activity;
+    Context context;
 
-    Button accept_btn_1,accept_btn_2,accept_btn_3,accept_btn_4,accept_btn_5,accept_btn_6;
-    CardView card_offer_1,card_offer_2,card_offer_3,card_offer_4,card_offer_5,card_offer_6;
-    LinearLayout nego_layout_1,nego_layout_2,nego_layout_3,nego_layout_4,nego_layout_5,nego_layout_6;
     Switch switchbtn;
     public static final String TAG ="HomeONline";
+
+    RecyclerView recyclerViewRideRequest;
+    LinearLayoutManager linearLayoutManager;
+    private RideRequestListAdapter rideRequestListAdapter;
+    private List<Data> dataList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_travel_request);
+        activity = this;
+        context = this;
         /*ToolBar With NavBar*/
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -89,180 +104,9 @@ public class TravelRequest extends AppCompatActivity {
 
         /*ToolBar With NavBar End*/
         nvDrawer.getMenu().getItem(2).setChecked(true);
-        card_offer_1 = findViewById(R.id.card_offer_1);
-        card_offer_2 = findViewById(R.id.card_offer_2);
-        card_offer_3 = findViewById(R.id.card_offer_3);
-        card_offer_4 = findViewById(R.id.card_offer_4);
-        card_offer_5 = findViewById(R.id.card_offer_5);
-        card_offer_6 = findViewById(R.id.card_offer_6);
-        accept_btn_1 = findViewById(R.id.accept_btn_1);
-        accept_btn_2 = findViewById(R.id.accept_btn_2);
-        accept_btn_3 = findViewById(R.id.accept_btn_3);
-        accept_btn_4 = findViewById(R.id.accept_btn_4);
-        accept_btn_5 = findViewById(R.id.accept_btn_5);
-        accept_btn_6 = findViewById(R.id.accept_btn_6);
-        nego_layout_1 = findViewById(R.id.nego_layout_1);
-        nego_layout_2 = findViewById(R.id.nego_layout_2);
-        nego_layout_3 = findViewById(R.id.nego_layout_3);
-        nego_layout_4 = findViewById(R.id.nego_layout_4);
-        nego_layout_5 = findViewById(R.id.nego_layout_5);
-        nego_layout_6 = findViewById(R.id.nego_layout_6);
+
         switchbtn = findViewById(R.id.switchbtn);
-        card_offer_1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                nego_layout_1.setVisibility(View.VISIBLE);
-                accept_btn_1.setVisibility(View.VISIBLE);
 
-                accept_btn_2.setVisibility(View.GONE);
-                accept_btn_3.setVisibility(View.GONE);
-                accept_btn_4.setVisibility(View.GONE);
-                accept_btn_5.setVisibility(View.GONE);
-                accept_btn_6.setVisibility(View.GONE);
-
-
-                nego_layout_2.setVisibility(View.GONE);
-                nego_layout_3.setVisibility(View.GONE);
-                nego_layout_4.setVisibility(View.GONE);
-                nego_layout_5.setVisibility(View.GONE);
-                nego_layout_6.setVisibility(View.GONE);
-            }
-        });
-
-        card_offer_2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                accept_btn_1.setVisibility(View.GONE);
-                accept_btn_2.setVisibility(View.VISIBLE);
-                accept_btn_3.setVisibility(View.GONE);
-                accept_btn_4.setVisibility(View.GONE);
-                accept_btn_5.setVisibility(View.GONE);
-                accept_btn_6.setVisibility(View.GONE);
-
-                nego_layout_1.setVisibility(View.GONE);
-                nego_layout_2.setVisibility(View.VISIBLE);
-                nego_layout_3.setVisibility(View.GONE);
-                nego_layout_4.setVisibility(View.GONE);
-                nego_layout_5.setVisibility(View.GONE);
-                nego_layout_6.setVisibility(View.GONE);
-            }
-        });
-
-        card_offer_3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                accept_btn_1.setVisibility(View.GONE);
-                accept_btn_2.setVisibility(View.GONE);
-                accept_btn_3.setVisibility(View.VISIBLE);
-                accept_btn_4.setVisibility(View.GONE);
-                accept_btn_5.setVisibility(View.GONE);
-                accept_btn_6.setVisibility(View.GONE);
-
-
-                nego_layout_1.setVisibility(View.GONE);
-                nego_layout_2.setVisibility(View.GONE);
-                nego_layout_3.setVisibility(View.VISIBLE);
-                nego_layout_4.setVisibility(View.GONE);
-                nego_layout_5.setVisibility(View.GONE);
-                nego_layout_6.setVisibility(View.GONE);
-            }
-        });
-
-        card_offer_4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                accept_btn_1.setVisibility(View.GONE);
-                accept_btn_2.setVisibility(View.GONE);
-                accept_btn_3.setVisibility(View.GONE);
-                accept_btn_4.setVisibility(View.VISIBLE);
-                accept_btn_5.setVisibility(View.GONE);
-                accept_btn_6.setVisibility(View.GONE);
-
-                nego_layout_1.setVisibility(View.GONE);
-                nego_layout_2.setVisibility(View.GONE);
-                nego_layout_3.setVisibility(View.GONE);
-                nego_layout_4.setVisibility(View.VISIBLE);
-                nego_layout_5.setVisibility(View.GONE);
-                nego_layout_6.setVisibility(View.GONE);
-            }
-        });
-
-        card_offer_5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                accept_btn_1.setVisibility(View.GONE);
-                accept_btn_2.setVisibility(View.GONE);
-                accept_btn_3.setVisibility(View.GONE);
-                accept_btn_4.setVisibility(View.GONE);
-                accept_btn_5.setVisibility(View.VISIBLE);
-                accept_btn_6.setVisibility(View.GONE);
-
-                nego_layout_1.setVisibility(View.GONE);
-                nego_layout_2.setVisibility(View.GONE);
-                nego_layout_3.setVisibility(View.GONE);
-                nego_layout_4.setVisibility(View.GONE);
-                nego_layout_5.setVisibility(View.VISIBLE);
-                nego_layout_6.setVisibility(View.GONE);
-            }
-        });
-
-        card_offer_6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                accept_btn_1.setVisibility(View.GONE);
-                accept_btn_2.setVisibility(View.GONE);
-                accept_btn_3.setVisibility(View.GONE);
-                accept_btn_4.setVisibility(View.GONE);
-                accept_btn_5.setVisibility(View.GONE);
-                accept_btn_6.setVisibility(View.VISIBLE);
-
-                nego_layout_1.setVisibility(View.GONE);
-                nego_layout_2.setVisibility(View.GONE);
-                nego_layout_3.setVisibility(View.GONE);
-                nego_layout_4.setVisibility(View.GONE);
-                nego_layout_5.setVisibility(View.GONE);
-                nego_layout_6.setVisibility(View.VISIBLE);
-            }
-        });
-
-
-
-        accept_btn_1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(TravelRequest.this, HomeOnlineBookingDetails.class));
-            }
-        });
-        accept_btn_2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(TravelRequest.this, HomeOnlineBookingDetails.class));
-            }
-        });
-        accept_btn_3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(TravelRequest.this, HomeOnlineBookingDetails.class));
-            }
-        });
-        accept_btn_4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(TravelRequest.this, HomeOnlineBookingDetails.class));
-            }
-        });
-        accept_btn_5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(TravelRequest.this, HomeOnlineBookingDetails.class));
-            }
-        });
-        accept_btn_6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(TravelRequest.this, HomeOnlineBookingDetails.class));
-            }
-        });
 
 
         switchbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -274,6 +118,10 @@ public class TravelRequest extends AppCompatActivity {
                 }
             }
         });
+
+        recyclerViewRideRequest = findViewById(R.id.recycler_view_rideRequest);
+        linearLayoutManager = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false);
+        recyclerViewRideRequest.setLayoutManager(linearLayoutManager);
 
         riderequest();
     }
@@ -380,9 +228,6 @@ public class TravelRequest extends AppCompatActivity {
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
-
-
-
     public void riderequest() {
 
 
@@ -393,25 +238,10 @@ public class TravelRequest extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Toast.makeText(TravelRequest.this, ""+response.body().data, Toast.LENGTH_LONG).show();
                     Log.d(TAG,"Data : "+response.body().data.get(0).id);
-//                    if (response.body().message.equals("Login Successfully"))
-//                    {
-//
-//                        String idClient = response.body().data.id;
-//                        String firstName = response.body().data.f_name;
-//                        String lastname = response.body().data.l_name;
-//                        String city = response.body().data.city;
-//                        String email = response.body().data.email;
-//                        String number = response.body().data.mobile_number;
-//
-//                        setClientId(context,idClient);
-//                        setFirstName(context,firstName);
-//                        setLastName(context,lastname);
-//                        setMobileNumber(context,number);
-//                        setEmail(context,email);
-//                        setCity(context,city);
-//
-//                    }
 
+                    rideRequestListAdapter = new RideRequestListAdapter(activity,context, response.body().data);
+                    recyclerViewRideRequest.setAdapter(rideRequestListAdapter);
+//
                 } else {
                     Toast.makeText(TravelRequest.this, "Register Not Successfull", Toast.LENGTH_SHORT).show();
                 }
