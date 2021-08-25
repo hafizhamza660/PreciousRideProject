@@ -47,4 +47,27 @@ public class MyAccount extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        first_name.setText("");
+        fullname.setText("");
+        email.setText("");
+        number.setText("");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        informationset();
+    }
+
+    public void informationset()
+    {
+        first_name.setText(getFirstName(context));
+        fullname.setText(getFirstName(context)+" "+getLastName(context));
+        email.setText(getEmail(context));
+        number.setText(getMobileNumber(context));
+    }
 }

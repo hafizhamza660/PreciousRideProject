@@ -1,5 +1,8 @@
 package com.example.task;
 
+import static com.example.task.Session.SaveSharedPreference.getClientId;
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -9,18 +12,28 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.app.Notification;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 
+import com.example.task.API.ApiClass;
+import com.example.task.AllNotificiationFiles.AllNotificationRequest;
+import com.example.task.AllNotificiationFiles.AllNotificationResponse;
 import com.example.task.adapters.NotificationAdapter;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Notifications extends AppCompatActivity {
 
@@ -33,15 +46,15 @@ public class Notifications extends AppCompatActivity {
     // Make sure to be using androidx.appcompat.app.ActionBarDrawerToggle version.
     private ActionBarDrawerToggle drawerToggle;
     // ArrayList for person names
-    ArrayList notificationName = new ArrayList<>(Arrays.asList("System", "Promotion","Promotion","System","System","Promotions"));
-    ArrayList notificationText = new ArrayList<>(Arrays.asList("Booking #1234 has been success...","Invite friends - Get 3 coupons each!","Invite friends - Get 3 coupons each!","Booking #1205 has been cancelled","Thank you! Your transaction is com...","Invite friends - Get 3 coupons each!"));
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
+    NotificationAdapter notificationAdapter;
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notifications);
-
+        context = this;
         /*ToolBar With NavBar*/
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -83,9 +96,7 @@ public class Notifications extends AppCompatActivity {
         linearLayoutManager = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-
-        NotificationAdapter notificationAdapter = new NotificationAdapter(Notifications.this, notificationName,notificationText);
-        recyclerView.setAdapter(notificationAdapter);
+        allnotificationapi();
 
 
 
@@ -186,5 +197,43 @@ public class Notifications extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggles
         drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    public void allnotificationapi() {
+        AllNotificationRequest allnotificationRequest = new AllNotificationRequest();
+        allnotificationRequest.setDriver_id(getClientId(context));
+
+        Call<AllNotificationResponse> notificationResponseCall = ApiClass.getUserServiceAllNotification().userLogin(allnotificationRequest);
+        notificationResponseCall.enqueue(new Callback<AllNotificationResponse>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onResponse(Call<AllNotificationResponse> call, Response<AllNotificationResponse> response) {
+                if (response.isSuccessful()) {
+//                    Toast.makeText(ServiceClass.this, ""+response.body().message, Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(Notifications.this, ""+response.body().message, Toast.LENGTH_SHORT).show();
+                    if (response.body().message.equals("Notifications"))
+                    {
+//
+                        notificationAdapter = new NotificationAdapter(Notifications.this,response.body().data);
+                        recyclerView.setAdapter(notificationAdapter);
+
+
+
+                    }
+//                    Toast.makeText(getActivity(), "Login Successfull", Toast.LENGTH_SHORT).show();
+//                    Intent intent = new Intent(getActivity(), PhoneVerification.class);
+//                    startActivity(intent);
+                } else {
+                    Toast.makeText(Notifications.this, "Login Not Successfull", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AllNotificationResponse> call, Throwable t) {
+                Toast.makeText(Notifications.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
+                Log.d("TAG", "Error " + t);
+            }
+        });
     }
 }

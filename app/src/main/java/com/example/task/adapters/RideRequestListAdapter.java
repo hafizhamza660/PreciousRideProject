@@ -1,5 +1,7 @@
 package com.example.task.adapters;
 
+import static com.example.task.Session.SaveSharedPreference.getClientId;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -97,7 +99,8 @@ public class RideRequestListAdapter extends RecyclerView.Adapter<RideRequestList
         holder.accept_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rideaccept(data.driver_id,data.id);
+                String id = getClientId(context);
+                rideaccept(id,data.id);
             }
         });
 
@@ -115,7 +118,8 @@ public class RideRequestListAdapter extends RecyclerView.Adapter<RideRequestList
         holder.enter_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ridenegotiate(data.driver_id,data.id,holder.negotiate_edt.getText().toString());
+                String id = getClientId(context);
+                ridenegotiate(id,data.id,holder.negotiate_edt.getText().toString());
                 holder.nego_layout.setVisibility(View.VISIBLE);
                 holder.nego_enter_layout.setVisibility(View.GONE);
             }

@@ -8,25 +8,27 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.task.AllNotificiationFiles.Data;
 import com.example.task.R;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.MyViewHolder> {
-    ArrayList notification_names;
-    ArrayList notification_text;
+    private List<Data> data;
     Context context;
 
-    public NotificationAdapter(Context context,ArrayList notification_names,ArrayList notification_text)
+    public NotificationAdapter(Context context,List<Data> data)
     {
         this.context=context;
-        this.notification_names=notification_names;
-        this.notification_text=notification_text;
+        this.data=data;
+
     }
 
     @NonNull
@@ -42,23 +44,39 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @Override
     public void onBindViewHolder(MyViewHolder holder,final int position) {
-        holder.noti_name.setText(notification_names.get(position).toString());
-        holder.noti_text.setText(notification_text.get(position).toString());
+        final Data datalist = data.get(position);
+
+        if (datalist.status.equals("0"))
+        {
+            holder.unread_layout.setVisibility(View.VISIBLE);
+            holder.read_layout.setVisibility(View.GONE);
+            holder.unread_noti_name.setText(datalist.text);
+        }
+        else if (datalist.status.equals("1"))
+        {
+            holder.unread_layout.setVisibility(View.GONE);
+            holder.read_layout.setVisibility(View.VISIBLE);
+            holder.read_noti_name.setText(datalist.text);
+        }
 
     }
 
     @Override
     public int getItemCount() {
-        return notification_names.size();
+        return data.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView noti_name;
-        TextView noti_text;
+        CardView unread_layout,read_layout;
+        TextView unread_noti_name,unread_noti_text,read_noti_name,read_noti_text;
         public MyViewHolder(View itemView) {
             super(itemView);
-            noti_name = itemView.findViewById(R.id.noti_name);
-            noti_text = itemView.findViewById(R.id.noti_text);
+            unread_layout = itemView.findViewById(R.id.unread_layout);
+            read_layout = itemView.findViewById(R.id.read_layout);
+            unread_noti_name = itemView.findViewById(R.id.unread_noti_name);
+            unread_noti_text = itemView.findViewById(R.id.unread_noti_text);
+            read_noti_name = itemView.findViewById(R.id.read_noti_name);
+            read_noti_text = itemView.findViewById(R.id.read_noti_text);
         }
     }
 }

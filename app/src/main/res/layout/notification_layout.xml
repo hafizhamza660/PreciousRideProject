@@ -5,33 +5,42 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/unread_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardElevation="4dp"
         >
         <RelativeLayout
+
             android:padding="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_centerVertical="true"
-                android:id="@+id/notification_image"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/oval_2"/>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/unread_notification_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/background"
+                app:cardCornerRadius="50dp">
 
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerVertical="true"
+                    android:padding="10dp"
+                    android:src="@drawable/notification" />
+            </androidx.cardview.widget.CardView>
 
             <LinearLayout
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@id/notification_image"
+                android:layout_toRightOf="@id/unread_notification_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/noti_name"
+                    android:id="@+id/unread_noti_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Notification Name"
@@ -40,7 +49,7 @@
                     android:textStyle="bold"
                     android:textColor="@color/Secondary"/>
                 <TextView
-                    android:id="@+id/noti_text"
+                    android:id="@+id/unread_noti_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Notification Text"
@@ -50,6 +59,67 @@
             </LinearLayout>
 
         </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:visibility="gone"
+        android:id="@+id/read_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="@color/background"
+        >
+        <RelativeLayout
+
+            android:padding="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/read_notification_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/background"
+                app:cardCornerRadius="50dp">
+                <ImageView
+                    android:layout_centerVertical="true"
+                    android:padding="10dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/notification"/>
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/read_notification_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/read_noti_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Notification Name"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/se_ui_display"
+                    android:textStyle="bold"
+                    android:textColor="@color/Secondary"/>
+                <TextView
+                    android:id="@+id/read_noti_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Notification Text"
+                    android:textSize="14sp"
+                    android:textColor="@color/Secondary"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
     </androidx.cardview.widget.CardView>
 
 </RelativeLayout>

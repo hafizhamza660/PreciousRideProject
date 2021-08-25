@@ -112,6 +112,18 @@ RelativeLayout container_2,currency_button,bank_button,campaign_button;
 //        });
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        name.setText("");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        name.setText(getFirstName(context)+" "+getLastName(context));
+    }
+
     public void vehicle_click(View view) {
         startActivity(new Intent(Setting.this,VehicleManagement.class));
     }

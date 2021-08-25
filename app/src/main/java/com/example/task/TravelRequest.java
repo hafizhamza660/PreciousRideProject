@@ -237,10 +237,15 @@ public class TravelRequest extends AppCompatActivity {
             public void onResponse(Call<RideRequestResponse> call, Response<RideRequestResponse> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(TravelRequest.this, ""+response.body().data, Toast.LENGTH_LONG).show();
-                    Log.d(TAG,"Data : "+response.body().data.get(0).id);
+//                    Log.d(TAG,"Data : "+response.body().data.get(0).id);
+                    if (response.body().data.equals(null))
+                    {
 
-                    rideRequestListAdapter = new RideRequestListAdapter(activity,context, response.body().data);
-                    recyclerViewRideRequest.setAdapter(rideRequestListAdapter);
+                    }
+                    else {
+                        rideRequestListAdapter = new RideRequestListAdapter(activity, context, response.body().data);
+                        recyclerViewRideRequest.setAdapter(rideRequestListAdapter);
+                    }
 //
                 } else {
                     Toast.makeText(TravelRequest.this, "Register Not Successfull", Toast.LENGTH_SHORT).show();

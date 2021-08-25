@@ -1,7 +1,9 @@
 package com.example.task.API;
 
+import com.example.task.AllNotificiationFiles.UserServiceAllNotification;
 import com.example.task.FilesLogin.UserServiceSiginIn;
 import com.example.task.FilesSignUp.UserServiceSignUp;
+import com.example.task.NotificationFiles.UserServiceNotification;
 import com.example.task.RideAcceptFiles.UserServiceRideAccept;
 import com.example.task.RideNegotiate.UserServiceRideNegotiate;
 import com.example.task.RideRequestFiles.UserServiceRideRequest;
@@ -63,6 +65,16 @@ public class ApiClass {
     public static UserServiceRideNegotiate getUserServiceRideNegotiate(){
         UserServiceRideNegotiate userServiceRideNegotiate =getRetrofit().create(UserServiceRideNegotiate.class);
         return userServiceRideNegotiate;
+    }
+
+    public static UserServiceNotification getUserServiceNotification(){
+        UserServiceNotification userServiceNotification =getRetrofit().create(UserServiceNotification.class);
+        return userServiceNotification;
+    }
+
+    public static UserServiceAllNotification getUserServiceAllNotification(){
+        UserServiceAllNotification userServiceAllNotification =getRetrofit().create(UserServiceAllNotification.class);
+        return userServiceAllNotification;
     }
 
 }

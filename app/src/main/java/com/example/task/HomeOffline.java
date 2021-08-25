@@ -54,6 +54,7 @@ import com.example.task.Dialog.Rules;
 import com.example.task.FilesLogin.RequestLogin;
 import com.example.task.FilesLogin.ResponseLogin;
 import com.example.task.Floating.FloatingViewService;
+import com.example.task.Service.ServiceClass;
 import com.example.task.Session.SaveSharedPreference;
 import com.example.task.StatusFiles.RequestStatus;
 import com.example.task.StatusFiles.ResponseStatus;
@@ -269,6 +270,8 @@ public class HomeOffline extends AppCompatActivity  {
                     }
                 }
             });
+
+            startService(new Intent(HomeOffline.this, ServiceClass.class));
         }
     }
 
@@ -293,6 +296,17 @@ public class HomeOffline extends AppCompatActivity  {
         return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        id_name.setText("");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        id_name.setText(getFirstName(context));
+    }
 
     public static boolean locationServicesEnabled(Context context) {
         LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
