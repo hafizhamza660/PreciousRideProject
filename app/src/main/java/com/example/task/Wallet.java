@@ -9,11 +9,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.task.Floating.FloatingViewService;
 import com.example.task.adapters.PaymentHistoryAdapter;
 import com.example.task.adapters.VehicleManagementAdapter;
 import com.google.android.material.navigation.NavigationView;
@@ -37,6 +40,7 @@ public class Wallet extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet);
+
 
         /*ToolBar With NavBar*/
         // Set a Toolbar to replace the ActionBar.
@@ -81,10 +85,28 @@ public class Wallet extends AppCompatActivity {
 
         PaymentHistoryAdapter inviteFiendListAdapter = new PaymentHistoryAdapter(Wallet.this, payment_person_name,payment_number,payment_amount);
         recyclerView.setAdapter(inviteFiendListAdapter);
+//       stopService(new Intent(Wallet.this,FloatingViewService.class));
     }
 
     public void payment_method(View view) {
         startActivity(new Intent(Wallet.this,PaymentMethod.class));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            startService(new Intent(Wallet.this, FloatingViewService.class));
+            finish();
+        } else if (Settings.canDrawOverlays(this)) {
+            startService(new Intent(Wallet.this, FloatingViewService.class));
+            finish();
+        } else {
+//            askPermission();
+            Toast.makeText(this, "You need System Alert Window Permission to do this", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 

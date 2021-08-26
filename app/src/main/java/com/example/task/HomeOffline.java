@@ -109,6 +109,7 @@ public class HomeOffline extends AppCompatActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG,"onCreat");
 
         if (SaveSharedPreference.getClientId(HomeOffline.this).length() == 0) {
             startActivity(new Intent(HomeOffline.this, WelcomeScreen.class));
@@ -272,6 +273,9 @@ public class HomeOffline extends AppCompatActivity  {
             });
 
             startService(new Intent(HomeOffline.this, ServiceClass.class));
+
+
+
         }
     }
 
@@ -335,30 +339,28 @@ public class HomeOffline extends AppCompatActivity  {
     @Override
     protected void onStart() {
         super.onStart();
+        Log.d(TAG,"onStart");
         stopService(new Intent(HomeOffline.this, FloatingViewService.class));
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            startService(new Intent(HomeOffline.this, FloatingViewService.class));
-            finish();
-        } else if (Settings.canDrawOverlays(this)) {
-            startService(new Intent(HomeOffline.this, FloatingViewService.class));
-            finish();
-        } else {
-            askPermission();
-            Toast.makeText(this, "You need System Alert Window Permission to do this", Toast.LENGTH_SHORT).show();
-        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-//        stopService(new Intent(HomeOffline.this, FloatingViewService.class));
+
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+                startService(new Intent(HomeOffline.this, FloatingViewService.class));
+                finish();
+            } else if (Settings.canDrawOverlays(this)) {
+                startService(new Intent(HomeOffline.this, FloatingViewService.class));
+                finish();
+            } else {
+                askPermission();
+                Toast.makeText(this, "You need System Alert Window Permission to do this", Toast.LENGTH_SHORT).show();
+            }
 
     }
+
+
 
     private List<String> numberWord(){
         List<String> word = new ArrayList<>();

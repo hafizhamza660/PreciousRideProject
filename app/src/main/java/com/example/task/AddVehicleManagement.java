@@ -26,4 +26,5 @@ public class AddVehicleManagement extends AppCompatActivity {
     public void completeaddvehicle(View view) {
         startActivity(new Intent(AddVehicleManagement.this,VehicleManagement.class));
     }
+
 }

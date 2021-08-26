@@ -135,6 +135,8 @@ public class SignUp extends AppCompatActivity {
     }
 
 
+
+
     public void dataget(){
         sfirst_name = first_name.getText().toString();
         slast_name = last_name.getText().toString();
