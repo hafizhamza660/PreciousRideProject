@@ -5,6 +5,7 @@ import static com.example.task.Session.SaveSharedPreference.getCity;
 import static com.example.task.Session.SaveSharedPreference.getClientId;
 import static com.example.task.Session.SaveSharedPreference.getEmail;
 import static com.example.task.Session.SaveSharedPreference.getFirstName;
+import static com.example.task.Session.SaveSharedPreference.getInterCity;
 import static com.example.task.Session.SaveSharedPreference.getLastName;
 import static com.example.task.Session.SaveSharedPreference.getMobileNumber;
 import static com.example.task.Session.SaveSharedPreference.setCity;
@@ -74,11 +75,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeOffline extends AppCompatActivity  {
+public class HomeOffline extends AppCompatActivity {
     private static final int SYSTEM_ALERT_WINDOW_PERMISSION = 2084;
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
-    private NavigationView nvDrawer;
+    private NavigationView nvDrawer, nvDrawer2;
 
     Switch switchbtn;
     LinearLayout homeOnline;
@@ -87,12 +88,12 @@ public class HomeOffline extends AppCompatActivity  {
     TextView toolbar_title;
     TextView timer;
 
-    ImageView minus_range,add_range;
-    TextView km_range,id_name;
+    ImageView minus_range, add_range;
+    TextView km_range, id_name;
     Context context;
 
-    public static final String TAG ="HomeONline";
-//    public int counter;
+    public static final String TAG = "HomeONline";
+    //    public int counter;
     BottomSheetBehavior bottomSheetBehavior;
     ConstraintLayout bottomSheetLayout;
 //    private static final long START_TIME_IN_MILLIS = 600000;
@@ -101,15 +102,17 @@ public class HomeOffline extends AppCompatActivity  {
 //    private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
 
 
-    int counter=0;
+    int counter = 0;
+    String val;
 
     // Make sure to be using androidx.appcompat.app.ActionBarDrawerToggle version.
     private ActionBarDrawerToggle drawerToggle;
-    FloatingActionButton floatingActionButton,floatingActionButton_online;
+    FloatingActionButton floatingActionButton, floatingActionButton_online;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG,"onCreat");
+        Log.d(TAG, "onCreat");
 
         if (SaveSharedPreference.getClientId(HomeOffline.this).length() == 0) {
             startActivity(new Intent(HomeOffline.this, WelcomeScreen.class));
@@ -145,7 +148,7 @@ public class HomeOffline extends AppCompatActivity  {
             setSupportActionBar(toolbar);
             setTitle("");
 //        defaultScreen();
-
+            val = getInterCity(context);
 
             // This will display an Up icon (<-), we will replace it with hamburger later
 //        getSupportActionBar().setHomeButtonEnabled(true);
@@ -167,12 +170,32 @@ public class HomeOffline extends AppCompatActivity  {
             // ...From section above...
             // Find our drawer view
             nvDrawer = (NavigationView) findViewById(R.id.nvView);
+//            nvDrawer2 = (NavigationView) findViewById(R.id.nvView2);
 
-            // Setup drawer view
+
+//            if (val=="0") {
+//                Toast.makeText(this, "0 Val", Toast.LENGTH_SHORT).show();
+//                nvDrawer.setVisibility(View.VISIBLE);
+//                nvDrawer2.setVisibility(View.GONE);
+//                // Setup drawer view
             setupDrawerContent(nvDrawer);
 
             /*ToolBar With NavBar End*/
             nvDrawer.getMenu().getItem(0).setChecked(true);
+            Toast.makeText(this, "Value: "+val, Toast.LENGTH_SHORT).show();
+//            }
+//            else if (val=="1")
+//            {
+//                Toast.makeText(this, "1 Val", Toast.LENGTH_SHORT).show();
+//
+//                nvDrawer.setVisibility(View.GONE);
+//                nvDrawer2.setVisibility(View.VISIBLE);
+//                // Setup drawer view
+//                setupDrawerContent(nvDrawer2);
+//
+//                /*ToolBar With NavBar End*/
+//                nvDrawer2.getMenu().getItem(0).setChecked(true);
+//            }
 
             bottomSheetLayout = findViewById(R.id.bottom_sheet);
             timer = findViewById(R.id.timer);
@@ -234,7 +257,7 @@ public class HomeOffline extends AppCompatActivity  {
 
             km_range.setText(counter + " KM");
 
-            Toast.makeText(this, ""+"\n"+getFirstName(context)+"\n"+getCity(context)+"\n"+getLastName(context)+"\n"+getEmail(context)+"\n"+getClientId(context)+"\n"+getMobileNumber(context), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "" + "\n" + getFirstName(context) + "\n" + getCity(context) + "\n" + getLastName(context) + "\n" + getEmail(context) + "\n" + getClientId(context) + "\n" + getMobileNumber(context), Toast.LENGTH_SHORT).show();
             id_name.setText(getFirstName(context));
             minus_range.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -267,13 +290,12 @@ public class HomeOffline extends AppCompatActivity  {
                     if (isChecked) {
                         status();
                     } else {
-                      status();
+                        status();
                     }
                 }
             });
 
             startService(new Intent(HomeOffline.this, ServiceClass.class));
-
 
 
         }
@@ -309,7 +331,9 @@ public class HomeOffline extends AppCompatActivity  {
     @Override
     protected void onResume() {
         super.onResume();
+        nvDrawer.getMenu().getItem(0).setChecked(true);
         id_name.setText(getFirstName(context));
+        val = getInterCity(context);
     }
 
     public static boolean locationServicesEnabled(Context context) {
@@ -320,16 +344,17 @@ public class HomeOffline extends AppCompatActivity  {
         try {
             gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
         } catch (Exception ex) {
-            Log.e(TAG,"Exception gps_enabled");
+            Log.e(TAG, "Exception gps_enabled");
         }
 
         try {
             net_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
         } catch (Exception ex) {
-            Log.e(TAG,"Exception network_enabled");
+            Log.e(TAG, "Exception network_enabled");
         }
         return gps_enabled || net_enabled;
     }
+
     private void askPermission() {
         Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                 Uri.parse("package:" + getPackageName()));
@@ -339,7 +364,7 @@ public class HomeOffline extends AppCompatActivity  {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d(TAG,"onStart");
+        Log.d(TAG, "onStart");
         stopService(new Intent(HomeOffline.this, FloatingViewService.class));
     }
 
@@ -347,22 +372,21 @@ public class HomeOffline extends AppCompatActivity  {
     protected void onDestroy() {
         super.onDestroy();
 
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-                startService(new Intent(HomeOffline.this, FloatingViewService.class));
-                finish();
-            } else if (Settings.canDrawOverlays(this)) {
-                startService(new Intent(HomeOffline.this, FloatingViewService.class));
-                finish();
-            } else {
-                askPermission();
-                Toast.makeText(this, "You need System Alert Window Permission to do this", Toast.LENGTH_SHORT).show();
-            }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            startService(new Intent(HomeOffline.this, FloatingViewService.class));
+            finish();
+        } else if (Settings.canDrawOverlays(this)) {
+            startService(new Intent(HomeOffline.this, FloatingViewService.class));
+            finish();
+        } else {
+            askPermission();
+            Toast.makeText(this, "You need System Alert Window Permission to do this", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
 
-
-    private List<String> numberWord(){
+    private List<String> numberWord() {
         List<String> word = new ArrayList<>();
         word.add("one");
 //        word.add("two");
@@ -375,7 +399,7 @@ public class HomeOffline extends AppCompatActivity  {
     private ActionBarDrawerToggle setupDrawerToggle() {
         // NOTE: Make sure you pass in a valid toolbar reference.  ActionBarDrawToggle() does not require it
         // and will not render the hamburger icon without it.
-        return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.navigation_open,  R.string.navigation_close);
+        return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.navigation_open, R.string.navigation_close);
     }
 
     @Override
@@ -398,47 +422,50 @@ public class HomeOffline extends AppCompatActivity  {
     }
 
 
-
     public void selectDrawerItem(MenuItem menuItem) {
 
 
-
         Intent i;
-        switch(menuItem.getItemId()) {
+        switch (menuItem.getItemId()) {
             case R.id.home:
-                 i = new Intent(HomeOffline.this,HomeOffline.class);
+                i = new Intent(HomeOffline.this, HomeOffline.class);
                 startActivity(i);
                 break;
             case R.id.my_wallet:
-                i = new Intent(HomeOffline.this,Wallet.class);
+                i = new Intent(HomeOffline.this, Wallet.class);
                 startActivity(i);
                 break;
             case R.id.travel_request:
-                i = new Intent(HomeOffline.this,TravelRequest.class);
+                i = new Intent(HomeOffline.this, TravelRequest.class);
                 startActivity(i);
                 break;
-//            case R.id.inter_city:
-//                i = new Intent(HomeOffline.this,InterCityRequests.class);
-//                startActivity(i);
-//                break;
+            case R.id.inter_city:
+                if (val.equals("0")) {
+                    nvDrawer.getMenu().getItem(0).setChecked(true);
+                    Toast.makeText(this, "Go to setting and switch on the Inter-State", Toast.LENGTH_SHORT).show();
+                } else if (val.equals("1")) {
+                    i = new Intent(HomeOffline.this, InterCityRequests.class);
+                    startActivity(i);
+                }
+                break;
             case R.id.history:
-                i = new Intent(HomeOffline.this,History.class);
+                i = new Intent(HomeOffline.this, History.class);
                 startActivity(i);
                 break;
             case R.id.notification_toolbar:
-                i = new Intent(HomeOffline.this,Notifications.class);
+                i = new Intent(HomeOffline.this, Notifications.class);
                 startActivity(i);
                 break;
             case R.id.invite_friends:
-                i = new Intent(HomeOffline.this,InviteFriends.class);
+                i = new Intent(HomeOffline.this, InviteFriends.class);
                 startActivity(i);
                 break;
             case R.id.setting:
-                i = new Intent(HomeOffline.this,Setting.class);
+                i = new Intent(HomeOffline.this, Setting.class);
                 startActivity(i);
                 break;
             case R.id.campaign_menu:
-                i = new Intent(HomeOffline.this,CampaignView.class);
+                i = new Intent(HomeOffline.this, CampaignView.class);
                 startActivity(i);
                 break;
 
@@ -469,6 +496,7 @@ public class HomeOffline extends AppCompatActivity  {
         drawerToggle.syncState();
     }
 
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -495,7 +523,7 @@ public class HomeOffline extends AppCompatActivity  {
 //                startActivity(new Intent(HomeOffline.this,HomeSwipeUp.class));
 //            }
 
-            return (distance>300)? true : false;
+            return (distance > 300) ? true : false;
         }
 
         @Override
@@ -561,12 +589,6 @@ public class HomeOffline extends AppCompatActivity  {
 //    }
 
 
-
-
-
-
-
-
     public void status() {
         RequestStatus requestStatus = new RequestStatus();
         requestStatus.setId(getClientId(context));
@@ -577,9 +599,8 @@ public class HomeOffline extends AppCompatActivity  {
             @Override
             public void onResponse(Call<ResponseStatus> call, Response<ResponseStatus> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(HomeOffline.this, ""+response.body().message, Toast.LENGTH_SHORT).show();
-                    if (response.body().message.equals("1"))
-                    {
+                    Toast.makeText(HomeOffline.this, "" + response.body().message, Toast.LENGTH_SHORT).show();
+                    if (response.body().message.equals("1")) {
                         Toast.makeText(HomeOffline.this, "You are online", Toast.LENGTH_LONG).show();
                         Rules exitDialog = new Rules(HomeOffline.this);
                         exitDialog.show();
@@ -599,8 +620,7 @@ public class HomeOffline extends AppCompatActivity  {
                         stackView.setListener(yourListner);
                         floatingActionButton.setVisibility(View.GONE);
                         floatingActionButton_online.setVisibility(View.VISIBLE);
-                    }
-                    else{
+                    } else {
                         Toast.makeText(HomeOffline.this, "You are offline", Toast.LENGTH_LONG).show();
                         // The toggle is disabled
                         homeOffline.setVisibility(View.VISIBLE);

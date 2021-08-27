@@ -3,6 +3,9 @@ package com.example.task.API;
 import com.example.task.AllNotificiationFiles.UserServiceAllNotification;
 import com.example.task.FilesLogin.UserServiceSiginIn;
 import com.example.task.FilesSignUp.UserServiceSignUp;
+import com.example.task.InterCityNegotiate.UserServiceRideNegotiateInterCity;
+import com.example.task.InterCityRequest.UserServiceInterCityRideRequest;
+import com.example.task.InterCityRequestAccept.UserServiceRideAcceptInterCity;
 import com.example.task.NotificationFiles.UserServiceNotification;
 import com.example.task.RideAcceptFiles.UserServiceRideAccept;
 import com.example.task.RideNegotiate.UserServiceRideNegotiate;
@@ -56,15 +59,28 @@ public class ApiClass {
         UserServiceRideRequest userServiceStatus =getRetrofit().create(UserServiceRideRequest.class);
         return userServiceStatus;
     }
+    public static UserServiceInterCityRideRequest getUserServiceInterCityRideRequest(){
+        UserServiceInterCityRideRequest userServiceInterCityRideRequest =getRetrofit().create(UserServiceInterCityRideRequest.class);
+        return userServiceInterCityRideRequest;
+    }
 
     public static UserServiceRideAccept getUserServiceRideAccept(){
         UserServiceRideAccept userServiceRideAccept =getRetrofit().create(UserServiceRideAccept.class);
         return userServiceRideAccept;
     }
+    public static UserServiceRideAcceptInterCity getUserServiceRideAcceptInterCity(){
+        UserServiceRideAcceptInterCity userServiceRideAcceptInterCity =getRetrofit().create(UserServiceRideAcceptInterCity.class);
+        return userServiceRideAcceptInterCity;
+    }
 
     public static UserServiceRideNegotiate getUserServiceRideNegotiate(){
         UserServiceRideNegotiate userServiceRideNegotiate =getRetrofit().create(UserServiceRideNegotiate.class);
         return userServiceRideNegotiate;
+    }
+
+    public static UserServiceRideNegotiateInterCity getUserServiceRideNegotiateInterCity(){
+        UserServiceRideNegotiateInterCity userServiceRideNegotiateInterCity =getRetrofit().create(UserServiceRideNegotiateInterCity.class);
+        return userServiceRideNegotiateInterCity;
     }
 
     public static UserServiceNotification getUserServiceNotification(){

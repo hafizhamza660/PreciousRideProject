@@ -1,7 +1,9 @@
 package com.example.task;
 
 import static com.example.task.Session.SaveSharedPreference.getFirstName;
+import static com.example.task.Session.SaveSharedPreference.getInterCity;
 import static com.example.task.Session.SaveSharedPreference.getLastName;
+import static com.example.task.Session.SaveSharedPreference.setInterCity;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +18,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +37,7 @@ RelativeLayout container_2,currency_button,bank_button,campaign_button;
     private ActionBarDrawerToggle drawerToggle;
     TextView name;
     Context context;
+    Switch intercityswtich;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,6 +106,29 @@ RelativeLayout container_2,currency_button,bank_button,campaign_button;
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Setting.this,PaymentMethod.class));
+            }
+        });
+
+        intercityswtich = findViewById(R.id.intercityswitchbtn);
+
+        String val = getInterCity(context);
+        if (val.equals("0"))
+        {
+            intercityswtich.setChecked(false);
+        }
+        else if (val.equals("1"))
+        {
+            intercityswtich.setChecked(true);
+        }
+
+        intercityswtich.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    setInterCity(context,"1");
+                } else {
+                    setInterCity(context,"0");
+                }
             }
         });
 

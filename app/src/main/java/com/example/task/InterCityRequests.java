@@ -5,10 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -16,22 +20,39 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.example.task.API.ApiClass;
+import com.example.task.InterCityRequest.InterCityRideRequestResponse;
+import com.example.task.RideRequestFiles.Data;
+import com.example.task.RideRequestFiles.RideRequestResponse;
+import com.example.task.adapters.InterCityRideRequestListAdapter;
+import com.example.task.adapters.RideRequestListAdapter;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class InterCityRequests extends AppCompatActivity {
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer;
     private ActionBarDrawerToggle drawerToggle;
-
-    Button accept_btn_1,accept_btn_2,accept_btn_3,accept_btn_4,accept_btn_5,accept_btn_6;
-    CardView card_offer_1,card_offer_2,card_offer_3,card_offer_4,card_offer_5,card_offer_6;
+    InterCityRequests activity;
+    Context context;
+    RecyclerView recyclerViewRideRequest;
+    LinearLayoutManager linearLayoutManager;
+    private InterCityRideRequestListAdapter rideRequestListAdapter;
+    private List<Data> dataList;
     Switch switchbtn;
     public static final String TAG ="HomeONline";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inter_city_requests);
+        activity = this;
+        context = this;
         /*ToolBar With NavBar*/
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -67,129 +88,9 @@ public class InterCityRequests extends AppCompatActivity {
 
         /*ToolBar With NavBar End*/
         nvDrawer.getMenu().getItem(3).setChecked(true);
-        card_offer_1 = findViewById(R.id.card_offer_1);
-        card_offer_2 = findViewById(R.id.card_offer_2);
-        card_offer_3 = findViewById(R.id.card_offer_3);
-        card_offer_4 = findViewById(R.id.card_offer_4);
-        card_offer_5 = findViewById(R.id.card_offer_5);
-        card_offer_6 = findViewById(R.id.card_offer_6);
-        accept_btn_1 = findViewById(R.id.accept_btn_1);
-        accept_btn_2 = findViewById(R.id.accept_btn_2);
-        accept_btn_3 = findViewById(R.id.accept_btn_3);
-        accept_btn_4 = findViewById(R.id.accept_btn_4);
-        accept_btn_5 = findViewById(R.id.accept_btn_5);
-        accept_btn_6 = findViewById(R.id.accept_btn_6);
+
         switchbtn = findViewById(R.id.switchbtn);
-        card_offer_1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                accept_btn_1.setVisibility(View.VISIBLE);
-                accept_btn_2.setVisibility(View.GONE);
-                accept_btn_3.setVisibility(View.GONE);
-                accept_btn_4.setVisibility(View.GONE);
-                accept_btn_5.setVisibility(View.GONE);
-                accept_btn_6.setVisibility(View.GONE);
-            }
-        });
 
-        card_offer_2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                accept_btn_1.setVisibility(View.GONE);
-                accept_btn_2.setVisibility(View.VISIBLE);
-                accept_btn_3.setVisibility(View.GONE);
-                accept_btn_4.setVisibility(View.GONE);
-                accept_btn_5.setVisibility(View.GONE);
-                accept_btn_6.setVisibility(View.GONE);
-            }
-        });
-
-        card_offer_3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                accept_btn_1.setVisibility(View.GONE);
-                accept_btn_2.setVisibility(View.GONE);
-                accept_btn_3.setVisibility(View.VISIBLE);
-                accept_btn_4.setVisibility(View.GONE);
-                accept_btn_5.setVisibility(View.GONE);
-                accept_btn_6.setVisibility(View.GONE);
-            }
-        });
-
-        card_offer_4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                accept_btn_1.setVisibility(View.GONE);
-                accept_btn_2.setVisibility(View.GONE);
-                accept_btn_3.setVisibility(View.GONE);
-                accept_btn_4.setVisibility(View.VISIBLE);
-                accept_btn_5.setVisibility(View.GONE);
-                accept_btn_6.setVisibility(View.GONE);
-            }
-        });
-
-        card_offer_5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                accept_btn_1.setVisibility(View.GONE);
-                accept_btn_2.setVisibility(View.GONE);
-                accept_btn_3.setVisibility(View.GONE);
-                accept_btn_4.setVisibility(View.GONE);
-                accept_btn_5.setVisibility(View.VISIBLE);
-                accept_btn_6.setVisibility(View.GONE);
-            }
-        });
-
-        card_offer_6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                accept_btn_1.setVisibility(View.GONE);
-                accept_btn_2.setVisibility(View.GONE);
-                accept_btn_3.setVisibility(View.GONE);
-                accept_btn_4.setVisibility(View.GONE);
-                accept_btn_5.setVisibility(View.GONE);
-                accept_btn_6.setVisibility(View.VISIBLE);
-            }
-        });
-
-
-
-        accept_btn_1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(InterCityRequests.this, HomeOnlineBookingDetails.class));
-            }
-        });
-        accept_btn_2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(InterCityRequests.this, HomeOnlineBookingDetails.class));
-            }
-        });
-        accept_btn_3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(InterCityRequests.this, HomeOnlineBookingDetails.class));
-            }
-        });
-        accept_btn_4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(InterCityRequests.this, HomeOnlineBookingDetails.class));
-            }
-        });
-        accept_btn_5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(InterCityRequests.this, HomeOnlineBookingDetails.class));
-            }
-        });
-        accept_btn_6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(InterCityRequests.this, HomeOnlineBookingDetails.class));
-            }
-        });
 
 
         switchbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -201,6 +102,12 @@ public class InterCityRequests extends AppCompatActivity {
                 }
             }
         });
+
+        recyclerViewRideRequest = findViewById(R.id.recycler_view_rideRequest);
+        linearLayoutManager = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false);
+        recyclerViewRideRequest.setLayoutManager(linearLayoutManager);
+
+        riderequest();
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
@@ -292,5 +199,38 @@ public class InterCityRequests extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggles
         drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+
+    public void riderequest() {
+
+
+        Call<InterCityRideRequestResponse> signUpResponseCall = ApiClass.getUserServiceInterCityRideRequest().userLogin();
+        signUpResponseCall.enqueue(new Callback<InterCityRideRequestResponse>() {
+            @Override
+            public void onResponse(Call<InterCityRideRequestResponse> call, Response<InterCityRideRequestResponse> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(InterCityRequests.this, ""+response.body().data, Toast.LENGTH_LONG).show();
+//                    Log.d(TAG,"Data : "+response.body().data.get(0).id);
+                    if (response.body().data.equals(null))
+                    {
+
+                    }
+                    else {
+                        rideRequestListAdapter = new InterCityRideRequestListAdapter(activity, context, response.body().data);
+                        recyclerViewRideRequest.setAdapter(rideRequestListAdapter);
+                    }
+//
+                } else {
+                    Toast.makeText(InterCityRequests.this, "Register Not Successfull", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<InterCityRideRequestResponse> call, Throwable t) {
+                Toast.makeText(InterCityRequests.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
+                Log.d("TAG", "Error " + t);
+            }
+        });
     }
 }

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/home"
+            android:title="Home"
+            android:icon="@drawable/ic_home"
+            android:iconTint="@color/icon_toolbar_color"
+            />
+        <item
+            android:id="@+id/my_wallet"
+            android:title="My Wallet"
+            android:icon="@drawable/wallet"
+            android:iconTint="@color/icon_toolbar_color"
+            />
+        <item
+            android:id="@+id/travel_request"
+            android:title="Travel Request"
+            android:icon="@drawable/ic_travel"
+            android:iconTint="@color/icon_toolbar_color"
+            />
+
+
+        <item
+            android:id="@+id/inter_city"
+            android:title="Inter State Request"
+            android:icon="@drawable/ic_city_travel"
+            android:iconTint="@color/icon_toolbar_color"
+            />
+        <item
+            android:id="@+id/history"
+            android:title="History"
+            android:icon="@drawable/ic_history"
+            android:iconTint="@color/icon_toolbar_color"
+            />
+        <item
+            android:id="@+id/notification_toolbar"
+            android:title="Notification"
+            android:icon="@drawable/notification"
+            android:iconTint="@color/icon_toolbar_color"
+            />
+        <item
+            android:id="@+id/invite_friends"
+            android:title="Invite Friends"
+            android:icon="@drawable/invite_friend"
+            android:iconTint="@color/icon_toolbar_color"
+            />
+        <item
+            android:id="@+id/setting"
+            android:title="Setting"
+            android:icon="@drawable/setting"
+            android:iconTint="@color/icon_toolbar_color"
+            />
+
+        <item
+            android:id="@+id/campaign_menu"
+            android:title="Campaign"
+            android:icon="@drawable/ic_campaign"
+            android:iconTint="@color/icon_toolbar_color"
+            />
+        <item
+            android:id="@+id/logout"
+            android:title="Logout"
+            android:icon="@drawable/logout"
+            android:iconTint="@color/icon_toolbar_color"
+            />
+    </group>
+</menu>

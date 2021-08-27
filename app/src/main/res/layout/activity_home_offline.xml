@@ -202,6 +202,16 @@
         android:layout_gravity="start"
         app:itemTextColor="@color/nav_selection_define"
         app:itemIconTint="@color/nav_selection_define"
-        app:menu="@menu/main_menu"
+        app:menu="@menu/main_menu_inter_city"
         app:headerLayout="@layout/header_toolbar" />
+<!--    <com.google.android.material.navigation.NavigationView-->
+<!--        android:id="@+id/nvView2"-->
+<!--        android:visibility="gone"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_gravity="start"-->
+<!--        app:itemTextColor="@color/nav_selection_define"-->
+<!--        app:itemIconTint="@color/nav_selection_define"-->
+<!--        app:menu="@menu/main_menu_inter_city"-->
+<!--        app:headerLayout="@layout/header_toolbar" />-->
 </androidx.drawerlayout.widget.DrawerLayout>
