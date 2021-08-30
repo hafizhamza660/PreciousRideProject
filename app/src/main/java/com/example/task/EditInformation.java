@@ -89,7 +89,7 @@ public class EditInformation extends AppCompatActivity {
     }
 
     public void updateinfo(String first_name,String last_name) {
-        Toast.makeText(this, ""+first_name+"\n"+last_name, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, ""+first_name+"\n"+last_name, Toast.LENGTH_SHORT).show();
         RequestUpdate requestUpdate = new RequestUpdate();
         requestUpdate.setId(getClientId(context));
         requestUpdate.setF_name(first_name);
@@ -120,7 +120,7 @@ public class EditInformation extends AppCompatActivity {
                         setEmail(context,email);
                         setCity(context,city);
 
-                        Toast.makeText(EditInformation.this, ""+"\n"+getFirstName(context)+"\n"+getCity(context)+"\n"+getLastName(context)+"\n"+getEmail(context)+"\n"+getClientId(context)+"\n"+getMobileNumber(context), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(EditInformation.this, ""+"\n"+getFirstName(context)+"\n"+getCity(context)+"\n"+getLastName(context)+"\n"+getEmail(context)+"\n"+getClientId(context)+"\n"+getMobileNumber(context), Toast.LENGTH_SHORT).show();
                     }
 
                 } else {
@@ -130,7 +130,7 @@ public class EditInformation extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseUpdate> call, Throwable t) {
-                Toast.makeText(EditInformation.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(EditInformation.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
             }
         });

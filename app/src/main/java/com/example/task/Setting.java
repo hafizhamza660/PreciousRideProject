@@ -1,5 +1,7 @@
 package com.example.task;
 
+import static com.example.task.Session.SaveSharedPreference.clearClientId;
+import static com.example.task.Session.SaveSharedPreference.getClientId;
 import static com.example.task.Session.SaveSharedPreference.getFirstName;
 import static com.example.task.Session.SaveSharedPreference.getInterCity;
 import static com.example.task.Session.SaveSharedPreference.getLastName;
@@ -14,6 +16,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,9 +27,16 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.task.API.ApiClass;
 import com.example.task.Dialog.CurrencySelection;
 import com.example.task.Dialog.Rules;
+import com.example.task.LogoutStatusFiles.RequestLogoutStatus;
+import com.example.task.LogoutStatusFiles.ResponseLogoutStatus;
 import com.google.android.material.navigation.NavigationView;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Setting extends AppCompatActivity {
 RelativeLayout container_2,currency_button,bank_button,campaign_button;
@@ -38,6 +48,7 @@ RelativeLayout container_2,currency_button,bank_button,campaign_button;
     TextView name;
     Context context;
     Switch intercityswtich;
+    String val;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,7 +122,7 @@ RelativeLayout container_2,currency_button,bank_button,campaign_button;
 
         intercityswtich = findViewById(R.id.intercityswitchbtn);
 
-        String val = getInterCity(context);
+        val = getInterCity(context);
         if (val.equals("0"))
         {
             intercityswtich.setChecked(false);
@@ -195,42 +206,64 @@ RelativeLayout container_2,currency_button,bank_button,campaign_button;
             case R.id.home:
                 i = new Intent(Setting.this,HomeOffline.class);
                 startActivity(i);
+                finish();
                 break;
             case R.id.my_wallet:
                 i = new Intent(Setting.this,Wallet.class);
                 startActivity(i);
+                finish();
                 break;
             case R.id.travel_request:
                 i = new Intent(Setting.this,TravelRequest.class);
                 startActivity(i);
+                finish();
                 break;
-//            case R.id.inter_city:
-//                i = new Intent(Setting.this,InterCityRequests.class);
-//                startActivity(i);
-//                break;
+            case R.id.inter_city:
+                if (val.equals("0")) {
+                    nvDrawer.getMenu().getItem(0).setChecked(true);
+                    Toast.makeText(this, "Go to setting and switch on the Inter-State", Toast.LENGTH_SHORT).show();
+                } else if (val.equals("1")) {
+                    i = new Intent(Setting.this, InterCityRequests.class);
+                    startActivity(i);
+                    finish();
+                }
+                break;
             case R.id.history:
                 i = new Intent(Setting.this,History.class);
                 startActivity(i);
+                finish();
                 break;
             case R.id.notification_toolbar:
                 i = new Intent(Setting.this,Notifications.class);
                 startActivity(i);
+                finish();
                 break;
             case R.id.invite_friends:
                 i = new Intent(Setting.this,InviteFriends.class);
                 startActivity(i);
+                finish();
                 break;
             case R.id.setting:
-                i = new Intent(Setting.this,Setting.class);
-                startActivity(i);
+//                i = new Intent(Setting.this,Setting.class);
+//                startActivity(i);
+                Toast.makeText(this, "Already in that tab", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.campaign_menu:
                 i = new Intent(Setting.this,CampaignView.class);
                 startActivity(i);
+                finish();
+                break;
+
+            case R.id.logout:
+                logoutstatus();
+                clearClientId(context);
+                i = new Intent(Setting.this, WelcomeScreen.class);
+                startActivity(i);
+                finish();
                 break;
 
             default:
-                Toast.makeText(this, "Coming Soon...", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Coming Soon...", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -254,5 +287,37 @@ RelativeLayout container_2,currency_button,bank_button,campaign_button;
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggles
         drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    public void logoutstatus() {
+        RequestLogoutStatus requestLogoutStatus = new RequestLogoutStatus();
+        requestLogoutStatus.setDriver_id(getClientId(context));
+
+
+        Call<ResponseLogoutStatus> signUpResponseCall = ApiClass.getUserServiceLogoutStatus().userLogin(requestLogoutStatus);
+        signUpResponseCall.enqueue(new Callback<ResponseLogoutStatus>() {
+            @Override
+            public void onResponse(Call<ResponseLogoutStatus> call, Response<ResponseLogoutStatus> response) {
+                if (response.isSuccessful()) {
+//                    Toast.makeText(Setting.this, "" + response.body().message, Toast.LENGTH_SHORT).show();
+                    if (response.body().message.equals("1")) {
+//                        Toast.makeText(Setting.this, "You are online", Toast.LENGTH_LONG).show();
+
+                    } else {
+                        Toast.makeText(Setting.this, "Logout", Toast.LENGTH_LONG).show();
+
+                    }
+
+                } else {
+                    Toast.makeText(Setting.this, "Request Denied", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseLogoutStatus> call, Throwable t) {
+//                Toast.makeText(Setting.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
+                Log.d("TAG", "Error " + t);
+            }
+        });
     }
 }

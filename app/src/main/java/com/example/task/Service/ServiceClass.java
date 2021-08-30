@@ -116,13 +116,13 @@ public class ServiceClass extends Service {
                     }
 
                 } else {
-                    Toast.makeText(ServiceClass.this, "Login Not Successfull", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(ServiceClass.this, "Login Not Successfull", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<NotificationResponse> call, Throwable t) {
-                Toast.makeText(ServiceClass.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(ServiceClass.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
             }
         });

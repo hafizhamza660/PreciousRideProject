@@ -8,12 +8,15 @@ import static com.example.task.Session.SaveSharedPreference.getFirstName;
 import static com.example.task.Session.SaveSharedPreference.getInterCity;
 import static com.example.task.Session.SaveSharedPreference.getLastName;
 import static com.example.task.Session.SaveSharedPreference.getMobileNumber;
+
+import static com.example.task.Session.SaveSharedPreference.getStatus;
 import static com.example.task.Session.SaveSharedPreference.setCity;
 import static com.example.task.Session.SaveSharedPreference.setClientId;
 import static com.example.task.Session.SaveSharedPreference.setEmail;
 import static com.example.task.Session.SaveSharedPreference.setFirstName;
 import static com.example.task.Session.SaveSharedPreference.setLastName;
 import static com.example.task.Session.SaveSharedPreference.setMobileNumber;
+import static com.example.task.Session.SaveSharedPreference.setStatus;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -55,6 +58,8 @@ import com.example.task.Dialog.Rules;
 import com.example.task.FilesLogin.RequestLogin;
 import com.example.task.FilesLogin.ResponseLogin;
 import com.example.task.Floating.FloatingViewService;
+import com.example.task.LogoutStatusFiles.RequestLogoutStatus;
+import com.example.task.LogoutStatusFiles.ResponseLogoutStatus;
 import com.example.task.Service.ServiceClass;
 import com.example.task.Session.SaveSharedPreference;
 import com.example.task.StatusFiles.RequestStatus;
@@ -91,6 +96,7 @@ public class HomeOffline extends AppCompatActivity {
     ImageView minus_range, add_range;
     TextView km_range, id_name;
     Context context;
+    String status_s;
 
     public static final String TAG = "HomeONline";
     //    public int counter;
@@ -283,13 +289,38 @@ public class HomeOffline extends AppCompatActivity {
                 }
             });
 
+             status_s = getStatus(context);
+            Toast.makeText(this, "Status: "+status_s, Toast.LENGTH_SHORT).show();
+            if (status_s.equals("0"))
+            {
+                switchbtn.setChecked(false);
+            }
+            else if (status_s.equals("1"))
+            {
+                switchbtn.setChecked(true);
+                homeOffline.setVisibility(View.GONE);
+                bottomSheetLayout.setVisibility(View.GONE);
+                homeOnline.setVisibility(View.VISIBLE);
+                toolbar_title.setText("Online");
+                StackAdapter adapter = new StackAdapter(numberWord(), HomeOffline.this, R.layout.item_stack);
+
+                stackView.setAdapter(adapter);
+                YourListner yourListner = new YourListner();
+                stackView.setListener(yourListner);
+                floatingActionButton.setVisibility(View.GONE);
+                floatingActionButton_online.setVisibility(View.VISIBLE);
+            }
 
             switchbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
+                        setStatus(context,"1");
+                        status_s = "1";
                         status();
                     } else {
+                        setStatus(context,"0");
+                        status_s = "0";
                         status();
                     }
                 }
@@ -428,16 +459,22 @@ public class HomeOffline extends AppCompatActivity {
         Intent i;
         switch (menuItem.getItemId()) {
             case R.id.home:
-                i = new Intent(HomeOffline.this, HomeOffline.class);
-                startActivity(i);
+//                i = new Intent(HomeOffline.this, HomeOffline.class);
+//                startActivity(i);
+                Toast.makeText(this, "Already in that tab", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.my_wallet:
                 i = new Intent(HomeOffline.this, Wallet.class);
                 startActivity(i);
                 break;
             case R.id.travel_request:
-                i = new Intent(HomeOffline.this, TravelRequest.class);
-                startActivity(i);
+                if (status_s.equals("0")) {
+                    nvDrawer.getMenu().getItem(0).setChecked(true);
+                    Toast.makeText(this, "Go Online First", Toast.LENGTH_SHORT).show();
+                } else if (status_s.equals("1")) {
+                    i = new Intent(HomeOffline.this, TravelRequest.class);
+                    startActivity(i);
+                }
                 break;
             case R.id.inter_city:
                 if (val.equals("0")) {
@@ -470,6 +507,7 @@ public class HomeOffline extends AppCompatActivity {
                 break;
 
             case R.id.logout:
+                logoutstatus();
                 clearClientId(context);
                 i = new Intent(HomeOffline.this, WelcomeScreen.class);
                 startActivity(i);
@@ -477,7 +515,7 @@ public class HomeOffline extends AppCompatActivity {
                 break;
 
             default:
-                Toast.makeText(this, "Coming Soon...", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Coming Soon...", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -599,7 +637,7 @@ public class HomeOffline extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseStatus> call, Response<ResponseStatus> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(HomeOffline.this, "" + response.body().message, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(HomeOffline.this, "" + response.body().message, Toast.LENGTH_SHORT).show();
                     if (response.body().message.equals("1")) {
                         Toast.makeText(HomeOffline.this, "You are online", Toast.LENGTH_LONG).show();
                         Rules exitDialog = new Rules(HomeOffline.this);
@@ -639,7 +677,41 @@ public class HomeOffline extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseStatus> call, Throwable t) {
-                Toast.makeText(HomeOffline.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(HomeOffline.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
+                Log.d("TAG", "Error " + t);
+            }
+        });
+    }
+
+
+
+    public void logoutstatus() {
+        RequestLogoutStatus requestLogoutStatus = new RequestLogoutStatus();
+        requestLogoutStatus.setDriver_id(getClientId(context));
+
+
+        Call<ResponseLogoutStatus> signUpResponseCall = ApiClass.getUserServiceLogoutStatus().userLogin(requestLogoutStatus);
+        signUpResponseCall.enqueue(new Callback<ResponseLogoutStatus>() {
+            @Override
+            public void onResponse(Call<ResponseLogoutStatus> call, Response<ResponseLogoutStatus> response) {
+                if (response.isSuccessful()) {
+//                    Toast.makeText(HomeOffline.this, "" + response.body().message, Toast.LENGTH_SHORT).show();
+                    if (response.body().message.equals("1")) {
+                        Toast.makeText(HomeOffline.this, "You are online", Toast.LENGTH_LONG).show();
+
+                    } else {
+                        Toast.makeText(HomeOffline.this, "Logout", Toast.LENGTH_LONG).show();
+
+                    }
+
+                } else {
+                    Toast.makeText(HomeOffline.this, "Request Denied", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseLogoutStatus> call, Throwable t) {
+//                Toast.makeText(HomeOffline.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
             }
         });

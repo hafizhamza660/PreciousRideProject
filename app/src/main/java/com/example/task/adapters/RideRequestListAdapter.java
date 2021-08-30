@@ -82,6 +82,15 @@ public class RideRequestListAdapter extends RecyclerView.Adapter<RideRequestList
         holder.dropoff_location.setText(dropoff);
         holder.price.setText(data.price);
 
+        if(data.negotiated_price==null)
+        {
+
+        }
+        else{
+            holder.nego_price.setText(data.negotiated_price);
+            holder.nego_price.setVisibility(View.VISIBLE);
+        }
+
         holder.card_offer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,7 +99,29 @@ public class RideRequestListAdapter extends RecyclerView.Adapter<RideRequestList
                 }
                 else
                 {
-                    holder.nego_layout.setVisibility(View.VISIBLE);
+                    if (data.status.equals("REQUESTED")) {
+
+                        if (data.negotiated_price==null)
+                        {
+                            holder.nego_layout.setVisibility(View.VISIBLE);
+                        }
+                        else {
+                            holder.nego_layout.setVisibility(View.VISIBLE);
+                            holder.negotiate_btn.setVisibility(View.GONE);
+//                            holder.accept_btn.setVisibility(View.GONE);
+                        }
+
+                    }
+                    else if (data.status.equals("ACCEPTED")) {
+                        holder.nego_layout.setVisibility(View.GONE);
+//                        holder.negotiate_btn.setVisibility(View.GONE);
+//                        holder.accept_btn.setVisibility(View.GONE);
+                    }
+                    else {
+                        holder.nego_layout.setVisibility(View.VISIBLE);
+                    }
+
+
                 }
 
             }
@@ -132,7 +163,7 @@ public class RideRequestListAdapter extends RecyclerView.Adapter<RideRequestList
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView pickup_location,dropoff_location,price;
+        TextView pickup_location,dropoff_location,price,nego_price;
         LinearLayout nego_layout,nego_enter_layout;
         Button negotiate_btn,accept_btn,enter_btn;
         CardView card_offer;
@@ -149,6 +180,7 @@ public class RideRequestListAdapter extends RecyclerView.Adapter<RideRequestList
             nego_enter_layout = itemView.findViewById(R.id.nego_enter_layout);
             enter_btn = itemView.findViewById(R.id.enter_btn);
             negotiate_edt = itemView.findViewById(R.id.negotiate_edt);
+            nego_price = itemView.findViewById(R.id.nego_price);
         }
     }
 
@@ -204,7 +236,7 @@ public class RideRequestListAdapter extends RecyclerView.Adapter<RideRequestList
 
             @Override
             public void onFailure(Call<ResponseRideAccept> call, Throwable t) {
-                Toast.makeText(context, "Throwable " + t, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
             }
         });
@@ -242,7 +274,7 @@ public class RideRequestListAdapter extends RecyclerView.Adapter<RideRequestList
 
             @Override
             public void onFailure(Call<ResponseRideNegotiate> call, Throwable t) {
-                Toast.makeText(context, "Throwable " + t, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
             }
         });

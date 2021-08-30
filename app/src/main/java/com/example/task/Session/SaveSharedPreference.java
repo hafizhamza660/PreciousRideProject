@@ -12,6 +12,7 @@ public class SaveSharedPreference {
     static final String PREF_EMAIL= "abc@gmail.com";
     static final String PREF_CITY= "name";
     static final String PREF_INTER_CITY= "0";
+    static final String PREF_STATUS= "Nothing";
 
     static SharedPreferences getSharedPreferences(Context ctx) {
         return PreferenceManager.getDefaultSharedPreferences(ctx);
@@ -66,6 +67,13 @@ public class SaveSharedPreference {
         editor.commit();
     }
 
+    public static void setStatus(Context ctx,String status)
+    {
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putString(PREF_STATUS, status);
+        editor.commit();
+    }
+
     public static String getClientId(Context ctx)
     {
         return getSharedPreferences(ctx).getString(PREF_USER_ID, "");
@@ -99,6 +107,10 @@ public class SaveSharedPreference {
     public static String getInterCity(Context ctx)
     {
         return getSharedPreferences(ctx).getString(PREF_INTER_CITY, "");
+    }
+    public static String getStatus(Context ctx)
+    {
+        return getSharedPreferences(ctx).getString(PREF_STATUS, "");
     }
 
     public static void clearClientId(Context ctx)

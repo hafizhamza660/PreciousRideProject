@@ -44,5 +44,6 @@ public class VehicleManagement extends AppCompatActivity {
 
     public void add_vehicle_document(View view) {
         startActivity(new Intent(VehicleManagement.this,AddVehicleManagement.class));
+
     }
 }

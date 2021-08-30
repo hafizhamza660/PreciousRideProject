@@ -1,5 +1,9 @@
 package com.example.task;
 
+import static com.example.task.Session.SaveSharedPreference.clearClientId;
+import static com.example.task.Session.SaveSharedPreference.getClientId;
+import static com.example.task.Session.SaveSharedPreference.getInterCity;
+
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -22,6 +26,8 @@ import android.widget.Toast;
 
 import com.example.task.API.ApiClass;
 import com.example.task.InterCityRequest.InterCityRideRequestResponse;
+import com.example.task.LogoutStatusFiles.RequestLogoutStatus;
+import com.example.task.LogoutStatusFiles.ResponseLogoutStatus;
 import com.example.task.RideRequestFiles.Data;
 import com.example.task.RideRequestFiles.RideRequestResponse;
 import com.example.task.adapters.InterCityRideRequestListAdapter;
@@ -47,6 +53,7 @@ public class InterCityRequests extends AppCompatActivity {
     private List<Data> dataList;
     Switch switchbtn;
     public static final String TAG ="HomeONline";
+    String val;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +66,7 @@ public class InterCityRequests extends AppCompatActivity {
         setSupportActionBar(toolbar);
         setTitle("");
 //        defaultScreen();
-
+        val = getInterCity(context);
 
 
         // This will display an Up icon (<-), we will replace it with hamburger later
@@ -117,6 +124,12 @@ public class InterCityRequests extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        val = getInterCity(context);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
@@ -144,38 +157,56 @@ public class InterCityRequests extends AppCompatActivity {
             case R.id.home:
                 i = new Intent(InterCityRequests.this,HomeOffline.class);
                 startActivity(i);
+                finish();
                 break;
             case R.id.my_wallet:
                 i = new Intent(InterCityRequests.this,Wallet.class);
                 startActivity(i);
+                finish();
                 break;
             case R.id.travel_request:
-                i = new Intent(InterCityRequests.this,HomeSwipeUp.class);
+                i = new Intent(InterCityRequests.this,TravelRequest.class);
                 startActivity(i);
+                finish();
                 break;
-//            case R.id.inter_city:
-//                i = new Intent(InterCityRequests.this,InterCityRequests.class);
-//                startActivity(i);
-//                break;
+            case R.id.inter_city:
+                Toast.makeText(this, "Already In Inter-City Tab", Toast.LENGTH_SHORT).show();
+                break;
             case R.id.history:
                 i = new Intent(InterCityRequests.this,History.class);
                 startActivity(i);
+                finish();
                 break;
             case R.id.notification_toolbar:
                 i = new Intent(InterCityRequests.this,Notifications.class);
                 startActivity(i);
+                finish();
                 break;
             case R.id.invite_friends:
                 i = new Intent(InterCityRequests.this,InviteFriends.class);
                 startActivity(i);
+                finish();
                 break;
             case R.id.setting:
                 i = new Intent(InterCityRequests.this,Setting.class);
                 startActivity(i);
+                finish();
+                break;
+            case R.id.campaign_menu:
+                i = new Intent(InterCityRequests.this,CampaignView.class);
+                startActivity(i);
+                finish();
+                break;
+            case R.id.logout:
+                logoutstatus();
+                clearClientId(context);
+                i = new Intent(InterCityRequests.this, WelcomeScreen.class);
+                startActivity(i);
+                finish();
                 break;
 
             default:
-                Toast.makeText(this, "Coming Soon...", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Coming Soon...", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -210,7 +241,7 @@ public class InterCityRequests extends AppCompatActivity {
             @Override
             public void onResponse(Call<InterCityRideRequestResponse> call, Response<InterCityRideRequestResponse> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(InterCityRequests.this, ""+response.body().data, Toast.LENGTH_LONG).show();
+//                    Toast.makeText(InterCityRequests.this, ""+response.body().data, Toast.LENGTH_LONG).show();
 //                    Log.d(TAG,"Data : "+response.body().data.get(0).id);
                     if (response.body().data.equals(null))
                     {
@@ -222,13 +253,46 @@ public class InterCityRequests extends AppCompatActivity {
                     }
 //
                 } else {
-                    Toast.makeText(InterCityRequests.this, "Register Not Successfull", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(InterCityRequests.this, "Not Successful", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<InterCityRideRequestResponse> call, Throwable t) {
-                Toast.makeText(InterCityRequests.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(InterCityRequests.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
+                Log.d("TAG", "Error " + t);
+            }
+        });
+    }
+
+
+    public void logoutstatus() {
+        RequestLogoutStatus requestLogoutStatus = new RequestLogoutStatus();
+        requestLogoutStatus.setDriver_id(getClientId(context));
+
+
+        Call<ResponseLogoutStatus> signUpResponseCall = ApiClass.getUserServiceLogoutStatus().userLogin(requestLogoutStatus);
+        signUpResponseCall.enqueue(new Callback<ResponseLogoutStatus>() {
+            @Override
+            public void onResponse(Call<ResponseLogoutStatus> call, Response<ResponseLogoutStatus> response) {
+                if (response.isSuccessful()) {
+//                    Toast.makeText(InterCityRequests.this, "" + response.body().message, Toast.LENGTH_SHORT).show();
+                    if (response.body().message.equals("1")) {
+                        Toast.makeText(InterCityRequests.this, "You are online", Toast.LENGTH_LONG).show();
+
+                    } else {
+                        Toast.makeText(InterCityRequests.this, "Logout", Toast.LENGTH_LONG).show();
+
+                    }
+
+                } else {
+                    Toast.makeText(InterCityRequests.this, "Request Denied", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseLogoutStatus> call, Throwable t) {
+//                Toast.makeText(InterCityRequests.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
             }
         });

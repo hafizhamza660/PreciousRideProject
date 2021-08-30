@@ -188,7 +188,7 @@ public class SignUp extends AppCompatActivity {
 //                    Intent intent = new Intent(getActivity(), PhoneVerification.class);
 //                    startActivity(intent);
                 } else {
-                    Toast.makeText(SignUp.this, "Register Not Successfull", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignUp.this, "API not Hit", Toast.LENGTH_SHORT).show();
                 }
             }
 

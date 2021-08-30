@@ -94,7 +94,27 @@ public class InterCityRideRequestListAdapter extends RecyclerView.Adapter<InterC
                 }
                 else
                 {
-                    holder.nego_layout.setVisibility(View.VISIBLE);
+                    if (data.status.equals("REQUESTED")) {
+
+                        if (data.negotiated_price==null)
+                        {
+                            holder.nego_layout.setVisibility(View.VISIBLE);
+                        }
+                        else {
+                            holder.nego_layout.setVisibility(View.VISIBLE);
+                            holder.negotiate_btn.setVisibility(View.GONE);
+//                            holder.accept_btn.setVisibility(View.GONE);
+                        }
+
+                    }
+                    else if (data.status.equals("ACCEPTED")) {
+                        holder.nego_layout.setVisibility(View.GONE);
+//                        holder.negotiate_btn.setVisibility(View.GONE);
+//                        holder.accept_btn.setVisibility(View.GONE);
+                    }
+                    else {
+                        holder.nego_layout.setVisibility(View.VISIBLE);
+                    }
                 }
 
             }
@@ -212,7 +232,7 @@ public class InterCityRideRequestListAdapter extends RecyclerView.Adapter<InterC
 
             @Override
             public void onFailure(Call<ResponseRideAcceptInterCity> call, Throwable t) {
-                Toast.makeText(context, "Throwable " + t, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
             }
         });
@@ -250,7 +270,7 @@ public class InterCityRideRequestListAdapter extends RecyclerView.Adapter<InterC
 
             @Override
             public void onFailure(Call<ResponseRideNegotiateInterCity> call, Throwable t) {
-                Toast.makeText(context, "Throwable " + t, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
             }
         });

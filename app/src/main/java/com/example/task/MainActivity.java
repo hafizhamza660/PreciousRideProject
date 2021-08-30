@@ -6,6 +6,7 @@ import static com.example.task.Session.SaveSharedPreference.setEmail;
 import static com.example.task.Session.SaveSharedPreference.setFirstName;
 import static com.example.task.Session.SaveSharedPreference.setLastName;
 import static com.example.task.Session.SaveSharedPreference.setMobileNumber;
+import static com.example.task.Session.SaveSharedPreference.setStatus;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -95,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
                         setMobileNumber(context,number);
                         setEmail(context,email);
                         setCity(context,city);
+                        setStatus(context,"0");
 
 //                        setClientId(context,idClient,firstName,lastname,email,number,password,city);
 //                        Toast.makeText(MainActivity.this, ""+response.body().data.id, Toast.LENGTH_LONG).show();
@@ -104,13 +106,13 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 } else {
-                    Toast.makeText(MainActivity.this, "Register Not Successfull", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Not Successful", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseLogin> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
             }
         });

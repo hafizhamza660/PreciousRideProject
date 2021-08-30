@@ -1,5 +1,9 @@
 package com.example.task;
 
+import static com.example.task.Session.SaveSharedPreference.clearClientId;
+import static com.example.task.Session.SaveSharedPreference.getClientId;
+import static com.example.task.Session.SaveSharedPreference.getInterCity;
+
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,6 +11,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
@@ -14,14 +19,22 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.style.BackgroundColorSpan;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.task.API.ApiClass;
+import com.example.task.LogoutStatusFiles.RequestLogoutStatus;
+import com.example.task.LogoutStatusFiles.ResponseLogoutStatus;
 import com.google.android.material.navigation.NavigationView;
 import com.wenchao.cardstack.CardStack;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class History extends AppCompatActivity {
 
@@ -36,11 +49,14 @@ public class History extends AppCompatActivity {
     TextView sun_date,mon_date,tue_date,wed_date,thu_date,fri_date,sat_date;
     ColorStateList oldColor;
     Drawable bg;
+    String val;
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
+        context=this;
 
         /*ToolBar With NavBar*/
         // Set a Toolbar to replace the ActionBar.
@@ -48,7 +64,7 @@ public class History extends AppCompatActivity {
         setSupportActionBar(toolbar);
         setTitle("");
 //        defaultScreen();
-
+        val = getInterCity(context);
 
 
         // This will display an Up icon (<-), we will replace it with hamburger later
@@ -369,6 +385,11 @@ public class History extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        val = getInterCity(context);
+    }
 
     public void history_details(View view) {
         startActivity(new Intent(History.this,Recipt.class));
@@ -418,13 +439,19 @@ public class History extends AppCompatActivity {
                 i = new Intent(History.this,TravelRequest.class);
                 startActivity(i);
                 break;
-//            case R.id.inter_city:
-//                i = new Intent(History.this,InterCityRequests.class);
-//                startActivity(i);
-//                break;
+            case R.id.inter_city:
+                if (val.equals("0")) {
+                    nvDrawer.getMenu().getItem(0).setChecked(true);
+                    Toast.makeText(this, "Go to setting and switch on the Inter-State", Toast.LENGTH_SHORT).show();
+                } else if (val.equals("1")) {
+                    i = new Intent(History.this, InterCityRequests.class);
+                    startActivity(i);
+                }
+                break;
             case R.id.history:
-                i = new Intent(History.this,History.class);
-                startActivity(i);
+//                i = new Intent(History.this,History.class);
+//                startActivity(i);
+                Toast.makeText(this, "Already in that tab", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.notification_toolbar:
                 i = new Intent(History.this,Notifications.class);
@@ -443,8 +470,15 @@ public class History extends AppCompatActivity {
                 startActivity(i);
                 break;
 
+            case R.id.logout:
+                logoutstatus();
+                clearClientId(context);
+                i = new Intent(History.this, WelcomeScreen.class);
+                startActivity(i);
+                finish();
+                break;
             default:
-                Toast.makeText(this, "Coming Soon...", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Coming Soon...", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -468,6 +502,38 @@ public class History extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggles
         drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    public void logoutstatus() {
+        RequestLogoutStatus requestLogoutStatus = new RequestLogoutStatus();
+        requestLogoutStatus.setDriver_id(getClientId(context));
+
+
+        Call<ResponseLogoutStatus> signUpResponseCall = ApiClass.getUserServiceLogoutStatus().userLogin(requestLogoutStatus);
+        signUpResponseCall.enqueue(new Callback<ResponseLogoutStatus>() {
+            @Override
+            public void onResponse(Call<ResponseLogoutStatus> call, Response<ResponseLogoutStatus> response) {
+                if (response.isSuccessful()) {
+//                    Toast.makeText(History.this, "" + response.body().message, Toast.LENGTH_SHORT).show();
+                    if (response.body().message.equals("1")) {
+//                        Toast.makeText(History.this, "You are online", Toast.LENGTH_LONG).show();
+
+                    } else {
+                        Toast.makeText(History.this, "Logout", Toast.LENGTH_LONG).show();
+
+                    }
+
+                } else {
+                    Toast.makeText(History.this, "Request Denied", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseLogoutStatus> call, Throwable t) {
+                Toast.makeText(History.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
+                Log.d("TAG", "Error " + t);
+            }
+        });
     }
 
 

@@ -156,6 +156,6 @@
         android:layout_gravity="start"
         app:itemTextColor="@color/nav_selection_define"
         app:itemIconTint="@color/nav_selection_define"
-        app:menu="@menu/main_menu"
+        app:menu="@menu/main_menu_inter_city"
         app:headerLayout="@layout/header_toolbar" />
 </androidx.drawerlayout.widget.DrawerLayout>

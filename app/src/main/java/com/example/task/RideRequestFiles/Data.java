@@ -7,6 +7,7 @@ public class Data {
     public String end_lat;
     public String end_long;
     public String price;
+    public String negotiated_price;
     public String distance;
     public String status;
     public String client_id;

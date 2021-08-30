@@ -1,11 +1,16 @@
 package com.example.task;
 
+import static com.example.task.Session.SaveSharedPreference.clearClientId;
+import static com.example.task.Session.SaveSharedPreference.getClientId;
+import static com.example.task.Session.SaveSharedPreference.getInterCity;
+import static com.example.task.Session.SaveSharedPreference.getStatus;
 import static com.example.task.Session.SaveSharedPreference.setCity;
 import static com.example.task.Session.SaveSharedPreference.setClientId;
 import static com.example.task.Session.SaveSharedPreference.setEmail;
 import static com.example.task.Session.SaveSharedPreference.setFirstName;
 import static com.example.task.Session.SaveSharedPreference.setLastName;
 import static com.example.task.Session.SaveSharedPreference.setMobileNumber;
+import static com.example.task.Session.SaveSharedPreference.setStatus;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,14 +39,21 @@ import android.widget.Toast;
 import com.example.task.API.ApiClass;
 import com.example.task.Dialog.AmountEnter;
 import com.example.task.Dialog.CurrencySelection;
+import com.example.task.Dialog.Rules;
 import com.example.task.FilesLogin.RequestLogin;
 import com.example.task.FilesLogin.ResponseLogin;
+import com.example.task.LogoutStatusFiles.RequestLogoutStatus;
+import com.example.task.LogoutStatusFiles.ResponseLogoutStatus;
 import com.example.task.RideRequestFiles.Data;
 import com.example.task.RideRequestFiles.RideRequestResponse;
+import com.example.task.StatusFiles.RequestStatus;
+import com.example.task.StatusFiles.ResponseStatus;
 import com.example.task.adapters.RideRequestListAdapter;
+import com.example.task.adapters.StackAdapter;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -62,7 +74,7 @@ public class TravelRequest extends AppCompatActivity {
     LinearLayoutManager linearLayoutManager;
     private RideRequestListAdapter rideRequestListAdapter;
     private List<Data> dataList;
-
+    String val;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +87,7 @@ public class TravelRequest extends AppCompatActivity {
         setSupportActionBar(toolbar);
         setTitle("");
 //        defaultScreen();
+        val = getInterCity(context);
 
 
 
@@ -107,13 +120,25 @@ public class TravelRequest extends AppCompatActivity {
 
         switchbtn = findViewById(R.id.switchbtn);
 
-
+        String status_s = getStatus(context);
+        if (status_s.equals("0"))
+        {
+            switchbtn.setChecked(false);
+        }
+        else if (status_s.equals("1"))
+        {
+            switchbtn.setChecked(true);
+        }
 
         switchbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
+                    status();
+                    setStatus(context,"1");
                 } else {
+                    status();
+                    setStatus(context,"0");
                     startActivity(new Intent(TravelRequest.this, HomeOffline.class));
                 }
             }
@@ -151,7 +176,11 @@ public class TravelRequest extends AppCompatActivity {
                 });
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        val = getInterCity(context);
+    }
 
     public void selectDrawerItem(MenuItem menuItem) {
 
@@ -166,13 +195,19 @@ public class TravelRequest extends AppCompatActivity {
                 startActivity(i);
                 break;
             case R.id.travel_request:
-                i = new Intent(TravelRequest.this,TravelRequest.class);
-                startActivity(i);
-                break;
-//            case R.id.inter_city:
-//                i = new Intent(TravelRequest.this,InterCityRequests.class);
+//                i = new Intent(TravelRequest.this,TravelRequest.class);
 //                startActivity(i);
-//                break;
+                Toast.makeText(this, "Already in that tab", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.inter_city:
+                if (val.equals("0")) {
+                    nvDrawer.getMenu().getItem(0).setChecked(true);
+                    Toast.makeText(this, "Go to setting and switch on the Inter-State", Toast.LENGTH_SHORT).show();
+                } else if (val.equals("1")) {
+                    i = new Intent(TravelRequest.this, InterCityRequests.class);
+                    startActivity(i);
+                }
+                break;
             case R.id.history:
                 i = new Intent(TravelRequest.this,History.class);
                 startActivity(i);
@@ -194,8 +229,16 @@ public class TravelRequest extends AppCompatActivity {
                 startActivity(i);
                 break;
 
+            case R.id.logout:
+                logoutstatus();
+                clearClientId(context);
+                i = new Intent(TravelRequest.this, WelcomeScreen.class);
+                startActivity(i);
+                finish();
+                break;
+
             default:
-                Toast.makeText(this, "Coming Soon...", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Coming Soon...", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -248,12 +291,78 @@ public class TravelRequest extends AppCompatActivity {
                     }
 //
                 } else {
-                    Toast.makeText(TravelRequest.this, "Register Not Successfull", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TravelRequest.this, "Not Successful", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<RideRequestResponse> call, Throwable t) {
+//                Toast.makeText(TravelRequest.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
+                Log.d("TAG", "Error " + t);
+            }
+        });
+    }
+
+
+    public void status() {
+        RequestStatus requestStatus = new RequestStatus();
+        requestStatus.setId(getClientId(context));
+
+
+        Call<ResponseStatus> signUpResponseCall = ApiClass.getUserServiceStatus().userLogin(requestStatus);
+        signUpResponseCall.enqueue(new Callback<ResponseStatus>() {
+            @Override
+            public void onResponse(Call<ResponseStatus> call, Response<ResponseStatus> response) {
+                if (response.isSuccessful()) {
+//                    Toast.makeText(TravelRequest.this, "" + response.body().message, Toast.LENGTH_SHORT).show();
+                    if (response.body().message.equals("1")) {
+                        Toast.makeText(TravelRequest.this, "You are online", Toast.LENGTH_LONG).show();
+
+                    } else {
+                        Toast.makeText(TravelRequest.this, "Logout", Toast.LENGTH_LONG).show();
+
+                    }
+
+                } else {
+                    Toast.makeText(TravelRequest.this, "Request Denied", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseStatus> call, Throwable t) {
+//                Toast.makeText(TravelRequest.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
+                Log.d("TAG", "Error " + t);
+            }
+        });
+    }
+
+
+    public void logoutstatus() {
+        RequestLogoutStatus requestLogoutStatus = new RequestLogoutStatus();
+        requestLogoutStatus.setDriver_id(getClientId(context));
+
+
+        Call<ResponseLogoutStatus> signUpResponseCall = ApiClass.getUserServiceLogoutStatus().userLogin(requestLogoutStatus);
+        signUpResponseCall.enqueue(new Callback<ResponseLogoutStatus>() {
+            @Override
+            public void onResponse(Call<ResponseLogoutStatus> call, Response<ResponseLogoutStatus> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(TravelRequest.this, "" + response.body().message, Toast.LENGTH_SHORT).show();
+                    if (response.body().message.equals("1")) {
+                        Toast.makeText(TravelRequest.this, "You are online", Toast.LENGTH_LONG).show();
+
+                    } else {
+                        Toast.makeText(TravelRequest.this, "You are offline", Toast.LENGTH_LONG).show();
+
+                    }
+
+                } else {
+                    Toast.makeText(TravelRequest.this, "Request Denied", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseLogoutStatus> call, Throwable t) {
                 Toast.makeText(TravelRequest.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
             }
