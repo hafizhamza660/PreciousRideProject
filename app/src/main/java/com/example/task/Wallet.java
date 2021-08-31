@@ -252,7 +252,7 @@ public class Wallet extends AppCompatActivity {
                     }
 
                 } else {
-                    Toast.makeText(Wallet.this, "Request Denied", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(Wallet.this, "Request Denied", Toast.LENGTH_SHORT).show();
                 }
             }
 

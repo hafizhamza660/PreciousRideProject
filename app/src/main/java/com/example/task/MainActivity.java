@@ -100,13 +100,13 @@ public class MainActivity extends AppCompatActivity {
 
 //                        setClientId(context,idClient,firstName,lastname,email,number,password,city);
 //                        Toast.makeText(MainActivity.this, ""+response.body().data.id, Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(MainActivity.this, HomeOffline.class);
+                        Intent intent = new Intent(MainActivity.this, SetupGPSLocationActivity.class);
                         startActivity(intent);
                         finish();
                     }
 
                 } else {
-                    Toast.makeText(MainActivity.this, "Not Successful", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(MainActivity.this, "Not Successful", Toast.LENGTH_SHORT).show();
                 }
             }
 

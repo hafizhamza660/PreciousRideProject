@@ -31,7 +31,7 @@ public class SplashActivity extends AppCompatActivity {
                     finish();
                 }
                 else {
-                    startActivity(new Intent(SplashActivity.this, HomeOffline.class));
+                    startActivity(new Intent(SplashActivity.this, SetupGPSLocationActivity.class));
                     finish();
                 }
                 return;

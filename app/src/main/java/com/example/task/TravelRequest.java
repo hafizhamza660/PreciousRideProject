@@ -120,25 +120,25 @@ public class TravelRequest extends AppCompatActivity {
 
         switchbtn = findViewById(R.id.switchbtn);
 
-        String status_s = getStatus(context);
-        if (status_s.equals("0"))
-        {
-            switchbtn.setChecked(false);
-        }
-        else if (status_s.equals("1"))
-        {
+//        String status_s = getStatus(context);
+//        if (status_s.equals("0"))
+//        {
+//            switchbtn.setChecked(false);
+//        }
+//        else if (status_s.equals("1"))
+//        {
             switchbtn.setChecked(true);
-        }
+//        }
 
         switchbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    status();
-                    setStatus(context,"1");
+//                    status();
+//                    setStatus(context,"1");
                 } else {
-                    status();
-                    setStatus(context,"0");
+//                    status();
+//                    setStatus(context,"0");
                     startActivity(new Intent(TravelRequest.this, HomeOffline.class));
                 }
             }
@@ -279,7 +279,7 @@ public class TravelRequest extends AppCompatActivity {
             @Override
             public void onResponse(Call<RideRequestResponse> call, Response<RideRequestResponse> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(TravelRequest.this, ""+response.body().data, Toast.LENGTH_LONG).show();
+//                    Toast.makeText(TravelRequest.this, ""+response.body().data, Toast.LENGTH_LONG).show();
 //                    Log.d(TAG,"Data : "+response.body().data.get(0).id);
                     if (response.body().data.equals(null))
                     {
@@ -291,7 +291,7 @@ public class TravelRequest extends AppCompatActivity {
                     }
 //
                 } else {
-                    Toast.makeText(TravelRequest.this, "Not Successful", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(TravelRequest.this, "Not Successful", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -304,37 +304,37 @@ public class TravelRequest extends AppCompatActivity {
     }
 
 
-    public void status() {
-        RequestStatus requestStatus = new RequestStatus();
-        requestStatus.setId(getClientId(context));
-
-
-        Call<ResponseStatus> signUpResponseCall = ApiClass.getUserServiceStatus().userLogin(requestStatus);
-        signUpResponseCall.enqueue(new Callback<ResponseStatus>() {
-            @Override
-            public void onResponse(Call<ResponseStatus> call, Response<ResponseStatus> response) {
-                if (response.isSuccessful()) {
-//                    Toast.makeText(TravelRequest.this, "" + response.body().message, Toast.LENGTH_SHORT).show();
-                    if (response.body().message.equals("1")) {
-                        Toast.makeText(TravelRequest.this, "You are online", Toast.LENGTH_LONG).show();
-
-                    } else {
-                        Toast.makeText(TravelRequest.this, "Logout", Toast.LENGTH_LONG).show();
-
-                    }
-
-                } else {
-                    Toast.makeText(TravelRequest.this, "Request Denied", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseStatus> call, Throwable t) {
-//                Toast.makeText(TravelRequest.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
-                Log.d("TAG", "Error " + t);
-            }
-        });
-    }
+//    public void status() {
+//        RequestStatus requestStatus = new RequestStatus();
+//        requestStatus.setId(getClientId(context));
+//
+//
+//        Call<ResponseStatus> signUpResponseCall = ApiClass.getUserServiceStatus().userLogin(requestStatus);
+//        signUpResponseCall.enqueue(new Callback<ResponseStatus>() {
+//            @Override
+//            public void onResponse(Call<ResponseStatus> call, Response<ResponseStatus> response) {
+//                if (response.isSuccessful()) {
+////                    Toast.makeText(TravelRequest.this, "" + response.body().message, Toast.LENGTH_SHORT).show();
+//                    if (response.body().message.equals("1")) {
+////                        Toast.makeText(TravelRequest.this, "You are online", Toast.LENGTH_LONG).show();
+//
+//                    } else {
+//                        startActivity(new Intent(TravelRequest.this,HomeOffline.class));
+//
+//                    }
+//
+//                } else {
+////                    Toast.makeText(TravelRequest.this, "Request Denied", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseStatus> call, Throwable t) {
+////                Toast.makeText(TravelRequest.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
+//                Log.d("TAG", "Error " + t);
+//            }
+//        });
+//    }
 
 
     public void logoutstatus() {
@@ -347,23 +347,23 @@ public class TravelRequest extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseLogoutStatus> call, Response<ResponseLogoutStatus> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(TravelRequest.this, "" + response.body().message, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(TravelRequest.this, "" + response.body().message, Toast.LENGTH_SHORT).show();
                     if (response.body().message.equals("1")) {
-                        Toast.makeText(TravelRequest.this, "You are online", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(TravelRequest.this, "You are online", Toast.LENGTH_LONG).show();
 
                     } else {
-                        Toast.makeText(TravelRequest.this, "You are offline", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(TravelRequest.this, "You are offline", Toast.LENGTH_LONG).show();
 
                     }
 
                 } else {
-                    Toast.makeText(TravelRequest.this, "Request Denied", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(TravelRequest.this, "Request Denied", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseLogoutStatus> call, Throwable t) {
-                Toast.makeText(TravelRequest.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(TravelRequest.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
             }
         });

@@ -524,13 +524,13 @@ public class History extends AppCompatActivity {
                     }
 
                 } else {
-                    Toast.makeText(History.this, "Request Denied", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(History.this, "Request Denied", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseLogoutStatus> call, Throwable t) {
-                Toast.makeText(History.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(History.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
             }
         });

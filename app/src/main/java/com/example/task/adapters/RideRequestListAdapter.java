@@ -230,7 +230,7 @@ public class RideRequestListAdapter extends RecyclerView.Adapter<RideRequestList
 //                    Intent intent = new Intent(getActivity(), PhoneVerification.class);
 //                    startActivity(intent);
                 } else {
-                    Toast.makeText(context, "Not", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, "Not", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -268,7 +268,7 @@ public class RideRequestListAdapter extends RecyclerView.Adapter<RideRequestList
 //                    Intent intent = new Intent(getActivity(), PhoneVerification.class);
 //                    startActivity(intent);
                 } else {
-                    Toast.makeText(context, "Not", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, "Not", Toast.LENGTH_SHORT).show();
                 }
             }
 

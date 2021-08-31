@@ -222,7 +222,7 @@ public class InviteFriends extends AppCompatActivity {
                     }
 
                 } else {
-                    Toast.makeText(InviteFriends.this, "Request Denied", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(InviteFriends.this, "Request Denied", Toast.LENGTH_SHORT).show();
                 }
             }
 

@@ -137,8 +137,10 @@ RelativeLayout container_2,currency_button,bank_button,campaign_button;
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     setInterCity(context,"1");
+                    val = getInterCity(context);
                 } else {
                     setInterCity(context,"0");
+                    val = getInterCity(context);
                 }
             }
         });
@@ -309,7 +311,7 @@ RelativeLayout container_2,currency_button,bank_button,campaign_button;
                     }
 
                 } else {
-                    Toast.makeText(Setting.this, "Request Denied", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(Setting.this, "Request Denied", Toast.LENGTH_SHORT).show();
                 }
             }
 

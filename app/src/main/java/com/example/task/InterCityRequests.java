@@ -3,6 +3,8 @@ package com.example.task;
 import static com.example.task.Session.SaveSharedPreference.clearClientId;
 import static com.example.task.Session.SaveSharedPreference.getClientId;
 import static com.example.task.Session.SaveSharedPreference.getInterCity;
+import static com.example.task.Session.SaveSharedPreference.getStatus;
+import static com.example.task.Session.SaveSharedPreference.setStatus;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,22 +21,29 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.task.API.ApiClass;
+import com.example.task.Dialog.Rules;
 import com.example.task.InterCityRequest.InterCityRideRequestResponse;
 import com.example.task.LogoutStatusFiles.RequestLogoutStatus;
 import com.example.task.LogoutStatusFiles.ResponseLogoutStatus;
 import com.example.task.RideRequestFiles.Data;
 import com.example.task.RideRequestFiles.RideRequestResponse;
+import com.example.task.StatusFiles.RequestStatus;
+import com.example.task.StatusFiles.ResponseStatus;
 import com.example.task.adapters.InterCityRideRequestListAdapter;
 import com.example.task.adapters.RideRequestListAdapter;
+import com.example.task.adapters.StackAdapter;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,7 +62,7 @@ public class InterCityRequests extends AppCompatActivity {
     private List<Data> dataList;
     Switch switchbtn;
     public static final String TAG ="HomeONline";
-    String val;
+    String val,status_s;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +76,7 @@ public class InterCityRequests extends AppCompatActivity {
         setTitle("");
 //        defaultScreen();
         val = getInterCity(context);
-
+        status_s = getStatus(context);
 
         // This will display an Up icon (<-), we will replace it with hamburger later
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -97,18 +106,29 @@ public class InterCityRequests extends AppCompatActivity {
         nvDrawer.getMenu().getItem(3).setChecked(true);
 
         switchbtn = findViewById(R.id.switchbtn);
+//        if (status_s.equals("0"))
+//        {
+//            switchbtn.setChecked(false);
+//        }
+//        else if (status_s.equals("1")) {
+//            switchbtn.setChecked(true);
+//        }
 
 
-
-        switchbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                } else {
-                    startActivity(new Intent(InterCityRequests.this, HomeOffline.class));
-                }
-            }
-        });
+//        switchbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+////                if (isChecked) {
+////                    setStatus(context,"1");
+////                    status_s = "1";
+////                    status();
+////                } else {
+////                    setStatus(context,"0");
+////                    status_s = "0";
+////                    status();
+////                }
+//            }
+//        });
 
         recyclerViewRideRequest = findViewById(R.id.recycler_view_rideRequest);
         linearLayoutManager = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false);
@@ -165,9 +185,14 @@ public class InterCityRequests extends AppCompatActivity {
                 finish();
                 break;
             case R.id.travel_request:
-                i = new Intent(InterCityRequests.this,TravelRequest.class);
-                startActivity(i);
-                finish();
+                if (status_s.equals("0")) {
+                    nvDrawer.getMenu().getItem(0).setChecked(true);
+                    Toast.makeText(this, "Go Online First", Toast.LENGTH_SHORT).show();
+                } else if (status_s.equals("1")) {
+                    i = new Intent(InterCityRequests.this, TravelRequest.class);
+                    startActivity(i);
+                    finish();
+                }
                 break;
             case R.id.inter_city:
                 Toast.makeText(this, "Already In Inter-City Tab", Toast.LENGTH_SHORT).show();
@@ -253,7 +278,7 @@ public class InterCityRequests extends AppCompatActivity {
                     }
 //
                 } else {
-                    Toast.makeText(InterCityRequests.this, "Not Successful", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(InterCityRequests.this, "Not Successful", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -265,6 +290,36 @@ public class InterCityRequests extends AppCompatActivity {
         });
     }
 
+
+//    public void status() {
+//        RequestStatus requestStatus = new RequestStatus();
+//        requestStatus.setId(getClientId(context));
+//
+//
+//        Call<ResponseStatus> signUpResponseCall = ApiClass.getUserServiceStatus().userLogin(requestStatus);
+//        signUpResponseCall.enqueue(new Callback<ResponseStatus>() {
+//            @Override
+//            public void onResponse(Call<ResponseStatus> call, Response<ResponseStatus> response) {
+//                if (response.isSuccessful()) {
+////                    Toast.makeText(HomeOffline.this, "" + response.body().message, Toast.LENGTH_SHORT).show();
+//                    if (response.body().message.equals("1")) {
+//
+//                    } else {
+//                        startActivity(new Intent(InterCityRequests.this,HomeOffline.class));
+//                    }
+//
+//                } else {
+////                    Toast.makeText(HomeOffline.this, "Request Denied", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseStatus> call, Throwable t) {
+////                Toast.makeText(HomeOffline.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
+//                Log.d("TAG", "Error " + t);
+//            }
+//        });
+//    }
 
     public void logoutstatus() {
         RequestLogoutStatus requestLogoutStatus = new RequestLogoutStatus();
@@ -278,7 +333,7 @@ public class InterCityRequests extends AppCompatActivity {
                 if (response.isSuccessful()) {
 //                    Toast.makeText(InterCityRequests.this, "" + response.body().message, Toast.LENGTH_SHORT).show();
                     if (response.body().message.equals("1")) {
-                        Toast.makeText(InterCityRequests.this, "You are online", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(InterCityRequests.this, "You are online", Toast.LENGTH_LONG).show();
 
                     } else {
                         Toast.makeText(InterCityRequests.this, "Logout", Toast.LENGTH_LONG).show();
@@ -286,7 +341,7 @@ public class InterCityRequests extends AppCompatActivity {
                     }
 
                 } else {
-                    Toast.makeText(InterCityRequests.this, "Request Denied", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(InterCityRequests.this, "Request Denied", Toast.LENGTH_SHORT).show();
                 }
             }
 

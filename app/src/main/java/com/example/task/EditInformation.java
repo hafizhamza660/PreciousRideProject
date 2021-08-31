@@ -124,7 +124,7 @@ public class EditInformation extends AppCompatActivity {
                     }
 
                 } else {
-                    Toast.makeText(EditInformation.this, "Not Successfull", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(EditInformation.this, "Not Successfull", Toast.LENGTH_SHORT).show();
                 }
             }
 

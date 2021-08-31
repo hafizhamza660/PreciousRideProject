@@ -21,6 +21,7 @@
         app:layout_constraintVertical_bias="0.65999997">
 
         <ImageView
+            android:onClick="back_button"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="start"

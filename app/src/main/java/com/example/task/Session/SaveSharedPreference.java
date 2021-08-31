@@ -11,7 +11,7 @@ public class SaveSharedPreference {
     static final String PREF_MOBILE_NUMBER= "000";
     static final String PREF_EMAIL= "abc@gmail.com";
     static final String PREF_CITY= "name";
-    static final String PREF_INTER_CITY= "0";
+    static final String PREF_INTER_CITY= "city";
     static final String PREF_STATUS= "Nothing";
 
     static SharedPreferences getSharedPreferences(Context ctx) {

@@ -96,7 +96,7 @@ public class HomeOffline extends AppCompatActivity {
     ImageView minus_range, add_range;
     TextView km_range, id_name;
     Context context;
-    String status_s;
+    String status_s,driver_id;
 
     public static final String TAG = "HomeONline";
     //    public int counter;
@@ -120,24 +120,24 @@ public class HomeOffline extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreat");
 
-        if (SaveSharedPreference.getClientId(HomeOffline.this).length() == 0) {
-            startActivity(new Intent(HomeOffline.this, WelcomeScreen.class));
-            finish();
-        } else {
+//        if (SaveSharedPreference.getClientId(HomeOffline.this).length() == 0) {
+//            startActivity(new Intent(HomeOffline.this, WelcomeScreen.class));
+//            finish();
+//        } else {
             // Stay at the current activity.
             setContentView(R.layout.activity_home_offline);
             context = this;
             Configuration config = getResources().getConfiguration();
-            if (isNetworkConnected()) {
-                Toast.makeText(this, "Internet connected successfully", Toast.LENGTH_SHORT).show();
-                if (locationServicesEnabled(context)) {
-                    Toast.makeText(this, "True", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "False", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                startActivity(new Intent(HomeOffline.this, SetupGPSLocationActivity.class));
-            }
+//            if (isNetworkConnected()) {
+//                Toast.makeText(this, "Internet connected successfully", Toast.LENGTH_SHORT).show();
+//                if (locationServicesEnabled(context)) {
+//                    Toast.makeText(this, "True", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    Toast.makeText(this, "False", Toast.LENGTH_SHORT).show();
+//                }
+//            } else {
+//                startActivity(new Intent(HomeOffline.this, SetupGPSLocationActivity.class));
+//            }
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
                 askPermission();
@@ -146,7 +146,7 @@ public class HomeOffline extends AppCompatActivity {
 
 
 
-
+        driver_id=getClientId(context);
 
             /*ToolBar With NavBar*/
             // Set a Toolbar to replace the ActionBar.
@@ -188,7 +188,7 @@ public class HomeOffline extends AppCompatActivity {
 
             /*ToolBar With NavBar End*/
             nvDrawer.getMenu().getItem(0).setChecked(true);
-            Toast.makeText(this, "Value: "+val, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Value: "+val, Toast.LENGTH_SHORT).show();
 //            }
 //            else if (val=="1")
 //            {
@@ -263,7 +263,7 @@ public class HomeOffline extends AppCompatActivity {
 
             km_range.setText(counter + " KM");
 
-            Toast.makeText(this, "" + "\n" + getFirstName(context) + "\n" + getCity(context) + "\n" + getLastName(context) + "\n" + getEmail(context) + "\n" + getClientId(context) + "\n" + getMobileNumber(context), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "" + "\n" + getFirstName(context) + "\n" + getCity(context) + "\n" + getLastName(context) + "\n" + getEmail(context) + "\n" + getClientId(context) + "\n" + getMobileNumber(context), Toast.LENGTH_SHORT).show();
             id_name.setText(getFirstName(context));
             minus_range.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -290,7 +290,7 @@ public class HomeOffline extends AppCompatActivity {
             });
 
              status_s = getStatus(context);
-            Toast.makeText(this, "Status: "+status_s, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Status: "+status_s, Toast.LENGTH_SHORT).show();
             if (status_s.equals("0"))
             {
                 switchbtn.setChecked(false);
@@ -318,34 +318,45 @@ public class HomeOffline extends AppCompatActivity {
                         setStatus(context,"1");
                         status_s = "1";
                         status();
+                        Rules exitDialog = new Rules(HomeOffline.this);
+                        exitDialog.show();
+                        Window window = exitDialog.getWindow();
+                        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        // The toggle is enabled
+                        long duration = TimeUnit.MINUTES.toMillis(1);
+
+                        homeOffline.setVisibility(View.GONE);
+                        bottomSheetLayout.setVisibility(View.GONE);
+                        homeOnline.setVisibility(View.VISIBLE);
+                        toolbar_title.setText("Online");
+                        StackAdapter adapter = new StackAdapter(numberWord(), HomeOffline.this, R.layout.item_stack);
+
+                        stackView.setAdapter(adapter);
+                        YourListner yourListner = new YourListner();
+                        stackView.setListener(yourListner);
+                        floatingActionButton.setVisibility(View.GONE);
+                        floatingActionButton_online.setVisibility(View.VISIBLE);
                     } else {
                         setStatus(context,"0");
                         status_s = "0";
                         status();
+                        homeOffline.setVisibility(View.VISIBLE);
+                        bottomSheetLayout.setVisibility(View.VISIBLE);
+                        homeOnline.setVisibility(View.GONE);
+                        toolbar_title.setText("Offline");
+//                    Log.d("FloatingParam",""+params.getAnchorId());
+                        floatingActionButton_online.setVisibility(View.GONE);
+                        floatingActionButton.setVisibility(View.VISIBLE);
                     }
                 }
             });
 
-            startService(new Intent(HomeOffline.this, ServiceClass.class));
+//            startService(new Intent(HomeOffline.this, ServiceClass.class));
 
 
         }
-    }
-
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-//            startService(new Intent(HomeOffline.this, FloatingViewService.class));
-//            finish();
-//        } else if (Settings.canDrawOverlays(this)) {
-//            startService(new Intent(HomeOffline.this, FloatingViewService.class));
-//            finish();
-//        } else {
-//            askPermission();
-//            Toast.makeText(this, "You need System Alert Window Permission to do this", Toast.LENGTH_SHORT).show();
-//        }
 //    }
+
 
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -357,14 +368,19 @@ public class HomeOffline extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         id_name.setText("");
+        driver_id=getClientId(context);
+
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         nvDrawer.getMenu().getItem(0).setChecked(true);
+        driver_id=getClientId(context);
         id_name.setText(getFirstName(context));
         val = getInterCity(context);
+        status_s = getStatus(context);
     }
 
     public static boolean locationServicesEnabled(Context context) {
@@ -396,23 +412,25 @@ public class HomeOffline extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Log.d(TAG, "onStart");
-        stopService(new Intent(HomeOffline.this, FloatingViewService.class));
+        driver_id=getClientId(context);
+//        stopService(new Intent(HomeOffline.this, FloatingViewService.class));
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        driver_id=getClientId(context);
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            startService(new Intent(HomeOffline.this, FloatingViewService.class));
-            finish();
-        } else if (Settings.canDrawOverlays(this)) {
-            startService(new Intent(HomeOffline.this, FloatingViewService.class));
-            finish();
-        } else {
-            askPermission();
-            Toast.makeText(this, "You need System Alert Window Permission to do this", Toast.LENGTH_SHORT).show();
-        }
+//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+//            startService(new Intent(HomeOffline.this, FloatingViewService.class));
+//            finish();
+//        } else if (Settings.canDrawOverlays(this)) {
+//            startService(new Intent(HomeOffline.this, FloatingViewService.class));
+//            finish();
+//        } else {
+//            askPermission();
+//            Toast.makeText(this, "You need System Alert Window Permission to do this", Toast.LENGTH_SHORT).show();
+//        }
 
     }
 
@@ -420,9 +438,6 @@ public class HomeOffline extends AppCompatActivity {
     private List<String> numberWord() {
         List<String> word = new ArrayList<>();
         word.add("one");
-//        word.add("two");
-//        word.add("three");
-//        word.add("four");
         return word;
     }
 
@@ -454,8 +469,6 @@ public class HomeOffline extends AppCompatActivity {
 
 
     public void selectDrawerItem(MenuItem menuItem) {
-
-
         Intent i;
         switch (menuItem.getItemId()) {
             case R.id.home:
@@ -629,7 +642,7 @@ public class HomeOffline extends AppCompatActivity {
 
     public void status() {
         RequestStatus requestStatus = new RequestStatus();
-        requestStatus.setId(getClientId(context));
+        requestStatus.setId(driver_id);
 
 
         Call<ResponseStatus> signUpResponseCall = ApiClass.getUserServiceStatus().userLogin(requestStatus);
@@ -638,40 +651,40 @@ public class HomeOffline extends AppCompatActivity {
             public void onResponse(Call<ResponseStatus> call, Response<ResponseStatus> response) {
                 if (response.isSuccessful()) {
 //                    Toast.makeText(HomeOffline.this, "" + response.body().message, Toast.LENGTH_SHORT).show();
-                    if (response.body().message.equals("1")) {
-                        Toast.makeText(HomeOffline.this, "You are online", Toast.LENGTH_LONG).show();
-                        Rules exitDialog = new Rules(HomeOffline.this);
-                        exitDialog.show();
-                        Window window = exitDialog.getWindow();
-                        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                        // The toggle is enabled
-                        long duration = TimeUnit.MINUTES.toMillis(1);
-
-                        homeOffline.setVisibility(View.GONE);
-                        bottomSheetLayout.setVisibility(View.GONE);
-                        homeOnline.setVisibility(View.VISIBLE);
-                        toolbar_title.setText("Online");
-                        StackAdapter adapter = new StackAdapter(numberWord(), HomeOffline.this, R.layout.item_stack);
-
-                        stackView.setAdapter(adapter);
-                        YourListner yourListner = new YourListner();
-                        stackView.setListener(yourListner);
-                        floatingActionButton.setVisibility(View.GONE);
-                        floatingActionButton_online.setVisibility(View.VISIBLE);
+                    if (response.body().message.equals("1") && status_s.equals("1")) {
+//                        Toast.makeText(HomeOffline.this, "You are online", Toast.LENGTH_LONG).show();
+//                        Rules exitDialog = new Rules(HomeOffline.this);
+//                        exitDialog.show();
+//                        Window window = exitDialog.getWindow();
+//                        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//                        // The toggle is enabled
+//                        long duration = TimeUnit.MINUTES.toMillis(1);
+//
+//                        homeOffline.setVisibility(View.GONE);
+//                        bottomSheetLayout.setVisibility(View.GONE);
+//                        homeOnline.setVisibility(View.VISIBLE);
+//                        toolbar_title.setText("Online");
+//                        StackAdapter adapter = new StackAdapter(numberWord(), HomeOffline.this, R.layout.item_stack);
+//
+//                        stackView.setAdapter(adapter);
+//                        YourListner yourListner = new YourListner();
+//                        stackView.setListener(yourListner);
+//                        floatingActionButton.setVisibility(View.GONE);
+//                        floatingActionButton_online.setVisibility(View.VISIBLE);
                     } else {
-                        Toast.makeText(HomeOffline.this, "You are offline", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(HomeOffline.this, "You are offline", Toast.LENGTH_LONG).show();
                         // The toggle is disabled
-                        homeOffline.setVisibility(View.VISIBLE);
-                        bottomSheetLayout.setVisibility(View.VISIBLE);
-                        homeOnline.setVisibility(View.GONE);
-                        toolbar_title.setText("Offline");
-//                    Log.d("FloatingParam",""+params.getAnchorId());
-                        floatingActionButton_online.setVisibility(View.GONE);
-                        floatingActionButton.setVisibility(View.VISIBLE);
+//                        homeOffline.setVisibility(View.VISIBLE);
+//                        bottomSheetLayout.setVisibility(View.VISIBLE);
+//                        homeOnline.setVisibility(View.GONE);
+//                        toolbar_title.setText("Offline");
+////                    Log.d("FloatingParam",""+params.getAnchorId());
+//                        floatingActionButton_online.setVisibility(View.GONE);
+//                        floatingActionButton.setVisibility(View.VISIBLE);
                     }
 
                 } else {
-                    Toast.makeText(HomeOffline.this, "Request Denied", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(HomeOffline.this, "Request Denied", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -684,10 +697,9 @@ public class HomeOffline extends AppCompatActivity {
     }
 
 
-
     public void logoutstatus() {
         RequestLogoutStatus requestLogoutStatus = new RequestLogoutStatus();
-        requestLogoutStatus.setDriver_id(getClientId(context));
+        requestLogoutStatus.setDriver_id(driver_id);
 
 
         Call<ResponseLogoutStatus> signUpResponseCall = ApiClass.getUserServiceLogoutStatus().userLogin(requestLogoutStatus);

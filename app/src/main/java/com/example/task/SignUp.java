@@ -188,16 +188,19 @@ public class SignUp extends AppCompatActivity {
 //                    Intent intent = new Intent(getActivity(), PhoneVerification.class);
 //                    startActivity(intent);
                 } else {
-                    Toast.makeText(SignUp.this, "API not Hit", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(SignUp.this, "API not Hit", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseSignUp> call, Throwable t) {
-                Toast.makeText(SignUp.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(SignUp.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
             }
         });
     }
 
+    public void back_button(View view) {
+        onBackPressed();
+    }
 }
