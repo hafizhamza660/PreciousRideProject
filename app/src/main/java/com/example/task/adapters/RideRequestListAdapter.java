@@ -104,16 +104,19 @@ public class RideRequestListAdapter extends RecyclerView.Adapter<RideRequestList
                         if (data.negotiated_price==null)
                         {
                             holder.nego_layout.setVisibility(View.VISIBLE);
+                            holder.req_type.setText("REQUESTED");
                         }
                         else {
                             holder.nego_layout.setVisibility(View.VISIBLE);
                             holder.negotiate_btn.setVisibility(View.GONE);
+                            holder.req_type.setText("Negotiated");
 //                            holder.accept_btn.setVisibility(View.GONE);
                         }
 
                     }
                     else if (data.status.equals("ACCEPTED")) {
                         holder.nego_layout.setVisibility(View.GONE);
+                        holder.req_type.setText("ACCEPTED");
 //                        holder.negotiate_btn.setVisibility(View.GONE);
 //                        holder.accept_btn.setVisibility(View.GONE);
                     }
@@ -163,7 +166,7 @@ public class RideRequestListAdapter extends RecyclerView.Adapter<RideRequestList
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView pickup_location,dropoff_location,price,nego_price;
+        TextView pickup_location,dropoff_location,price,nego_price,req_type;
         LinearLayout nego_layout,nego_enter_layout;
         Button negotiate_btn,accept_btn,enter_btn;
         CardView card_offer;
@@ -181,6 +184,7 @@ public class RideRequestListAdapter extends RecyclerView.Adapter<RideRequestList
             enter_btn = itemView.findViewById(R.id.enter_btn);
             negotiate_edt = itemView.findViewById(R.id.negotiate_edt);
             nego_price = itemView.findViewById(R.id.nego_price);
+            req_type = itemView.findViewById(R.id.req_type);
         }
     }
 

@@ -22,18 +22,18 @@ public class SplashActivity extends AppCompatActivity {
                 onBoardingScreen = getSharedPreferences("onBoardingScreen", MODE_PRIVATE);
                 boolean isFirstTime = onBoardingScreen.getBoolean("firstTime", true);
 
-                if (isFirstTime){
-
-                    SharedPreferences.Editor editor = onBoardingScreen.edit();
-                    editor.putBoolean("firstTime", false);
-                    editor.commit();
-                    startActivity(new Intent(SplashActivity.this, OnBoardingActivity.class));
-                    finish();
-                }
-                else {
+//                if (isFirstTime){
+//
+//                    SharedPreferences.Editor editor = onBoardingScreen.edit();
+//                    editor.putBoolean("firstTime", false);
+//                    editor.commit();
+//                    startActivity(new Intent(SplashActivity.this, OnBoardingActivity.class));
+//                    finish();
+//                }
+//                else {
                     startActivity(new Intent(SplashActivity.this, SetupGPSLocationActivity.class));
                     finish();
-                }
+//                }
                 return;
             }
         },SPLASH_TIME_OUT);

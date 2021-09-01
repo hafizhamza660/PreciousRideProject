@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,11 +34,12 @@ public class SignUp extends AppCompatActivity {
     TextView city_name;
     String name;
     Context context;
-    EditText first_name,last_name,email,number,password,invite_code;
-    String sfirst_name,slast_name,semail,snumber,spassword,scity,sinvite_code;
+    EditText first_name,last_name,email,number,password,invite_code,confim_password;
+    String sfirst_name,slast_name,semail,snumber,spassword,scity,sinvite_code,sconfim_password;
     private List<Place.Field> fields;
     final int place_picker_req_code =1;
     CountryCodePicker ccp;
+    CheckBox terms_and_conditions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,8 @@ public class SignUp extends AppCompatActivity {
         city_name=findViewById(R.id.city_name);
         invite_code=findViewById(R.id.invite_code);
         ccp=findViewById(R.id.ccp);
+        terms_and_conditions=findViewById(R.id.terms_and_conditions);
+        confim_password=findViewById(R.id.confim_password);
 
 
 
@@ -76,10 +80,14 @@ public class SignUp extends AppCompatActivity {
         switch (requestCode)
         {
             case place_picker_req_code:
-                Place place = Autocomplete.getPlaceFromIntent(data);
-                name = place.getName();
-                city_name.setText(name);
+                Place place;
+                if (resultCode == 0) {
 
+                } else {
+                    place = Autocomplete.getPlaceFromIntent(data);
+                    name = place.getName();
+                    city_name.setText(name);
+                }
                 break;
 
         }
@@ -141,17 +149,52 @@ public class SignUp extends AppCompatActivity {
         sfirst_name = first_name.getText().toString();
         slast_name = last_name.getText().toString();
         semail = email.getText().toString();
+        String numbercheck=number.getText().toString();
         snumber = ccp.getDefaultCountryCodeWithPlus()+number.getText().toString();
         spassword = password.getText().toString();
         scity = city_name.getText().toString();
         sinvite_code = invite_code.getText().toString();
-
-        if (sfirst_name.isEmpty() && slast_name.isEmpty() && semail.isEmpty() && snumber.isEmpty() && spassword.isEmpty() && scity.isEmpty() && sinvite_code.isEmpty())
+        sconfim_password = confim_password.getText().toString();
+        Log.d("Data","\n"+sfirst_name+"\n"+slast_name+"\n"+semail+"\n"+snumber+"\n"+spassword+"\n"+scity+"\n"+sinvite_code);
+        if(sfirst_name.isEmpty())
         {
-            Toast.makeText(this, "Fill all fields", Toast.LENGTH_SHORT).show();
+            first_name.setError("Fill this field");
         }
+        else if(slast_name.isEmpty())
+        {
+            last_name.setError("Fill this field");
+        }
+        else if(semail.isEmpty())
+        {
+            email.setError("Fill this field");
+        }
+        else if(numbercheck.isEmpty())
+        {
+            number.setError("Enter the valid number");
+        }
+        else if(numbercheck.length()>10)
+        {
+            number.setError("Enter the valid number");
+        }
+        else if(spassword.isEmpty())
+        {
+            password.setError("Fill this field");
+        }
+        else if(!(sconfim_password.equals(spassword)))
+        {
+            confim_password.setError("Password does not match");
+        }
+        else if(scity.isEmpty())
+        {
+            city_name.setError("Fill this field");
+        }
+        else if(!(terms_and_conditions.isChecked()))
+        {
+            terms_and_conditions.setError("Check");
+        }
+
         else{
-//            Toast.makeText(this, ""+snumber, Toast.LENGTH_SHORT).show();
+
             signupf(sfirst_name,slast_name,semail,snumber,spassword,scity,sinvite_code);
         }
     }

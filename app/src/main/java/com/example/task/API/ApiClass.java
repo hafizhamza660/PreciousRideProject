@@ -6,6 +6,7 @@ import com.example.task.FilesSignUp.UserServiceSignUp;
 import com.example.task.InterCityNegotiate.UserServiceRideNegotiateInterCity;
 import com.example.task.InterCityRequest.UserServiceInterCityRideRequest;
 import com.example.task.InterCityRequestAccept.UserServiceRideAcceptInterCity;
+import com.example.task.LoginValues.UserServiceLoginValues;
 import com.example.task.LogoutStatusFiles.UserServiceLogoutStatus;
 import com.example.task.NotificationFiles.UserServiceNotification;
 import com.example.task.RideAcceptFiles.UserServiceRideAccept;
@@ -44,6 +45,10 @@ public class ApiClass {
     public static UserServiceSiginIn getUserServiceLogin(){
         UserServiceSiginIn userServiceSiginIn =getRetrofit().create(UserServiceSiginIn.class);
         return userServiceSiginIn;
+    }
+    public static UserServiceLoginValues getUserServiceLoginValues(){
+        UserServiceLoginValues userServiceLoginValues =getRetrofit().create(UserServiceLoginValues.class);
+        return userServiceLoginValues;
     }
 
     public static UserServiceStatus getUserServiceStatus(){

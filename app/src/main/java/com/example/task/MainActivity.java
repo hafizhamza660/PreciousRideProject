@@ -22,6 +22,14 @@ import android.widget.Toast;
 import com.example.task.API.ApiClass;
 import com.example.task.FilesLogin.RequestLogin;
 import com.example.task.FilesLogin.ResponseLogin;
+import com.example.task.LoginValues.RequestLoginValues;
+import com.example.task.LoginValues.ResponseLoginValues;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -54,11 +62,17 @@ public class MainActivity extends AppCompatActivity {
 //        Intent intent = new Intent(MainActivity.this,HomeOffline.class);
 //        startActivity(intent);
 
-        String semail,spassword;
+        String semail, spassword;
         semail = email.getText().toString();
         spassword = password.getText().toString();
+        if (semail.isEmpty()) {
+            email.setError("Required");
+        } else if (spassword.isEmpty()) {
+            password.setError("Required");
+        } else {
 
-        login(semail,spassword);
+            login(semail, spassword);
+        }
     }
 
 //    public void clear(View view) {
@@ -98,6 +112,20 @@ public class MainActivity extends AppCompatActivity {
                         setCity(context,city);
                         setStatus(context,"0");
 
+
+
+                        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+1:00"));
+                        Date currentLocalTime = cal.getTime();
+                        DateFormat date = new SimpleDateFormat("HH:mm a");
+// you can get seconds by adding  "...:ss" to it
+                        date.setTimeZone(TimeZone.getTimeZone("GMT+1:00"));
+
+                        String localTime = date.format(currentLocalTime);
+
+
+
+                        loginvalues(idClient,number,localTime);
+
 //                        setClientId(context,idClient,firstName,lastname,email,number,password,city);
 //                        Toast.makeText(MainActivity.this, ""+response.body().data.id, Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(MainActivity.this, SetupGPSLocationActivity.class);
@@ -112,6 +140,62 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseLogin> call, Throwable t) {
+//                Toast.makeText(MainActivity.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
+                Log.d("TAG", "Error " + t);
+            }
+        });
+    }
+
+
+    public void loginvalues(String driverId,String mobile,String logged_in) {
+        RequestLoginValues requestLoginValues = new RequestLoginValues();
+        requestLoginValues.setDriver_id(driverId);
+        requestLoginValues.setMobile(mobile);
+        requestLoginValues.setLogged_in(logged_in);
+
+//        signUpRequest.setI_code(invite_code);
+
+
+        Call<ResponseLoginValues> responseLoginValuesCall = ApiClass.getUserServiceLoginValues().userLogin(requestLoginValues);
+        responseLoginValuesCall.enqueue(new Callback<ResponseLoginValues>() {
+            @Override
+            public void onResponse(Call<ResponseLoginValues> call, Response<ResponseLoginValues> response) {
+                if (response.isSuccessful()) {
+//                    Toast.makeText(MainActivity.this, ""+response.body().message, Toast.LENGTH_SHORT).show();
+//                    if (response.body().message.equals("Login Successfully"))
+//                    {
+//
+//                        String idClient = response.body().data.id;
+//                        String firstName = response.body().data.f_name;
+//                        String lastname = response.body().data.l_name;
+//                        String city = response.body().data.city;
+//                        String email = response.body().data.email;
+//                        String number = response.body().data.mobile_number;
+//
+//                        setClientId(context,idClient);
+//                        setFirstName(context,firstName);
+//                        setLastName(context,lastname);
+//                        setMobileNumber(context,number);
+//                        setEmail(context,email);
+//                        setCity(context,city);
+//                        setStatus(context,"0");
+//
+//
+//
+////                        setClientId(context,idClient,firstName,lastname,email,number,password,city);
+////                        Toast.makeText(MainActivity.this, ""+response.body().data.id, Toast.LENGTH_LONG).show();
+//                        Intent intent = new Intent(MainActivity.this, SetupGPSLocationActivity.class);
+//                        startActivity(intent);
+//                        finish();
+//                    }
+
+                } else {
+//                    Toast.makeText(MainActivity.this, "Not Successful", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseLoginValues> call, Throwable t) {
 //                Toast.makeText(MainActivity.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
             }
