@@ -27,6 +27,8 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -60,10 +62,13 @@ import com.example.task.FilesLogin.ResponseLogin;
 import com.example.task.Floating.FloatingViewService;
 import com.example.task.LogoutStatusFiles.RequestLogoutStatus;
 import com.example.task.LogoutStatusFiles.ResponseLogoutStatus;
+import com.example.task.RideRequestFiles.RideRequestResponse;
+import com.example.task.RideRequestedHistory.RideRequestHistoryResponse;
 import com.example.task.Service.ServiceClass;
 import com.example.task.Session.SaveSharedPreference;
 import com.example.task.StatusFiles.RequestStatus;
 import com.example.task.StatusFiles.ResponseStatus;
+import com.example.task.adapters.RideRequestListAdapter;
 import com.example.task.adapters.StackAdapter;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -114,6 +119,11 @@ public class HomeOffline extends AppCompatActivity {
     // Make sure to be using androidx.appcompat.app.ActionBarDrawerToggle version.
     private ActionBarDrawerToggle drawerToggle;
     FloatingActionButton floatingActionButton, floatingActionButton_online;
+
+
+//    RecyclerView recyclerViewRideRequest;
+//    LinearLayoutManager linearLayoutManager;
+//    private RideRequestListAdapter rideRequestListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -302,14 +312,14 @@ public class HomeOffline extends AppCompatActivity {
                 bottomSheetLayout.setVisibility(View.GONE);
                 homeOnline.setVisibility(View.VISIBLE);
                 toolbar_title.setText("Online");
-                StackAdapter adapter = new StackAdapter(numberWord(), HomeOffline.this, R.layout.item_stack);
-
-                stackView.setAdapter(adapter);
-                YourListner yourListner = new YourListner();
-                stackView.setListener(yourListner);
+                ridehistoryrequest();
                 floatingActionButton.setVisibility(View.GONE);
                 floatingActionButton_online.setVisibility(View.VISIBLE);
             }
+
+//        recyclerViewRideRequest = findViewById(R.id.recycler_view_rideRequest);
+//        linearLayoutManager = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false);
+//        recyclerViewRideRequest.setLayoutManager(linearLayoutManager);
 
             switchbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -329,11 +339,12 @@ public class HomeOffline extends AppCompatActivity {
                         bottomSheetLayout.setVisibility(View.GONE);
                         homeOnline.setVisibility(View.VISIBLE);
                         toolbar_title.setText("Online");
-                        StackAdapter adapter = new StackAdapter(numberWord(), HomeOffline.this, R.layout.item_stack);
-
-                        stackView.setAdapter(adapter);
-                        YourListner yourListner = new YourListner();
-                        stackView.setListener(yourListner);
+//                        StackAdapter adapter = new StackAdapter(numberWord(), HomeOffline.this, R.layout.item_stack);
+//
+//                        stackView.setAdapter(adapter);
+//                        YourListner yourListner = new YourListner();
+//                        stackView.setListener(yourListner);
+                        ridehistoryrequest();
                         floatingActionButton.setVisibility(View.GONE);
                         floatingActionButton_online.setVisibility(View.VISIBLE);
                     } else {
@@ -371,6 +382,46 @@ public class HomeOffline extends AppCompatActivity {
         driver_id=getClientId(context);
 
 
+    }
+
+
+    public void ridehistoryrequest() {
+
+
+        Call<RideRequestHistoryResponse> signUpResponseCall = ApiClass.getUserServiceRideHistoryRequest().userLogin();
+        signUpResponseCall.enqueue(new Callback<RideRequestHistoryResponse>() {
+            @Override
+            public void onResponse(Call<RideRequestHistoryResponse> call, Response<RideRequestHistoryResponse> response) {
+                if (response.isSuccessful()) {
+//                    Toast.makeText(TravelRequest.this, ""+response.body().data, Toast.LENGTH_LONG).show();
+//                    Log.d(TAG,"Data : "+response.body().data.get(0).id);
+                    if (response.body().data.equals(null))
+                    {
+
+                    }
+                    else {
+//                        rideRequestListAdapter = new RideRequestListAdapter(HomeOffline.this, context, response.body().data);
+//                        recyclerViewRideRequest.setAdapter(rideRequestListAdapter);
+
+
+                        StackAdapter adapter = new StackAdapter(response.body().data, HomeOffline.this, R.layout.item_stack);
+
+                        stackView.setAdapter(adapter);
+                        YourListner yourListner = new YourListner();
+                        stackView.setListener(yourListner);
+                    }
+//
+                } else {
+//                    Toast.makeText(TravelRequest.this, "Not Successful", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RideRequestHistoryResponse> call, Throwable t) {
+//                Toast.makeText(TravelRequest.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
+                Log.d("TAG", "Error " + t);
+            }
+        });
     }
 
     @Override

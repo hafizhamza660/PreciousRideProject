@@ -10,8 +10,10 @@ import com.example.task.LoginValues.UserServiceLoginValues;
 import com.example.task.LogoutStatusFiles.UserServiceLogoutStatus;
 import com.example.task.NotificationFiles.UserServiceNotification;
 import com.example.task.RideAcceptFiles.UserServiceRideAccept;
+import com.example.task.RideCancel.UserServiceRideCancel;
 import com.example.task.RideNegotiate.UserServiceRideNegotiate;
 import com.example.task.RideRequestFiles.UserServiceRideRequest;
+import com.example.task.RideRequestedHistory.UserServiceRideHistoryRequest;
 import com.example.task.StatusFiles.UserServiceStatus;
 import com.example.task.UpdateFiles.UserServiceUpdate;
 
@@ -101,6 +103,14 @@ public class ApiClass {
     public static UserServiceAllNotification getUserServiceAllNotification(){
         UserServiceAllNotification userServiceAllNotification =getRetrofit().create(UserServiceAllNotification.class);
         return userServiceAllNotification;
+    }
+    public static UserServiceRideHistoryRequest getUserServiceRideHistoryRequest(){
+        UserServiceRideHistoryRequest userServiceRideHistoryRequest =getRetrofit().create(UserServiceRideHistoryRequest.class);
+        return userServiceRideHistoryRequest;
+    }
+    public static UserServiceRideCancel getUserServiceRideCancel(){
+        UserServiceRideCancel userServiceRideCancel =getRetrofit().create(UserServiceRideCancel.class);
+        return userServiceRideCancel;
     }
 
 }

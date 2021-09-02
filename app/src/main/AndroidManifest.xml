@@ -17,8 +17,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".ContactUs"
+            android:exported="true" />
         <activity
             android:name=".WelcomeScreen"
             android:exported="true" />
@@ -81,11 +84,7 @@
             android:name=".Floating.FloatingViewService"
             android:enabled="true"
             android:exported="false" />
-
-
-        <service
-            android:name=".Service.ServiceClass"
-            />
+        <service android:name=".Service.ServiceClass" />
     </application>
 
 </manifest>
