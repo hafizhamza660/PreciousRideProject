@@ -8,6 +8,8 @@ import com.example.task.InterCityRequest.UserServiceInterCityRideRequest;
 import com.example.task.InterCityRequestAccept.UserServiceRideAcceptInterCity;
 import com.example.task.LoginValues.UserServiceLoginValues;
 import com.example.task.LogoutStatusFiles.UserServiceLogoutStatus;
+import com.example.task.Messages.MessageWithChatId.UserServiceMessagesWithChatId;
+import com.example.task.Messages.MessageWithoutChatId.UserServiceMessagesWithoutChatId;
 import com.example.task.NotificationFiles.UserServiceNotification;
 import com.example.task.RideAcceptFiles.UserServiceRideAccept;
 import com.example.task.RideCancel.UserServiceRideCancel;
@@ -111,6 +113,16 @@ public class ApiClass {
     public static UserServiceRideCancel getUserServiceRideCancel(){
         UserServiceRideCancel userServiceRideCancel =getRetrofit().create(UserServiceRideCancel.class);
         return userServiceRideCancel;
+    }
+
+    public static UserServiceMessagesWithChatId getUserServiceMessagesWithChatId(){
+        UserServiceMessagesWithChatId userServiceMessagesWithChatId =getRetrofit().create(UserServiceMessagesWithChatId.class);
+        return userServiceMessagesWithChatId;
+    }
+
+    public static UserServiceMessagesWithoutChatId getUserServiceMessagesWithoutChatId(){
+        UserServiceMessagesWithoutChatId userServiceMessagesWithoutChatId =getRetrofit().create(UserServiceMessagesWithoutChatId.class);
+        return userServiceMessagesWithoutChatId;
     }
 
 }

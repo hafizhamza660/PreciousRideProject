@@ -32,6 +32,8 @@ import com.example.task.MainActivity;
 import com.example.task.R;
 import com.example.task.RideAcceptFiles.RequestRideAccept;
 import com.example.task.RideAcceptFiles.ResponseRideAccept;
+import com.example.task.RideCancel.RideCancelRequest;
+import com.example.task.RideCancel.RideCancelResponse;
 import com.example.task.RideNegotiate.RequestRideNegotiate;
 import com.example.task.RideNegotiate.ResponseRideNegotiate;
 import com.example.task.RideRequestFiles.Data;
@@ -116,6 +118,7 @@ public class RideRequestListAdapter extends RecyclerView.Adapter<RideRequestList
                     }
                     else if (data.status.equals("ACCEPTED")) {
                         holder.nego_layout.setVisibility(View.GONE);
+                        holder.cancel_layout.setVisibility(View.VISIBLE);
                         holder.req_type.setText("ACCEPTED");
 //                        holder.negotiate_btn.setVisibility(View.GONE);
 //                        holder.accept_btn.setVisibility(View.GONE);
@@ -158,6 +161,16 @@ public class RideRequestListAdapter extends RecyclerView.Adapter<RideRequestList
                 holder.nego_enter_layout.setVisibility(View.GONE);
             }
         });
+
+        holder.cancel_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String id = getClientId(context);
+                ridecancel(id,data.id);
+
+                holder.cancel_btn.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override
@@ -167,8 +180,8 @@ public class RideRequestListAdapter extends RecyclerView.Adapter<RideRequestList
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         TextView pickup_location,dropoff_location,price,nego_price,req_type;
-        LinearLayout nego_layout,nego_enter_layout;
-        Button negotiate_btn,accept_btn,enter_btn;
+        LinearLayout nego_layout,nego_enter_layout,cancel_layout;
+        Button negotiate_btn,accept_btn,enter_btn,cancel_btn;
         CardView card_offer;
         EditText negotiate_edt;
         public MyViewHolder(View itemView) {
@@ -185,6 +198,8 @@ public class RideRequestListAdapter extends RecyclerView.Adapter<RideRequestList
             negotiate_edt = itemView.findViewById(R.id.negotiate_edt);
             nego_price = itemView.findViewById(R.id.nego_price);
             req_type = itemView.findViewById(R.id.req_type);
+            cancel_btn = itemView.findViewById(R.id.cancel_btn);
+            cancel_layout = itemView.findViewById(R.id.cancel_layout);
         }
     }
 
@@ -278,6 +293,33 @@ public class RideRequestListAdapter extends RecyclerView.Adapter<RideRequestList
 
             @Override
             public void onFailure(Call<ResponseRideNegotiate> call, Throwable t) {
+//                Toast.makeText(context, "Throwable " + t, Toast.LENGTH_SHORT).show();
+                Log.d("TAG", "Error " + t);
+            }
+        });
+    }
+
+    public void ridecancel(String driver_id,String ride_id) {
+        RideCancelRequest rideCancelRequest = new RideCancelRequest();
+        rideCancelRequest.setDriver_id(driver_id);
+        rideCancelRequest.setRide_id(ride_id);
+
+
+        Call<RideCancelResponse> responseRideNegotiateCall = ApiClass.getUserServiceRideCancel().userLogin(rideCancelRequest);
+        responseRideNegotiateCall.enqueue(new Callback<RideCancelResponse>() {
+            @Override
+            public void onResponse(Call<RideCancelResponse> call, Response<RideCancelResponse> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(context, ""+response.body().message, Toast.LENGTH_SHORT).show();
+
+
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RideCancelResponse> call, Throwable t) {
 //                Toast.makeText(context, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
             }

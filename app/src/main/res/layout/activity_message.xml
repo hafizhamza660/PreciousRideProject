@@ -34,7 +34,7 @@
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_gchat"
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="16dp"
@@ -69,7 +69,7 @@
 
 
         <EditText
-            android:id="@+id/edit_gchat_message"
+            android:id="@+id/message"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_centerVertical="true"
@@ -89,11 +89,11 @@
             android:layout_width="64dp"
             android:layout_height="48dp"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:background="?attr/selectableItemBackground"
             android:src="@drawable/send"
             android:text="Send"
-            android:textColor="@color/Primary"
-            android:layout_alignParentRight="true" />
+            android:textColor="@color/Primary" />
 
     </RelativeLayout>
 

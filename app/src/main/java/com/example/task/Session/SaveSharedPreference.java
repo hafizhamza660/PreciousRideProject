@@ -13,6 +13,7 @@ public class SaveSharedPreference {
     static final String PREF_CITY= "name";
     static final String PREF_INTER_CITY= "city";
     static final String PREF_STATUS= "Nothing";
+    static final String PREF_CHAT_ID= "chat_id";
 
     static SharedPreferences getSharedPreferences(Context ctx) {
         return PreferenceManager.getDefaultSharedPreferences(ctx);
@@ -67,10 +68,17 @@ public class SaveSharedPreference {
         editor.commit();
     }
 
+
     public static void setStatus(Context ctx,String status)
     {
         SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
         editor.putString(PREF_STATUS, status);
+        editor.commit();
+    }
+    public static void setChatId(Context ctx,String chat_id)
+    {
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putString(PREF_CHAT_ID, chat_id);
         editor.commit();
     }
 
@@ -111,6 +119,11 @@ public class SaveSharedPreference {
     public static String getStatus(Context ctx)
     {
         return getSharedPreferences(ctx).getString(PREF_STATUS, "");
+    }
+
+    public static String getChatId(Context ctx)
+    {
+        return getSharedPreferences(ctx).getString(PREF_CHAT_ID, "");
     }
 
     public static void clearClientId(Context ctx)

@@ -4,6 +4,7 @@ import static com.example.task.Session.SaveSharedPreference.getClientId;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.task.API.ApiClass;
+import com.example.task.RideAcceptFiles.RequestRideAccept;
+import com.example.task.RideAcceptFiles.ResponseRideAccept;
 import com.example.task.RideCancel.RideCancelRequest;
 import com.example.task.RideCancel.RideCancelResponse;
 import com.example.task.RideNegotiate.RequestRideNegotiate;
@@ -37,6 +40,7 @@ public class HomeOnlineBookingDetails extends AppCompatActivity {
     TextView pickup_location,dropofflocation,price;
     String s_id,s_start_lat,s_start_long,s_end_lat,s_end_long,s_price,s_negotiated_price,s_distance,s_status,s_client_id,s_driver_id;
     CardView negotiate_btn,cancel_btn;
+    ConstraintLayout gotopickupLayout;
     LinearLayout nego_enter_layout;
     Button enter_btn;
     Context context;
@@ -56,6 +60,7 @@ public class HomeOnlineBookingDetails extends AppCompatActivity {
         enter_btn=findViewById(R.id.enter_btn);
         negotiate_edt=findViewById(R.id.negotiate_edt);
         cancel_btn=findViewById(R.id.cancel_btn);
+        gotopickupLayout=findViewById(R.id.gotopickupLayout);
 
         Intent intent= getIntent();
         s_id= intent.getStringExtra("id");
@@ -115,6 +120,16 @@ public class HomeOnlineBookingDetails extends AppCompatActivity {
             }
         });
 
+        gotopickupLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String client_id = getClientId(context);
+                rideaccept(client_id,s_id);
+//                negotiate_btn.setVisibility(View.VISIBLE);
+//                nego_enter_layout.setVisibility(View.GONE);
+            }
+        });
+
 
     }
 
@@ -166,19 +181,9 @@ public class HomeOnlineBookingDetails extends AppCompatActivity {
             public void onResponse(Call<ResponseRideNegotiate> call, Response<ResponseRideNegotiate> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(context, ""+response.body().message, Toast.LENGTH_SHORT).show();
-//                    if (response.body().message.equals("Ride confirmed successfully"))
-//                    {
-//                        Toast.makeText(SignUp.this, ""+response.body().data.verification_code, Toast.LENGTH_LONG).show();
-//                        Toast.makeText(SignUp.this, ""+response.body().signUpData.id, Toast.LENGTH_LONG).show();
-//                        Intent intent = new Intent(SignUp.this, MainActivity.class);
-//                        startActivity(intent);
-//                        finish();
-//                    }
-//                    Toast.makeText(getActivity(), "Login Successfull", Toast.LENGTH_SHORT).show();
-//                    Intent intent = new Intent(getActivity(), PhoneVerification.class);
-//                    startActivity(intent);
+
                 } else {
-//                    Toast.makeText(context, "Not", Toast.LENGTH_SHORT).show();
+
                 }
             }
 
@@ -203,19 +208,10 @@ public class HomeOnlineBookingDetails extends AppCompatActivity {
             public void onResponse(Call<RideCancelResponse> call, Response<RideCancelResponse> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(context, ""+response.body().message, Toast.LENGTH_SHORT).show();
-//                    if (response.body().message.equals("Ride confirmed successfully"))
-//                    {
-//                        Toast.makeText(SignUp.this, ""+response.body().data.verification_code, Toast.LENGTH_LONG).show();
-//                        Toast.makeText(SignUp.this, ""+response.body().signUpData.id, Toast.LENGTH_LONG).show();
-//                        Intent intent = new Intent(SignUp.this, MainActivity.class);
-//                        startActivity(intent);
-//                        finish();
-//                    }
-//                    Toast.makeText(getActivity(), "Login Successfull", Toast.LENGTH_SHORT).show();
-//                    Intent intent = new Intent(getActivity(), PhoneVerification.class);
-//                    startActivity(intent);
+
+
                 } else {
-//                    Toast.makeText(context, "Not", Toast.LENGTH_SHORT).show();
+
                 }
             }
 
@@ -226,4 +222,38 @@ public class HomeOnlineBookingDetails extends AppCompatActivity {
             }
         });
     }
+
+
+    public void rideaccept(String driver_id,String ride_id) {
+        RequestRideAccept requestRideAccept = new RequestRideAccept();
+        requestRideAccept.setDriver_id(driver_id);
+        requestRideAccept.setRide_id(ride_id);
+
+
+        Call<ResponseRideAccept> signUpResponseCall = ApiClass.getUserServiceRideAccept().userLogin(requestRideAccept);
+        signUpResponseCall.enqueue(new Callback<ResponseRideAccept>() {
+            @Override
+            public void onResponse(Call<ResponseRideAccept> call, Response<ResponseRideAccept> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(context, ""+response.body().message, Toast.LENGTH_SHORT).show();
+                    Intent intent= new Intent(HomeOnlineBookingDetails.this,HomeOnlineBookingDetailsGotopickup.class);
+                    intent.putExtra("id",response.body().data.id);
+                    intent.putExtra("client_id",response.body().data.client_id);
+                    intent.putExtra("driver_id",response.body().data.driver_id);
+                    startActivity(intent);
+                    finish();
+
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseRideAccept> call, Throwable t) {
+//                Toast.makeText(context, "Throwable " + t, Toast.LENGTH_SHORT).show();
+                Log.d("TAG", "Error " + t);
+            }
+        });
+    }
+
 }
