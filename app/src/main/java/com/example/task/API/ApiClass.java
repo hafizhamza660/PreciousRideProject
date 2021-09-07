@@ -1,6 +1,8 @@
 package com.example.task.API;
 
 import com.example.task.AllNotificiationFiles.UserServiceAllNotification;
+import com.example.task.DocumentUploadFiles.RequestDocument;
+import com.example.task.DocumentUploadFiles.UserServiceDocumentUpload;
 import com.example.task.FilesLogin.UserServiceSiginIn;
 import com.example.task.FilesSignUp.UserServiceSignUp;
 import com.example.task.InterCityNegotiate.UserServiceRideNegotiateInterCity;
@@ -20,6 +22,7 @@ import com.example.task.StatusFiles.UserServiceStatus;
 import com.example.task.UpdateFiles.UserServiceUpdate;
 
 
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -123,6 +126,10 @@ public class ApiClass {
     public static UserServiceMessagesWithoutChatId getUserServiceMessagesWithoutChatId(){
         UserServiceMessagesWithoutChatId userServiceMessagesWithoutChatId =getRetrofit().create(UserServiceMessagesWithoutChatId.class);
         return userServiceMessagesWithoutChatId;
+    }
+    public static UserServiceDocumentUpload getUserServiceDocumentUpload(){
+        UserServiceDocumentUpload userServiceDocumentUpload =getRetrofit().create(UserServiceDocumentUpload.class);
+        return userServiceDocumentUpload;
     }
 
 }

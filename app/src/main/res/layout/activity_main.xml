@@ -124,6 +124,21 @@
 
 
 
+    <TextView
+        android:onClick="forget_password"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="Forget password"
+        android:textColor="@color/Secondary"
+        android:textSize="16sp"
+        android:fontFamily="@font/se_ui_display"
+        app:layout_constraintTop_toTopOf="@id/signup_text_start_guideline"
+        app:layout_constraintBottom_toBottomOf="@id/signup_text_end_guideline"
+        app:layout_constraintRight_toRightOf="@id/signup_text_right_guideline"
+        app:layout_constraintLeft_toLeftOf="@id/signup_text_left_guideline"
+        />
 
 
     <androidx.constraintlayout.widget.Guideline

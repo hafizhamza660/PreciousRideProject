@@ -161,36 +161,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseLoginValues> call, Response<ResponseLoginValues> response) {
                 if (response.isSuccessful()) {
-//                    Toast.makeText(MainActivity.this, ""+response.body().message, Toast.LENGTH_SHORT).show();
-//                    if (response.body().message.equals("Login Successfully"))
-//                    {
-//
-//                        String idClient = response.body().data.id;
-//                        String firstName = response.body().data.f_name;
-//                        String lastname = response.body().data.l_name;
-//                        String city = response.body().data.city;
-//                        String email = response.body().data.email;
-//                        String number = response.body().data.mobile_number;
-//
-//                        setClientId(context,idClient);
-//                        setFirstName(context,firstName);
-//                        setLastName(context,lastname);
-//                        setMobileNumber(context,number);
-//                        setEmail(context,email);
-//                        setCity(context,city);
-//                        setStatus(context,"0");
-//
-//
-//
-////                        setClientId(context,idClient,firstName,lastname,email,number,password,city);
-////                        Toast.makeText(MainActivity.this, ""+response.body().data.id, Toast.LENGTH_LONG).show();
-//                        Intent intent = new Intent(MainActivity.this, SetupGPSLocationActivity.class);
-//                        startActivity(intent);
-//                        finish();
-//                    }
+
 
                 } else {
-//                    Toast.makeText(MainActivity.this, "Not Successful", Toast.LENGTH_SHORT).show();
+
                 }
             }
 
@@ -200,5 +174,9 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("TAG", "Error " + t);
             }
         });
+    }
+
+    public void forget_password(View view) {
+
     }
 }
