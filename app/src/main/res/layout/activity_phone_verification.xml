@@ -47,95 +47,27 @@
     </LinearLayout>
 
     <LinearLayout
+        android:gravity="center"
         android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/container_3"
         android:layout_below="@id/container_2"
-        android:weightSum="4"
+
         android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:layout_width="0dp"
+        <com.mukesh.OtpView
+            android:id="@+id/otp_view"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/opt_edt"
-            >
-        <EditText
-            android:id="@+id/opt_edt_1"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:textColor="@color/Secondary"
-            android:gravity="center"
             android:inputType="number"
-            android:maxLength="1"
-            android:textSize="30sp"
-            android:background="@drawable/opt_edt"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/opt_edt"
-            >
-            <EditText
-                android:id="@+id/opt_edt_2"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="60dp"
-
-                android:gravity="center"
-                android:inputType="number"
-                android:maxLength="1"
-                android:textSize="30sp"
-                android:background="@drawable/opt_edt"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/opt_edt"
-            >
-            <EditText
-                android:id="@+id/opt_edt_3"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="60dp"
-
-                android:gravity="center"
-                android:inputType="number"
-                android:maxLength="1"
-                android:textSize="30sp"
-                android:background="@drawable/opt_edt"/>
-        </LinearLayout>
-
-        <LinearLayout
-
-            android:layout_margin="10dp"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/opt_edt"
-            >
-            <EditText
-
-                android:id="@+id/opt_edt_4"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-
-                android:gravity="center"
-                android:inputType="number"
-                android:maxLength="1"
-                android:textSize="30sp"
-                android:background="@drawable/opt_edt"/>
-        </LinearLayout>
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textColor="@color/Secondary"
+            app:OtpItemCount="4"
+            app:OtpLineColor="@color/Primary"
+            app:OtpViewType="line"
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -147,6 +79,7 @@
         android:padding="10dp"
         >
         <Button
+            android:onClick="verify"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/button_yellow_background"

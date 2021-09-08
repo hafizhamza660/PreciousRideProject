@@ -49,6 +49,7 @@
                     android:fontFamily="@font/se_ui_display"/>
 
                 <TextView
+                    android:id="@+id/pickup_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="7958 Swift Village"
@@ -104,6 +105,7 @@
 
 
                         <TextView
+                            android:id="@+id/duration"
                             android:textStyle="bold"
                             android:layout_marginTop="5dp"
                             android:layout_width="wrap_content"
@@ -133,6 +135,7 @@
                             android:text="Distance"
                             />
                         <TextView
+                            android:id="@+id/distance"
                             android:textStyle="bold"
                             android:layout_marginTop="5dp"
                             android:layout_width="wrap_content"
@@ -175,6 +178,7 @@
 
                 </LinearLayout>
             <Button
+                android:id="@+id/dropoff_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="DROP OFF"

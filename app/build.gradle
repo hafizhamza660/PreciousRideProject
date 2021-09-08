@@ -65,4 +65,8 @@ dependencies {
     implementation 'com.karumi:dexter:5.0.0'
 
 
+    //OTP
+    implementation 'com.github.mukeshsolanki:android-otpview-pinview:2.1.2'
+
+
 }

@@ -1,6 +1,7 @@
 package com.example.task.API;
 
 import com.example.task.AllNotificiationFiles.UserServiceAllNotification;
+import com.example.task.DataSendFiles.UserServiceDataSend;
 import com.example.task.DocumentUploadFiles.RequestDocument;
 import com.example.task.DocumentUploadFiles.UserServiceDocumentUpload;
 import com.example.task.FilesLogin.UserServiceSiginIn;
@@ -130,6 +131,10 @@ public class ApiClass {
     public static UserServiceDocumentUpload getUserServiceDocumentUpload(){
         UserServiceDocumentUpload userServiceDocumentUpload =getRetrofit().create(UserServiceDocumentUpload.class);
         return userServiceDocumentUpload;
+    }
+    public static UserServiceDataSend getUserServiceDataSend(){
+        UserServiceDataSend userServiceDataSend =getRetrofit().create(UserServiceDataSend.class);
+        return userServiceDataSend;
     }
 
 }

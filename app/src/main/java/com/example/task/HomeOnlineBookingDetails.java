@@ -240,6 +240,10 @@ public class HomeOnlineBookingDetails extends AppCompatActivity {
                     intent.putExtra("id",response.body().data.id);
                     intent.putExtra("client_id",response.body().data.client_id);
                     intent.putExtra("driver_id",response.body().data.driver_id);
+                    intent.putExtra("start_lat",response.body().data.start_lat);
+                    intent.putExtra("start_long",response.body().data.start_long);
+                    intent.putExtra("end_lat",response.body().data.end_lat);
+                    intent.putExtra("end_long",response.body().data.end_long);
                     startActivity(intent);
                     finish();
 

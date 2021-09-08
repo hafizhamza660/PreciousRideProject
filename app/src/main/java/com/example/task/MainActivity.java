@@ -177,6 +177,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void forget_password(View view) {
-
+        startActivity(new Intent(MainActivity.this,ForgetPassword.class));
     }
 }
