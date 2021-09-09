@@ -9,7 +9,7 @@ public class ResponseDataSend {
       public Duration duration;
     public String start_address;
     public String end_address;
-//    public List<Steps> steps;
+    public List<Steps> steps;
 
 
     public Total_Distance getTotal_distance() {
@@ -42,5 +42,13 @@ public class ResponseDataSend {
 
     public void setEnd_address(String end_address) {
         this.end_address = end_address;
+    }
+
+    public List<Steps> getSteps() {
+        return steps;
+    }
+
+    public void setSteps(List<Steps> steps) {
+        this.steps = steps;
     }
 }

@@ -1,10 +1,7 @@
-package com.example.task.DataSendFiles;
+package com.example.task.DataSendFiles.Array1;
 
-
-import java.util.List;
-
-public class Steps {
-   public NameValuePairs nameValuePairs;
+public class Duration {
+    public NameValuePairs nameValuePairs;
 
     public NameValuePairs getNameValuePairs() {
         return nameValuePairs;
@@ -13,6 +10,4 @@ public class Steps {
     public void setNameValuePairs(NameValuePairs nameValuePairs) {
         this.nameValuePairs = nameValuePairs;
     }
-
-
 }

@@ -5,11 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -19,15 +23,22 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.task.API.ApiClass;
+import com.example.task.DataSendFiles.RequestDataSend;
 import com.example.task.DataSendFiles.ResponseDataSend;
 import com.example.task.Directionhelpers.FetchURL;
 import com.example.task.Directionhelpers.TaskLoadedCallback;
+import com.example.task.RoomDatabaseFiles.DatabaseClient;
+import com.example.task.RoomDatabaseFiles.RideDataTable;
+import com.example.task.adapters.RideStepsListAdapter;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -37,16 +48,25 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implements LocationListener, OnMapReadyCallback, TaskLoadedCallback {
     public static final String TAG = "Details";
@@ -54,7 +74,7 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
     ConstraintLayout bottomSheetLayout;
     FloatingActionButton floatingMessage;
     String driver_id, client_id, end_long, start_lat, start_long, end_lat;
-    double flat, flng, tlat, tlng;
+    double flat, flng, tlat, tlng,live_lat,live_lng;
 
     private GoogleMap mMap;
     private MarkerOptions place1, place2;
@@ -69,7 +89,14 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
     protected boolean gps_enabled, network_enabled;
     MapFragment mapFragment;
 
-    TextView pickup_location,duration,distance;
+    TextView pickup_location, duration_txt, distance_txt;
+    List<RideDataTable> rideDataTables;
+
+
+    RecyclerView recyclerViewRideRequest;
+    LinearLayoutManager linearLayoutManager;
+    private RideStepsListAdapter rideStepsListAdapter;
+    int id_To_Update = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,8 +109,8 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
         floatingMessage = findViewById(R.id.floatingMessage);
         dropoff_btn = findViewById(R.id.dropoff_btn);
         pickup_location = findViewById(R.id.pickup_location);
-        duration = findViewById(R.id.duration);
-        distance = findViewById(R.id.distance);
+        duration_txt = findViewById(R.id.duration);
+        distance_txt = findViewById(R.id.distance);
 
         Intent intent = getIntent();
         driver_id = intent.getStringExtra("driver_id");
@@ -112,17 +139,17 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
         tlng = Double.parseDouble(end_long);
 
 
-
 //        addRideRequest(startLat, startLng, endLat, endLng);
 
-         mapFragment = (MapFragment) getFragmentManager()
+        mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
 
         // init the bottom sheet behavior
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetLayout);
         // set callback for changes
         bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
-            @Override public void onStateChanged(@NonNull View bottomSheet, int newState) {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
                 switch (newState) {
                     case BottomSheetBehavior.STATE_HIDDEN:
 //                        textViewBottomSheetState.setText("STATE HIDDEN");
@@ -146,7 +173,9 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
                 }
                 Log.d(TAG, "onStateChanged: " + newState);
             }
-            @Override public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
             }
         });
 
@@ -154,9 +183,9 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
         floatingMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(HomeOnlineBookingDetailsGotopickup.this,Message.class);
-                intent.putExtra("client_id",client_id);
-                intent.putExtra("driver_id",driver_id);
+                Intent intent = new Intent(HomeOnlineBookingDetailsGotopickup.this, Message.class);
+                intent.putExtra("client_id", client_id);
+                intent.putExtra("driver_id", driver_id);
                 startActivity(intent);
             }
         });
@@ -164,10 +193,41 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                        Uri.parse("http://maps.google.com/maps?saddr="+flat+","+flng+"&daddr="+tlat+","+tlng));
+                        Uri.parse("http://maps.google.com/maps?saddr=" + flat + "," + flng + "&daddr=" + tlat + "," + tlng));
                 startActivity(intent);
             }
         });
+
+        recyclerViewRideRequest = findViewById(R.id.recycler_view_rideSteps);
+        linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerViewRideRequest.setLayoutManager(linearLayoutManager);
+
+
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                String pickup = getStringAddres(flat, flng);
+
+                String dropoff = getStringAddres(tlat, tlng);
+
+
+
+
+
+
+                place1 = new MarkerOptions().position(new LatLng(flat, flng)).title(pickup);
+                place2 = new MarkerOptions().position(new LatLng(live_lat, live_lng)).title(dropoff);
+
+//                Log.d("DataLatLong",""+flat+"\n"+flng+"\n"+location.getLatitude()+"\n"+location.getLongitude());
+
+                new FetchURL(HomeOnlineBookingDetailsGotopickup.this).execute(getUrl(place2.getPosition(),place1.getPosition(), "driving"), "driving");
+
+
+
+                JSONObject object= (JSONObject) getPreferenceObjectJson(context,"mapObject");
+                datasend(object);
+            }
+        }, 0, 30000);
     }
 
     public void back_button(View view) {
@@ -178,6 +238,7 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
     public void onBackPressed() {
 //        super.onBackPressed();
     }
+
     public String getStringAddres(Double lat, Double lng) {
         String address = "";
         String city = "";
@@ -225,7 +286,7 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
         mMap = googleMap;
         Log.d("mylog", "Added Markers");
 
-        mMap.addMarker(place2);
+
         mMap.addMarker(place1);
 
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
@@ -245,10 +306,22 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
         CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding);
 
         mMap.animateCamera(cu);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+//        mMap.set
 
 //        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-//                new LatLng(flat,
-//                        flng), DEFAULT_ZOOM));
+//                                            new LatLng(place2.getPosition().latitude,
+//                                                    place2.getPosition().latitude), padding));
     }
 
     private String getUrl(LatLng origin, LatLng dest, String directionMode) {
@@ -279,24 +352,18 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
 
     @Override
     public void onLocationChanged(Location location) {
-        String pickup = getStringAddres(flat, flng);
-
-        String dropoff = getStringAddres(tlat, tlng);
 
 
-
-
-
-        place1 = new MarkerOptions().position(new LatLng(flat, flng)).title(pickup);
-        place2 = new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title(dropoff);
-
-        Log.d("DataLatLong",""+flat+"\n"+flng+"\n"+location.getLatitude()+"\n"+location.getLongitude());
-
-        new FetchURL(HomeOnlineBookingDetailsGotopickup.this).execute(getUrl(place1.getPosition(), place2.getPosition(), "driving"), "driving");
-
+        live_lat=location.getLatitude();
+        live_lng=location.getLongitude();
         mapFragment.getMapAsync(this);
-        ResponseDataSend responseDataSend = new ResponseDataSend();
-        pickup_location.setText(responseDataSend.end_address);
+//        getTasks();
+
+//        Log.d("Ridedatatable","Ride Data: "+rideDataTables.get(0).getEnd_address());
+//        pickup_location.setText(rideDataTablesress());
+//        Cursor data = mydb.getData(id_To_Update);
+
+//        pickup_location.setText(data.getColumnIndex("end_address"));
 
 
 
@@ -306,7 +373,7 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
     public void onProviderDisabled(String provider) {
         Log.d("Latitude","disable");
 
-        pickup_location.setText(provider);
+//        pickup_location.setText(provider);
     }
 
     @Override
@@ -318,4 +385,103 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
     public void onStatusChanged(String provider, int status, Bundle extras) {
         Log.d("Latitude","status");
     }
+
+
+    private void getTasks() {
+        class GetTasks extends AsyncTask<Void, Void, List<RideDataTable>> {
+
+            @Override
+            protected List<RideDataTable> doInBackground(Void... voids) {
+                List<RideDataTable> taskList = DatabaseClient
+                        .getInstance(getApplicationContext())
+                        .getAppDatabase()
+                        .rideDao()
+                        .getAll();
+                return taskList;
+            }
+
+            @Override
+            protected void onPostExecute(List<RideDataTable> tasks) {
+                super.onPostExecute(tasks);
+                Log.d("Ridedatatable","Ride Data: "+tasks);
+//                Log.d("Ridedatatable","Ride Data: "+tasks.get(0).getEnd_address());
+//                rideDataTables=tasks;
+
+            }
+        }
+
+        GetTasks gt = new GetTasks();
+        gt.execute();
+    }
+
+
+
+    static public Object getPreferenceObjectJson(Context c,String key) {
+
+        SharedPreferences appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(
+                c.getApplicationContext());
+        /**** get user data    *****/
+        String json = appSharedPrefs.getString(key, "");
+        Gson gson=new Gson();
+        JSONObject object = gson.fromJson(json,JSONObject.class);
+//        JsonObjectC selectedUser=gson.fromJson(json, JsonObjectC.class);
+        return  object;
+    }
+
+
+    public void datasend(JSONObject object) {
+        RequestDataSend requestDataSend = new RequestDataSend();
+        requestDataSend.setObject(object);
+//        signUpRequest.setI_code(invite_code);
+
+
+        Call<ResponseDataSend> signUpResponseCall = ApiClass.getUserServiceDataSend().userLogin(requestDataSend);
+        signUpResponseCall.enqueue(new Callback<ResponseDataSend>() {
+            @Override
+            public void onResponse(Call<ResponseDataSend> call, Response<ResponseDataSend> response) {
+                if (response.isSuccessful()) {
+
+                    ResponseDataSend responseDataSend = new ResponseDataSend();
+//                    responseDataSend.setEnd_address(response.body().end_address);
+
+                    Log.d("TAGtotal_distance",""+response.body().total_distance.text);
+                    Log.d("TAGduration",""+response.body().duration.text);
+//                    Log.d("TAGduration",""+response.body().duration.get(0));
+                    Log.d("TAGstart_address",""+response.body().start_address);
+                    Log.d("TAGend_address",""+response.body().end_address);
+
+                    String total_distance=response.body().total_distance.text;
+                    String duration=response.body().duration.text;
+                    String start_address=response.body().start_address;
+                    String end_address=response.body().end_address;
+
+                    pickup_location.setText(end_address);
+                    duration_txt.setText(duration);
+                    distance_txt.setText(total_distance);
+
+                    Log.d("DataSteps",""+response.body().steps.get(0).nameValuePairs.html_instructions);
+
+                    rideStepsListAdapter = new RideStepsListAdapter( context, response.body().steps);
+                    recyclerViewRideRequest.setAdapter(rideStepsListAdapter);
+
+//                    saveTask(total_distance,duration,start_address,end_address);
+
+
+
+                } else {
+//                    Toast.makeText(SignUp.this, "API not Hit", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseDataSend> call, Throwable t) {
+//                Toast.makeText(SignUp.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
+                Log.d("TAG", "Error " + t);
+            }
+        });
+    }
+
+
+
+
 }

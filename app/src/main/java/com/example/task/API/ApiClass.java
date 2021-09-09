@@ -6,6 +6,7 @@ import com.example.task.DocumentUploadFiles.RequestDocument;
 import com.example.task.DocumentUploadFiles.UserServiceDocumentUpload;
 import com.example.task.FilesLogin.UserServiceSiginIn;
 import com.example.task.FilesSignUp.UserServiceSignUp;
+import com.example.task.ForgetPasswordFiles.UserServiceForgetPassword;
 import com.example.task.InterCityNegotiate.UserServiceRideNegotiateInterCity;
 import com.example.task.InterCityRequest.UserServiceInterCityRideRequest;
 import com.example.task.InterCityRequestAccept.UserServiceRideAcceptInterCity;
@@ -14,6 +15,8 @@ import com.example.task.LogoutStatusFiles.UserServiceLogoutStatus;
 import com.example.task.Messages.MessageWithChatId.UserServiceMessagesWithChatId;
 import com.example.task.Messages.MessageWithoutChatId.UserServiceMessagesWithoutChatId;
 import com.example.task.NotificationFiles.UserServiceNotification;
+import com.example.task.PhoneVerificationFiles.UserServicePhoneVerification;
+import com.example.task.ResetPasswordFiles.UserServiceResetPassword;
 import com.example.task.RideAcceptFiles.UserServiceRideAccept;
 import com.example.task.RideCancel.UserServiceRideCancel;
 import com.example.task.RideNegotiate.UserServiceRideNegotiate;
@@ -135,6 +138,21 @@ public class ApiClass {
     public static UserServiceDataSend getUserServiceDataSend(){
         UserServiceDataSend userServiceDataSend =getRetrofit().create(UserServiceDataSend.class);
         return userServiceDataSend;
+    }
+
+    public static UserServiceForgetPassword getUserServiceForgetPassword(){
+        UserServiceForgetPassword userServiceForgetPassword =getRetrofit().create(UserServiceForgetPassword.class);
+        return userServiceForgetPassword;
+    }
+
+    public static UserServicePhoneVerification getUserServicePhoneVerification(){
+        UserServicePhoneVerification userServicePhoneVerification =getRetrofit().create(UserServicePhoneVerification.class);
+        return userServicePhoneVerification;
+    }
+
+    public static UserServiceResetPassword getUserServiceResetPassword(){
+        UserServiceResetPassword userServiceResetPassword =getRetrofit().create(UserServiceResetPassword.class);
+        return userServiceResetPassword;
     }
 
 }

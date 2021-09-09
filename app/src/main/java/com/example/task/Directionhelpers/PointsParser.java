@@ -2,9 +2,14 @@ package com.example.task.Directionhelpers;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.task.API.ApiClass;
@@ -13,9 +18,12 @@ import com.example.task.DataSendFiles.ResponseDataSend;
 import com.example.task.FilesSignUp.RequestSignUp;
 import com.example.task.FilesSignUp.ResponseSignUp;
 import com.example.task.MainActivity;
+import com.example.task.RoomDatabaseFiles.DatabaseClient;
+import com.example.task.RoomDatabaseFiles.RideDataTable;
 import com.example.task.SignUp;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
@@ -30,10 +38,14 @@ import retrofit2.Response;
 public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<String, String>>>> {
     TaskLoadedCallback taskCallback;
     String directionMode = "driving";
+    int id_To_Update = 0;
+    Context context;
 
     public PointsParser(Context mContext, String directionMode) {
+        context=mContext;
         this.taskCallback = (TaskLoadedCallback) mContext;
         this.directionMode = directionMode;
+//        mydb = new DatabaseHandler(mContext.getApplicationContext());
     }
 
     // Parsing the data in non-ui thread
@@ -45,7 +57,8 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
 
         try {
             jObject = new JSONObject(jsonData[0]);
-            datasend(jObject);
+//            datasend(jObject);
+            setPreferenceObject(context,jObject,"mapObject");
             Log.d("JsonArray", jsonData[0].toString());
             DataParser parser = new DataParser();
             Log.d("Parser", parser.toString());
@@ -126,19 +139,17 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
 //                    Log.d("TAGduration",""+response.body().duration.get(0));
                     Log.d("TAGstart_address",""+response.body().start_address);
                     Log.d("TAGend_address",""+response.body().end_address);
-//                    Log.d("TAGsteps",""+response.body().steps.get(0));
-//                    Toast.makeText(SignUp.this, ""+response.body().message, Toast.LENGTH_SHORT).show();
-//                    if (response.body().message.equals("Driver Successfully Stored"))
-//                    {
-////                        Toast.makeText(SignUp.this, ""+response.body().data.verification_code, Toast.LENGTH_LONG).show();
-////                        Toast.makeText(SignUp.this, ""+response.body().signUpData.id, Toast.LENGTH_LONG).show();
-//                        Intent intent = new Intent(SignUp.this, MainActivity.class);
-//                        startActivity(intent);
-//                        finish();
-//                    }
-//                    Toast.makeText(getActivity(), "Login Successfull", Toast.LENGTH_SHORT).show();
-//                    Intent intent = new Intent(getActivity(), PhoneVerification.class);
-//                    startActivity(intent);
+
+                    String total_distance=response.body().total_distance.text;
+                    String duration=response.body().duration.text;
+                    String start_address=response.body().start_address;
+                    String end_address=response.body().end_address;
+
+
+                    saveTask(total_distance,duration,start_address,end_address);
+
+
+
                 } else {
 //                    Toast.makeText(SignUp.this, "API not Hit", Toast.LENGTH_SHORT).show();
                 }
@@ -151,4 +162,85 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
             }
         });
     }
+
+
+
+    private void saveTask(String total_distance,String duration,String start_address,String end_address) {
+
+
+        class SaveTask extends AsyncTask<Void, Void, Void> {
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+
+                //creating a task
+                RideDataTable dataTable = new RideDataTable();
+                dataTable.setTotal_distance(total_distance);
+                dataTable.setDuration(duration);
+                dataTable.setStart_address(start_address);
+                dataTable.setEnd_address(end_address);
+
+                //adding to database
+                DatabaseClient.getInstance(context).getAppDatabase()
+                        .rideDao()
+                        .insert(dataTable);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+//                finish();
+//                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+//                Toast.makeText(getApplicationContext(), "Saved", Toast.LENGTH_LONG).show();
+            }
+        }
+
+        SaveTask st = new SaveTask();
+        st.execute();
+    }
+
+
+    static public void setPreferenceObject(Context c, Object modal,String key) {
+        /**** storing object in preferences  ****/
+        SharedPreferences appSharedPrefs = PreferenceManager.getDefaultSharedPreferences(
+                c.getApplicationContext());
+        SharedPreferences.Editor prefsEditor = appSharedPrefs.edit();
+
+        Gson gson = new Gson();
+        String jsonObject = gson.toJson(modal);
+        prefsEditor.putString(key, jsonObject);
+        prefsEditor.commit();
+
+    }
+
+//    public void saveData(String total_distance,String duration,String start_address,String end_address) {
+//        /*, */
+// /*        mydb.addContact(name.getText().toString(),email.getText().toString(), street.getText().toString(), place.getText().toString(), phone.getText().toString());
+//         finish();*/
+//
+//        Cursor idData = mydb.getData(id_To_Update);
+//
+//
+//        if (idData != null) {
+//            int Value = idData.getColumnCount();
+//            if (Value > 0) {
+//                if (mydb.updateStudentContact(id_To_Update, total_distance, duration, start_address,end_address)) {
+//                    Toast.makeText(context, "Successfully Updated", Toast.LENGTH_SHORT).show();
+////                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+////                    startActivity(intent);
+//                } else {
+//                    Toast.makeText(context, "Record not updated", Toast.LENGTH_SHORT).show();
+//                }
+//            } else {
+//                if (mydb.addRideData(total_distance, duration,start_address, end_address)) {
+//                    Toast.makeText(context, "Successfully Added", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    Toast.makeText(context, "Record not added", Toast.LENGTH_SHORT).show();
+//                }
+////                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+////                startActivity(intent);
+//            }
+//        }
+//    }
 }
