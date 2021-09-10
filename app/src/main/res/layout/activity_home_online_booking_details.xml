@@ -25,11 +25,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/rideId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:fontFamily="@font/se_ui_display"
             android:gravity="center"
@@ -60,7 +59,7 @@
         android:id="@+id/container_2"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/scroll_guideline"
+        app:layout_constraintBottom_toTopOf="@+id/button_start_guideline"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
        app:layout_constraintTop_toTopOf="@+id/toolbar_guideline">
@@ -105,6 +104,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/client_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/se_ui_display"
@@ -164,6 +164,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/price_top"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/se_ui_display"
@@ -244,6 +245,7 @@
                     android:background="@color/line_color" />
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -290,6 +292,7 @@
                         android:textStyle="bold" />
 
                     <LinearLayout
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -304,7 +307,7 @@
                             android:textSize="15sp" />
 
                         <TextView
-                            android:id="@+id/price"
+
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -317,6 +320,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -357,6 +361,7 @@
                             android:textSize="15sp" />
 
                         <TextView
+                            android:id="@+id/price"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -554,6 +559,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Price"
+                            android:inputType="numberDecimal"
                             android:textColor="@color/Secondary"
                             android:padding="16dp"
                             android:textSize="16sp"
@@ -600,7 +606,7 @@
         android:id="@+id/gotopickupLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="22dp"
+
         android:background="@color/Primary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

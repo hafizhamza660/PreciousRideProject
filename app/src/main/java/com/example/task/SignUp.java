@@ -159,34 +159,42 @@ public class SignUp extends AppCompatActivity {
         if(sfirst_name.isEmpty())
         {
             first_name.setError("Fill this field");
+            first_name.requestFocus();
         }
         else if(slast_name.isEmpty())
         {
             last_name.setError("Fill this field");
+            last_name.requestFocus();
         }
         else if(semail.isEmpty())
         {
             email.setError("Fill this field");
+            email.requestFocus();
         }
         else if(numbercheck.isEmpty())
         {
             number.setError("Enter the valid number");
+            number.requestFocus();
         }
         else if(numbercheck.length()>10)
         {
             number.setError("Enter the valid number");
+            number.requestFocus();
         }
         else if(spassword.isEmpty())
         {
             password.setError("Fill this field");
+            password.requestFocus();
         }
         else if(!(sconfim_password.equals(spassword)))
         {
             confim_password.setError("Password does not match");
+            confim_password.requestFocus();
         }
         else if(scity.isEmpty())
         {
             city_name.setError("Fill this field");
+            city_name.requestFocus();
         }
         else if(!(terms_and_conditions.isChecked()))
         {

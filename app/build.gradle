@@ -74,5 +74,7 @@ dependencies {
     annotationProcessor "android.arch.persistence.room:compiler:$room_version"
     testImplementation "android.arch.persistence.room:testing:$room_version"
 
+    implementation 'com.google.android.libraries.places:places:2.4.0'
+
 
 }

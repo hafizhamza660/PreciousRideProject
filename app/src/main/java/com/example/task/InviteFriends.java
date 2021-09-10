@@ -2,6 +2,7 @@ package com.example.task;
 
 import static com.example.task.Session.SaveSharedPreference.clearClientId;
 import static com.example.task.Session.SaveSharedPreference.getClientId;
+import static com.example.task.Session.SaveSharedPreference.getFirstName;
 import static com.example.task.Session.SaveSharedPreference.getInterCity;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -16,6 +17,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.task.API.ApiClass;
@@ -70,7 +72,9 @@ public class InviteFriends extends AppCompatActivity {
         // ...From section above...
         // Find our drawer view
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
-
+        View hView =  nvDrawer.getHeaderView(0);
+        TextView drivername = (TextView)hView.findViewById(R.id.driver_name);
+        drivername.setText(getFirstName(context));
         // Setup drawer view
         setupDrawerContent(nvDrawer);
 
@@ -217,7 +221,7 @@ public class InviteFriends extends AppCompatActivity {
 //                        Toast.makeText(InviteFriends.this, "You are online", Toast.LENGTH_LONG).show();
 
                     } else {
-                        Toast.makeText(InviteFriends.this, "Logout", Toast.LENGTH_LONG).show();
+                        Toast.makeText(InviteFriends.this, "Driver Logout Successfully", Toast.LENGTH_LONG).show();
 
                     }
 

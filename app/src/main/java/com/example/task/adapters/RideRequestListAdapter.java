@@ -28,6 +28,8 @@ import com.example.task.Dialog.Rules;
 import com.example.task.FilesSignUp.RequestSignUp;
 import com.example.task.FilesSignUp.ResponseSignUp;
 import com.example.task.HomeOffline;
+import com.example.task.HomeOnlineBookingDetails;
+import com.example.task.HomeOnlineBookingDetailsGotopickup;
 import com.example.task.MainActivity;
 import com.example.task.R;
 import com.example.task.RideAcceptFiles.RequestRideAccept;
@@ -227,8 +229,8 @@ public class RideRequestListAdapter extends RecyclerView.Adapter<RideRequestList
 
     public void rideaccept(String driver_id,String ride_id) {
         RequestRideAccept requestRideAccept = new RequestRideAccept();
-       requestRideAccept.setDriver_id(driver_id);
-       requestRideAccept.setRide_id(ride_id);
+        requestRideAccept.setDriver_id(driver_id);
+        requestRideAccept.setRide_id(ride_id);
 
 
         Call<ResponseRideAccept> signUpResponseCall = ApiClass.getUserServiceRideAccept().userLogin(requestRideAccept);
@@ -237,19 +239,21 @@ public class RideRequestListAdapter extends RecyclerView.Adapter<RideRequestList
             public void onResponse(Call<ResponseRideAccept> call, Response<ResponseRideAccept> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(context, ""+response.body().message, Toast.LENGTH_SHORT).show();
-//                    if (response.body().message.equals("Ride confirmed successfully"))
-//                    {
-//                        Toast.makeText(SignUp.this, ""+response.body().data.verification_code, Toast.LENGTH_LONG).show();
-//                        Toast.makeText(SignUp.this, ""+response.body().signUpData.id, Toast.LENGTH_LONG).show();
-//                        Intent intent = new Intent(SignUp.this, MainActivity.class);
-//                        startActivity(intent);
-//                        finish();
-//                    }
-//                    Toast.makeText(getActivity(), "Login Successfull", Toast.LENGTH_SHORT).show();
-//                    Intent intent = new Intent(getActivity(), PhoneVerification.class);
-//                    startActivity(intent);
+                    if (response.body().message.equals("Ride confirmed successfully")) {
+                        Intent intent = new Intent(activity, HomeOnlineBookingDetailsGotopickup.class);
+                        intent.putExtra("id", response.body().data.id);
+                        intent.putExtra("client_id", response.body().data.client_id);
+                        intent.putExtra("driver_id", response.body().data.driver_id);
+                        intent.putExtra("start_lat", response.body().data.start_lat);
+                        intent.putExtra("start_long", response.body().data.start_long);
+                        intent.putExtra("end_lat", response.body().data.end_lat);
+                        intent.putExtra("end_long", response.body().data.end_long);
+                        activity.startActivity(intent);
+                        activity.finish();
+                    }
+
                 } else {
-//                    Toast.makeText(context, "Not", Toast.LENGTH_SHORT).show();
+
                 }
             }
 

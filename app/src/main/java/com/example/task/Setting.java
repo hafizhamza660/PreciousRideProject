@@ -83,7 +83,9 @@ RelativeLayout container_2,currency_button,bank_button,campaign_button;
         // ...From section above...
         // Find our drawer view
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
-
+        View hView =  nvDrawer.getHeaderView(0);
+        TextView drivername = (TextView)hView.findViewById(R.id.driver_name);
+        drivername.setText(getFirstName(context));
         // Setup drawer view
         setupDrawerContent(nvDrawer);
 
@@ -306,7 +308,7 @@ RelativeLayout container_2,currency_button,bank_button,campaign_button;
 //                        Toast.makeText(Setting.this, "You are online", Toast.LENGTH_LONG).show();
 
                     } else {
-                        Toast.makeText(Setting.this, "Logout", Toast.LENGTH_LONG).show();
+                        Toast.makeText(Setting.this, "Driver Logout Successfully", Toast.LENGTH_LONG).show();
 
                     }
 

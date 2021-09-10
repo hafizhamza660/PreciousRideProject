@@ -112,7 +112,7 @@ public class StackAdapter extends ArrayAdapter {
         ignore_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                c.startActivity(new Intent(c, HomeOnlineBookingDetails.class));
+//                c.startActivity(new Intent(c, HomeOnlineBookingDetails.class));
             }
         });
 
@@ -163,4 +163,7 @@ public class StackAdapter extends ArrayAdapter {
 
         return address + "  " + city;
     }
+
+
+
 }

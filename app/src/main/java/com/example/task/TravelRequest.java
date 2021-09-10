@@ -2,6 +2,7 @@ package com.example.task;
 
 import static com.example.task.Session.SaveSharedPreference.clearClientId;
 import static com.example.task.Session.SaveSharedPreference.getClientId;
+import static com.example.task.Session.SaveSharedPreference.getFirstName;
 import static com.example.task.Session.SaveSharedPreference.getInterCity;
 import static com.example.task.Session.SaveSharedPreference.getStatus;
 import static com.example.task.Session.SaveSharedPreference.setCity;
@@ -34,6 +35,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.task.API.ApiClass;
@@ -111,7 +113,9 @@ public class TravelRequest extends AppCompatActivity {
         // ...From section above...
         // Find our drawer view
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
-
+        View hView =  nvDrawer.getHeaderView(0);
+        TextView drivername = (TextView)hView.findViewById(R.id.driver_name);
+        drivername.setText(getFirstName(context));
         // Setup drawer view
         setupDrawerContent(nvDrawer);
 
