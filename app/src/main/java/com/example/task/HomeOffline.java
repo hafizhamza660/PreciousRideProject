@@ -412,6 +412,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
                     double lng = Double.parseDouble(currentLng);
                     LatLng latLng = new LatLng(lat, lng);
                     reducecircle(latLng);
+
                 }
 
             }
@@ -525,16 +526,19 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
         CircleOptions circleOptions = new CircleOptions()
                 .center(latLng)   //set center
                 .radius(radiusvalue)   //set radius in meters
-                .fillColor(Color.TRANSPARENT)  //default
+                .fillColor(R.color.mapfillcolor)  //default
                 .strokeColor(Color.BLUE)
                 .strokeWidth(5);
 
         if (mCircleList.size()<3){
             Circle mCircle = map.addCircle(circleOptions);
             mCircleList.add(mCircle);
-//            removelastOnecircle();
-        }
 
+        }
+        for (int i = 0 ; i <= mCircleList.size() -2; i++){
+            Circle mCircle = mCircleList.get(i);
+            mCircle.remove();
+        }
 
 
 
@@ -554,7 +558,8 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
         }
 
 
-//        mCircleList.clear();
+        mCircleList.clear();
+        createcircle(latLng,counter);
 //        radiusvalue= radiusvalue-1000;
 //        map.
 //        CircleOptions mapCircle=new CircleOptions()

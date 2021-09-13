@@ -261,6 +261,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Price"
+                    android:inputType="numberDecimal"
                     android:textColor="@color/Secondary"
                     android:padding="16dp"
                     android:textSize="16sp"
