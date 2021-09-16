@@ -1,7 +1,6 @@
 package com.example.task.Service;
 
 
-
 import static com.example.task.Session.SaveSharedPreference.getClientId;
 
 import android.annotation.SuppressLint;
@@ -24,6 +23,7 @@ import androidx.core.app.NotificationCompat;
 
 
 import com.example.task.API.ApiClass;
+import com.example.task.HomeOnlineBookingDetailsGotopickup;
 import com.example.task.NotificationFiles.NotificationRequest;
 import com.example.task.NotificationFiles.NotificationResponse;
 import com.example.task.Notifications;
@@ -52,8 +52,8 @@ public class ServiceClass extends Service {
 
     @Override
     public void onCreate() {
-        context =this;
-        driverId =getClientId(context);
+        context = this;
+        driverId = getClientId(context);
         if (mTimer != null) // Cancel if already existed
             mTimer.cancel();
         else
@@ -65,7 +65,7 @@ public class ServiceClass extends Service {
     public void onDestroy() {
         super.onDestroy();
         mTimer.cancel();    //For Cancel Timer
-        Log.d("service is ","Destroyed");
+        Log.d("service is ", "Destroyed");
     }
 
     //class TimeDisplay for handling task
@@ -76,13 +76,12 @@ public class ServiceClass extends Service {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    Log.d("service is ","running");
+                    Log.d("service is ", "running");
                     notificationapi(driverId);
                 }
             });
         }
     }
-
 
     public void notificationapi(String driverId) {
         NotificationRequest notificationRequest = new NotificationRequest();
@@ -94,42 +93,32 @@ public class ServiceClass extends Service {
             @Override
             public void onResponse(Call<NotificationResponse> call, Response<NotificationResponse> response) {
                 if (response.isSuccessful()) {
-//                    Toast.makeText(ServiceClass.this, ""+response.body().message, Toast.LENGTH_SHORT).show();
-
-                    if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.O)
-                    {
-                        NotificationChannel channel = new NotificationChannel("Aber","SimpleNotification",NotificationManager.IMPORTANCE_DEFAULT);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        NotificationChannel channel = new NotificationChannel("Aber", "SimpleNotification", NotificationManager.IMPORTANCE_DEFAULT);
                         NotificationManager manager = getSystemService(NotificationManager.class);
                         manager.createNotificationChannel(channel);
                     }
-
-
-                    if (response.body().message.equals("Notifications"))
-                    {
-                        if (response.body().data==null) {
-                        }
-                        else {
-
-                                notificationDialog(response.body().data.text);
-
+                    if (response.body().message.equals("Notifications")) {
+                        if (response.body().data == null) {
+                        } else {
+                            notificationDialog(response.body().data.text);
+                            Intent intent = new Intent(ServiceClass.this, HomeOnlineBookingDetailsGotopickup.class);
+                            startActivity(intent);
                         }
                     }
-
-                } else {
-//                    Toast.makeText(ServiceClass.this, "Login Not Successfull", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<NotificationResponse> call, Throwable t) {
-//                Toast.makeText(ServiceClass.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
             }
         });
     }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void notificationDialog(String text) {
-        NotificationManager notificationManager = (NotificationManager)  getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         String NOTIFICATION_CHANNEL_ID = "aber";
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             @SuppressLint("WrongConstant") NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "My Notifications", NotificationManager.IMPORTANCE_MAX);

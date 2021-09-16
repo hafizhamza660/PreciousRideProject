@@ -1,6 +1,7 @@
 package com.example.task;
 
 import static com.example.task.Session.SaveSharedPreference.getClientId;
+import static com.example.task.Session.SaveSharedPreference.setChatId;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -257,6 +258,8 @@ public class HomeOnlineBookingDetails extends AppCompatActivity {
                         intent.putExtra("start_long", response.body().data.start_long);
                         intent.putExtra("end_lat", response.body().data.end_lat);
                         intent.putExtra("end_long", response.body().data.end_long);
+                        String chatid= response.body().chat_id;
+                        setChatId(context,chatid);
                         startActivity(intent);
                         finish();
                     }

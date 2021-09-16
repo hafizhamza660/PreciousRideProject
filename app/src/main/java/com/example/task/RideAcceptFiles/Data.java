@@ -7,6 +7,7 @@ public class Data {
     public String end_lat;
     public String end_long;
     public String price;
+
     public String negotiated_price;
     public String distance;
     public String status;
@@ -14,6 +15,8 @@ public class Data {
     public String driver_id;
     public String created_at;
     public String updated_at;
+
+
 
     public String getId() {
         return id;
