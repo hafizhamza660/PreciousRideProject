@@ -9,8 +9,10 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.FileUtils;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -19,6 +21,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +33,9 @@ import com.example.task.DocumentUploadFiles.ResponseDocumentUpload;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -45,7 +50,7 @@ import retrofit2.Response;
 
 public class AddNewDocument extends AppCompatActivity {
     CardView id_card_front_btn,id_card_back_btn;
-    ImageView id_card_front_img,id_card_back_img,id_card_front_demo,id_card_back_demo;
+    ImageView id_card_front_img,id_card_back_img,id_card_front_demo,id_card_back_demo,imageshow;
 
     private int PICK_IMAGE_REQUEST = 1;
 
@@ -61,7 +66,9 @@ public class AddNewDocument extends AppCompatActivity {
     Bitmap front_bitmap,back_bitmap;
     Context context;
     String front_base_code,back_base_code;
-
+    byte[] byteArray;
+    String encodedImage;
+    ProgressBar pg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,12 +92,14 @@ public class AddNewDocument extends AppCompatActivity {
         id_card_back_demo= findViewById(R.id.id_card_back_demo);
         card_number= findViewById(R.id.card_number);
         expiry_date= findViewById(R.id.expiry_date);
+        imageshow= findViewById(R.id.imageshow);
 
         id_card_front_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 button_value="0";
-                showFileChooser();
+//                showFileChooser();
+                ChooseImage();
             }
         });
 
@@ -98,7 +107,8 @@ public class AddNewDocument extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 button_value="1";
-                showFileChooser();
+//                showFileChooser();
+                ChooseImage();
             }
         });
 
@@ -139,7 +149,9 @@ public class AddNewDocument extends AppCompatActivity {
     }
 
     public void complete_add_document(View view) {
-        front_base_code = ImageUtil.convert(front_bitmap);
+//        front_base_code = getStringImage(front_bitmap);
+//        back_base_code = getStringImage(back_bitmap);
+//        front_base_code = ImageUtil.convert(front_bitmap);
 //        back_base_code = ImageUtil.convert(back_bitmap);
 
         Log.d("ConvertBitmap",""+front_base_code);
@@ -148,9 +160,90 @@ public class AddNewDocument extends AppCompatActivity {
         String cardnumber= card_number.getText().toString();
         String expiry = expiry_date.getText().toString();
 //
-//        documentupload(front_base_code,back_base_code,type,cardnumber,expiry);
+        documentupload(front_base_code,back_base_code,type,cardnumber,expiry);
 
     }
+
+
+    public void ChooseImage() {
+        if (Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED)
+                && !Environment.getExternalStorageState().equals(
+                Environment.MEDIA_CHECKING)) {
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setType("image/*");
+            startActivityForResult(intent, 1);
+
+        } else {
+            Toast.makeText(AddNewDocument.this,
+                    "No activity found to perform this task",
+                    Toast.LENGTH_SHORT).show();
+
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            Bitmap originBitmap = null;
+            Uri selectedImage = data.getData();
+            Toast.makeText(AddNewDocument.this, selectedImage.toString(),
+                    Toast.LENGTH_LONG).show();
+//            txtmsg.setText(selectedImage.toString());
+            InputStream imageStream;
+            try {
+                imageStream = getContentResolver().openInputStream(
+                        selectedImage);
+                originBitmap = BitmapFactory.decodeStream(imageStream);
+
+            } catch (FileNotFoundException e) {
+
+//                txtmsg.setText(e.getMessage().toString());
+            }
+            if (originBitmap != null) {
+//                this.imageshow.setImageBitmap(originBitmap);
+
+                if (button_value.equals("0")) {
+
+//                    front_base_code=encodedImage;
+                    id_card_front_demo.setVisibility(View.GONE);
+                    id_card_front_img.setVisibility(View.VISIBLE);
+                    this.id_card_front_img.setImageBitmap(originBitmap);
+
+                }
+                else{
+//                    back_base_code=encodedImage;
+                    id_card_back_demo.setVisibility(View.GONE);
+                    id_card_back_img.setVisibility(View.VISIBLE);
+                    this.id_card_back_img.setImageBitmap(originBitmap);
+                }
+
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                originBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byteArray = stream.toByteArray();
+                encodedImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                if (button_value.equals("0")) {
+
+                    front_base_code=encodedImage;
+                    this.id_card_front_img.setImageBitmap(originBitmap);
+
+                }
+                else{
+                    back_base_code=encodedImage;
+                    this.id_card_back_img.setImageBitmap(originBitmap);
+                }
+                Toast.makeText(AddNewDocument.this, "Conversion Done",
+                        Toast.LENGTH_SHORT).show();
+            }
+        } else {
+//            txtmsg.setText("There's an error if this code doesn't work, thats all I know");
+
+        }
+    }
+
+
 
 
 
@@ -169,34 +262,34 @@ public class AddNewDocument extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-
-            filePath = data.getData();
-            Log.d("ImageData",""+filePath.getPath());
-
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                if (button_value.equals("0")) {
-                    front_bitmap= bitmap;
-                    id_card_front_demo.setVisibility(View.GONE);
-                    id_card_front_img.setVisibility(View.VISIBLE);
-                    id_card_front_img.setImageBitmap(bitmap);
-                }
-                else {
-                    back_bitmap= bitmap;
-                    id_card_back_demo.setVisibility(View.GONE);
-                    id_card_back_img.setVisibility(View.VISIBLE);
-                    id_card_back_img.setImageBitmap(bitmap);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+//
+//            filePath = data.getData();
+//            Log.d("ImageData",""+filePath.getPath());
+//
+//            try {
+//                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+//                if (button_value.equals("0")) {
+//                    front_bitmap= bitmap;
+//                    id_card_front_demo.setVisibility(View.GONE);
+//                    id_card_front_img.setVisibility(View.VISIBLE);
+//                    id_card_front_img.setImageBitmap(bitmap);
+//                }
+//                else {
+//                    back_bitmap= bitmap;
+//                    id_card_back_demo.setVisibility(View.GONE);
+//                    id_card_back_img.setVisibility(View.VISIBLE);
+//                    id_card_back_img.setImageBitmap(bitmap);
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
 
 

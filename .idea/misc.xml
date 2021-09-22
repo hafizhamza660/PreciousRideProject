@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/drawable-hdpi/background_card_color_white.xml" value="0.13385416666666666" />
+        <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/drawable-ldpi/background_card_color.xml" value="0.13385416666666666" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/drawable-xxxhdpi/ic_close.xml" value="0.2611111111111111" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout-hdpi/activity_my_account.xml" value="0.21920289855072464" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout-hdpi/bottom_layout.xml" value="0.13020833333333334" />
@@ -18,7 +20,7 @@
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/activity_first_screen.xml" value="0.21920289855072464" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/activity_forget_password.xml" value="0.19519927536231885" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/activity_history.xml" value="0.176" />
-        <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/activity_home_offline.xml" value="0.14583333333333334" />
+        <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/activity_home_offline.xml" value="0.16" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/activity_home_online_booking_details.xml" value="0.264" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/activity_home_online_booking_details_gotopickup.xml" value="0.20878623188405798" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/activity_home_swipe_up.xml" value="0.11614583333333334" />

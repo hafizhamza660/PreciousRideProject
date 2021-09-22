@@ -14,6 +14,7 @@ public class SaveSharedPreference {
     static final String PREF_INTER_CITY= "city";
     static final String PREF_STATUS= "Nothing";
     static final String PREF_CHAT_ID= "chat_id";
+    static final float PREF_RANGE= 1;
 
     static SharedPreferences getSharedPreferences(Context ctx) {
         return PreferenceManager.getDefaultSharedPreferences(ctx);
@@ -81,6 +82,13 @@ public class SaveSharedPreference {
         editor.putString(PREF_CHAT_ID, chat_id);
         editor.commit();
     }
+
+//    public static void setRange(Context ctx,double range)
+//    {
+//        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+//        editor.putLong(PREF_RANGE, range);
+//        editor.commit();
+//    }
 
     public static String getClientId(Context ctx)
     {

@@ -17,6 +17,7 @@ import com.example.task.Messages.MessageWithChatId.UserServiceMessagesWithChatId
 import com.example.task.Messages.MessageWithoutChatId.UserServiceMessagesWithoutChatId;
 import com.example.task.NotificationFiles.UserServiceNotification;
 import com.example.task.PhoneVerificationFiles.UserServicePhoneVerification;
+import com.example.task.RangeFiles.UserServiceRange;
 import com.example.task.ResetPasswordFiles.UserServiceResetPassword;
 import com.example.task.RideAcceptFiles.UserServiceRideAccept;
 import com.example.task.RideCancel.UserServiceRideCancel;
@@ -159,6 +160,10 @@ public class ApiClass {
     public static UserServiceClientData getUserServiceClientData(){
         UserServiceClientData userServiceClientData =getRetrofit().create(UserServiceClientData.class);
         return userServiceClientData;
+    }
+    public static UserServiceRange getUserServiceRange(){
+        UserServiceRange userServiceRange =getRetrofit().create(UserServiceRange.class);
+        return userServiceRange;
     }
 
 }

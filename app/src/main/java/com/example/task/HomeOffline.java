@@ -74,6 +74,8 @@ import com.example.task.FilesLogin.ResponseLogin;
 import com.example.task.Floating.FloatingViewService;
 import com.example.task.LogoutStatusFiles.RequestLogoutStatus;
 import com.example.task.LogoutStatusFiles.ResponseLogoutStatus;
+import com.example.task.RangeFiles.RequestRange;
+import com.example.task.RangeFiles.ResponseRange;
 import com.example.task.RideRequestFiles.RideRequestResponse;
 import com.example.task.RideRequestedHistory.RideRequestHistoryResponse;
 import com.example.task.Service.ServiceClass;
@@ -132,7 +134,6 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
     RelativeLayout homeOffline;
     CardStack stackView;
     TextView toolbar_title;
-    TextView timer;
 
     ImageView minus_range, add_range;
     TextView km_range, id_name,driver_name;
@@ -149,7 +150,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
 //    private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
 
 
-    double counter = 0;
+    float counter = 0;
     String val;
 
     // Make sure to be using androidx.appcompat.app.ActionBarDrawerToggle version.
@@ -296,7 +297,6 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
 //            }
 
         bottomSheetLayout = findViewById(R.id.bottom_sheet);
-        timer = findViewById(R.id.timer);
         floatingActionButton = findViewById(R.id.floatingActionButton);
         floatingActionButton_online = findViewById(R.id.floatingActionButton_online);
 
@@ -388,10 +388,15 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
 //        driver_name = findViewById(R.id.driver_name);
 
 
-        km_range.setText(counter + " KM");
+//        km_range.setText(counter + " KM");
 
 //            Toast.makeText(this, "" + "\n" + getFirstName(context) + "\n" + getCity(context) + "\n" + getLastName(context) + "\n" + getEmail(context) + "\n" + getClientId(context) + "\n" + getMobileNumber(context), Toast.LENGTH_SHORT).show();
+
+
         id_name.setText(getFirstName(context));
+
+//        counter= get
+
         minus_range.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -484,7 +489,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
 //                        stackView.setListener(yourListner);
                     ridehistoryrequest();
                     floatingActionButton.setVisibility(View.GONE);
-                    floatingActionButton_online.setVisibility(View.VISIBLE);
+//                    floatingActionButton_online.setVisibility(View.VISIBLE);
                 } else {
                     setStatus(context, "0");
                     status_s = "0";
@@ -530,7 +535,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
                 .strokeColor(Color.BLUE)
                 .strokeWidth(5);
 
-        if (mCircleList.size()<3){
+        if (mCircleList.size()<8){
             Circle mCircle = map.addCircle(circleOptions);
             mCircleList.add(mCircle);
 
@@ -633,6 +638,36 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
         });
     }
 
+
+
+    public void rideRange() {
+        RequestRange requestRange = new RequestRange();
+        requestRange.setDriver_id(driver_id);
+        requestRange.setRange(driver_id);
+
+
+        Call<ResponseRange> responseRangeCall = ApiClass.getUserServiceRange().userLogin(requestRange);
+        responseRangeCall.enqueue(new Callback<ResponseRange>() {
+            @Override
+            public void onResponse(Call<ResponseRange> call, Response<ResponseRange> response) {
+                if (response.isSuccessful()) {
+
+                    counter = Float.parseFloat(response.body().range);
+                    km_range.setText(counter + " KM");
+
+
+                } else {
+//                    Toast.makeText(TravelRequest.this, "Not Successful", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseRange> call, Throwable t) {
+//                Toast.makeText(TravelRequest.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
+                Log.d("TAG", "Error " + t);
+            }
+        });
+    }
 
 
 
