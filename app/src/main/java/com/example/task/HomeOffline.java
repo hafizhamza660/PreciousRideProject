@@ -9,6 +9,7 @@ import static com.example.task.Session.SaveSharedPreference.getInterCity;
 import static com.example.task.Session.SaveSharedPreference.getLastName;
 import static com.example.task.Session.SaveSharedPreference.getMobileNumber;
 
+import static com.example.task.Session.SaveSharedPreference.getRange;
 import static com.example.task.Session.SaveSharedPreference.getStatus;
 import static com.example.task.Session.SaveSharedPreference.setCity;
 import static com.example.task.Session.SaveSharedPreference.setClientId;
@@ -16,6 +17,7 @@ import static com.example.task.Session.SaveSharedPreference.setEmail;
 import static com.example.task.Session.SaveSharedPreference.setFirstName;
 import static com.example.task.Session.SaveSharedPreference.setLastName;
 import static com.example.task.Session.SaveSharedPreference.setMobileNumber;
+import static com.example.task.Session.SaveSharedPreference.setRange;
 import static com.example.task.Session.SaveSharedPreference.setStatus;
 
 import androidx.annotation.NonNull;
@@ -150,7 +152,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
 //    private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
 
 
-    float counter = 0;
+    float counter=1;
     String val;
 
     // Make sure to be using androidx.appcompat.app.ActionBarDrawerToggle version.
@@ -395,14 +397,14 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
 
         id_name.setText(getFirstName(context));
 
-//        counter= get
-
+//        counter= Double.parseDouble(getRange(context));
+        rideRange(String.valueOf(counter),"nothing");
         minus_range.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 counter--;
                 km_range.setText(counter + " KM");
-                if (counter == 0) {
+                if (counter <1) {
                     minus_range.setEnabled(false);
 
 //                    map.addCircle(new CircleOptions()
@@ -413,10 +415,11 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
 
                 }
                 else{
-                    double lat = Double.parseDouble(currentLat);
-                    double lng = Double.parseDouble(currentLng);
-                    LatLng latLng = new LatLng(lat, lng);
-                    reducecircle(latLng);
+                    rideRange(String.valueOf(counter),"minus");
+//                    double lat = Double.parseDouble(currentLat);
+//                    double lng = Double.parseDouble(currentLng);
+//                    LatLng latLng = new LatLng(lat, lng);
+//                    reducecircle(latLng);
 
                 }
 
@@ -426,20 +429,16 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 counter++;
-                km_range.setText(counter + " KM");
+
+//                km_range.setText(counter + " KM");
                 if (counter > 0) {
                     minus_range.setEnabled(true);
-                    double lat = Double.parseDouble(currentLat);
-                    double lng = Double.parseDouble(currentLng);
-                    LatLng latLng = new LatLng(lat, lng);
-                    createcircle(latLng,counter);
-//                    map.addCircle(new CircleOptions()
-//                            .center(latLng)
-//                            .radius(counter+999)
-//                            .strokeColor(Color.RED)
-//                            .fillColor(Color.BLUE));
+                    rideRange(String.valueOf(counter),"add");
+//                    double lat = Double.parseDouble(currentLat);
+//                    double lng = Double.parseDouble(currentLng);
+//                    LatLng latLng = new LatLng(lat, lng);
+//                    createcircle(latLng,counter);
 
-//                    map.
                 }
             }
         });
@@ -640,10 +639,10 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
 
 
 
-    public void rideRange() {
+    public void rideRange(String range,String typebtn) {
         RequestRange requestRange = new RequestRange();
-        requestRange.setDriver_id(driver_id);
-        requestRange.setRange(driver_id);
+        requestRange.setDriver_id(getClientId(context));
+        requestRange.setRange(range);
 
 
         Call<ResponseRange> responseRangeCall = ApiClass.getUserServiceRange().userLogin(requestRange);
@@ -652,8 +651,34 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
             public void onResponse(Call<ResponseRange> call, Response<ResponseRange> response) {
                 if (response.isSuccessful()) {
 
-                    counter = Float.parseFloat(response.body().range);
-                    km_range.setText(counter + " KM");
+                    if (typebtn.equals("add")) {
+                        counter = Float.parseFloat(response.body().range);
+                        setRange(context, String.valueOf(counter));
+                        km_range.setText(counter + " KM");
+                        double lat = Double.parseDouble(currentLat);
+                        double lng = Double.parseDouble(currentLng);
+                        LatLng latLng = new LatLng(lat, lng);
+                        createcircle(latLng, counter);
+
+                    }
+                    else if(typebtn.equals("minus")){
+                        counter = Float.parseFloat(response.body().range);
+                        setRange(context, String.valueOf(counter));
+                        km_range.setText(counter + " KM");
+                        double lat = Double.parseDouble(currentLat);
+                        double lng = Double.parseDouble(currentLng);
+                        LatLng latLng = new LatLng(lat, lng);
+                        reducecircle(latLng);
+                    }
+                    else{
+                        counter = Float.parseFloat(response.body().range);
+                        setRange(context, String.valueOf(counter));
+                        km_range.setText(counter + " KM");
+                        double lat = Double.parseDouble(currentLat);
+                        double lng = Double.parseDouble(currentLng);
+                        LatLng latLng = new LatLng(lat, lng);
+                        createcircle(latLng, counter);
+                    }
 
 
                 } else {

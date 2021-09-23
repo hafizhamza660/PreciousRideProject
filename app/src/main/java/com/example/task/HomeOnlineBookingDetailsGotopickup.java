@@ -26,6 +26,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -97,6 +98,7 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
     LinearLayoutManager linearLayoutManager;
     private RideStepsListAdapter rideStepsListAdapter;
     int id_To_Update = 0;
+    TextView direction_up,distance_up;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +113,8 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
         pickup_location = findViewById(R.id.pickup_location);
         duration_txt = findViewById(R.id.duration);
         distance_txt = findViewById(R.id.distance);
+        direction_up = findViewById(R.id.direction_up);
+        distance_up = findViewById(R.id.distance_up);
 
         Intent intent = getIntent();
         driver_id = intent.getStringExtra("driver_id");
@@ -227,7 +231,7 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
                 JSONObject object= (JSONObject) getPreferenceObjectJson(context,"mapObject");
                 datasend(object);
             }
-        }, 0, 30000);
+        }, 0, 5000);
     }
 
     public void back_button(View view) {
@@ -460,6 +464,13 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
                     distance_txt.setText(total_distance);
 
                     Log.d("DataSteps",""+response.body().steps.get(0).nameValuePairs.html_instructions);
+
+
+                    direction_up.setText(Html.fromHtml(response.body().steps.get(0).nameValuePairs.html_instructions));
+                    distance_up.setText(Html.fromHtml(response.body().steps.get(0).nameValuePairs.distance.nameValuePairs.text));
+
+//                    holder.route.setText(Html.fromHtml(stepslist.nameValuePairs.html_instructions));
+//                    holder.distance_route.setText(stepslist.nameValuePairs.distance.nameValuePairs.text);
 
                     rideStepsListAdapter = new RideStepsListAdapter( context, response.body().steps);
                     recyclerViewRideRequest.setAdapter(rideStepsListAdapter);

@@ -1,5 +1,6 @@
 package com.example.task.API;
 
+import com.example.task.AllDocumentFiles.UserServiceAllDocument;
 import com.example.task.AllNotificiationFiles.UserServiceAllNotification;
 import com.example.task.ClientDataFiles.UserServiceClientData;
 import com.example.task.DataSendFiles.UserServiceDataSend;
@@ -28,6 +29,8 @@ import com.example.task.StatusFiles.UserServiceStatus;
 import com.example.task.UpdateFiles.UserServiceUpdate;
 
 
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -39,7 +42,11 @@ public class ApiClass {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-        OkHttpClient okHttpClient = new OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor).build();
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .connectTimeout(100, TimeUnit.SECONDS)
+                .readTimeout(100,TimeUnit.SECONDS)
+                .addInterceptor(httpLoggingInterceptor)
+                .build();
 
         Retrofit retrofit= new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
@@ -164,6 +171,11 @@ public class ApiClass {
     public static UserServiceRange getUserServiceRange(){
         UserServiceRange userServiceRange =getRetrofit().create(UserServiceRange.class);
         return userServiceRange;
+    }
+
+    public static UserServiceAllDocument getUserServiceAllDocument(){
+        UserServiceAllDocument userServiceAllDocument =getRetrofit().create(UserServiceAllDocument.class);
+        return userServiceAllDocument;
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.task;
 
 import static com.example.task.Session.SaveSharedPreference.getClientId;
+import static com.example.task.Session.SaveSharedPreference.setImageUrl;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -262,35 +263,6 @@ public class AddNewDocument extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-//
-//            filePath = data.getData();
-//            Log.d("ImageData",""+filePath.getPath());
-//
-//            try {
-//                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-//                if (button_value.equals("0")) {
-//                    front_bitmap= bitmap;
-//                    id_card_front_demo.setVisibility(View.GONE);
-//                    id_card_front_img.setVisibility(View.VISIBLE);
-//                    id_card_front_img.setImageBitmap(bitmap);
-//                }
-//                else {
-//                    back_bitmap= bitmap;
-//                    id_card_back_demo.setVisibility(View.GONE);
-//                    id_card_back_img.setVisibility(View.VISIBLE);
-//                    id_card_back_img.setImageBitmap(bitmap);
-//                }
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
-
 
 
 
@@ -328,6 +300,11 @@ public class AddNewDocument extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Log.d("DataDocument",""+response.body().message);
                     Toast.makeText(AddNewDocument.this, ""+response.body().message, Toast.LENGTH_SHORT).show();
+//                    setImageUrl(context,response.body().data.card_file_front);
+                    Intent intent=new Intent(AddNewDocument.this,DocumentManagement.class);
+                    startActivity(intent);
+                    finish();
+
 
                 } else {
 

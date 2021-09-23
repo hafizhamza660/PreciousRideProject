@@ -14,7 +14,8 @@ public class SaveSharedPreference {
     static final String PREF_INTER_CITY= "city";
     static final String PREF_STATUS= "Nothing";
     static final String PREF_CHAT_ID= "chat_id";
-    static final float PREF_RANGE= 1;
+    static final String PREF_RANGE= "1";
+    static final String PREF_IMAGE_URL= "123.jpg";
 
     static SharedPreferences getSharedPreferences(Context ctx) {
         return PreferenceManager.getDefaultSharedPreferences(ctx);
@@ -83,12 +84,19 @@ public class SaveSharedPreference {
         editor.commit();
     }
 
-//    public static void setRange(Context ctx,double range)
-//    {
-//        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
-//        editor.putLong(PREF_RANGE, range);
-//        editor.commit();
-//    }
+    public static void setRange(Context ctx,String range)
+    {
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putString(PREF_RANGE, range);
+        editor.commit();
+    }
+
+    public static void setImageUrl(Context ctx,String imageurl)
+    {
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putString(PREF_IMAGE_URL, imageurl);
+        editor.commit();
+    }
 
     public static String getClientId(Context ctx)
     {
@@ -132,6 +140,16 @@ public class SaveSharedPreference {
     public static String getChatId(Context ctx)
     {
         return getSharedPreferences(ctx).getString(PREF_CHAT_ID, "");
+    }
+
+    public static String getRange(Context ctx)
+    {
+        return getSharedPreferences(ctx).getString(PREF_RANGE, "");
+    }
+
+    public static String getImageUrl(Context ctx)
+    {
+        return getSharedPreferences(ctx).getString(PREF_IMAGE_URL, "");
     }
 
     public static void clearClientId(Context ctx)

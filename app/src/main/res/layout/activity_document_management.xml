@@ -156,6 +156,7 @@
                         app:layout_constraintRight_toRightOf="@id/information_right"
                         app:layout_constraintLeft_toLeftOf="@id/information_left">
                         <TextView
+                            android:id="@+id/id_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="16sp"
@@ -163,6 +164,7 @@
                             />
 
                         <TextView
+                            android:id="@+id/mobile_number"
                             android:padding="5sp"
                             android:layout_marginTop="8dp"
                             android:layout_width="match_parent"
@@ -170,6 +172,7 @@
                             android:background="@drawable/textview_background"
                             />
                         <TextView
+                            android:id="@+id/id_number"
                             android:padding="5sp"
                             android:layout_marginTop="8dp"
                             android:layout_width="match_parent"
@@ -177,6 +180,7 @@
                             android:background="@drawable/textview_background"
                             />
                         <TextView
+                            android:id="@+id/id_expiry"
                             android:padding="5sp"
                             android:layout_marginTop="8dp"
                             android:layout_width="match_parent"
@@ -263,6 +267,13 @@
                         app:layout_constraintBottom_toBottomOf="@id/card_2_bottom"
                         >
                         <ImageView
+                            android:id="@+id/licence_card_img"
+                            android:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            />
+                        <ImageView
+                            android:id="@+id/licence_card_demo"
                             android:layout_gravity="bottom|center"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
@@ -309,6 +320,7 @@
                         app:layout_constraintRight_toRightOf="@id/information_2_right"
                         app:layout_constraintLeft_toLeftOf="@id/information_2_left">
                         <TextView
+                            android:id="@+id/licence_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="16sp"
@@ -316,6 +328,7 @@
                             />
 
                         <TextView
+                            android:id="@+id/licence_mobile_number"
                             android:padding="5sp"
                             android:layout_marginTop="8dp"
                             android:layout_width="match_parent"
@@ -323,6 +336,7 @@
                             android:background="@drawable/textview_background"
                             />
                         <TextView
+                            android:id="@+id/licence_number"
                             android:padding="5sp"
                             android:layout_marginTop="8dp"
                             android:layout_width="match_parent"
@@ -330,6 +344,7 @@
                             android:background="@drawable/textview_background"
                             />
                         <TextView
+                            android:id="@+id/licence_expiry"
                             android:padding="5sp"
                             android:layout_marginTop="8dp"
                             android:layout_width="match_parent"
