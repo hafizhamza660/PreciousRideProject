@@ -37,4 +37,69 @@
     <string name="pick_place">Pick Place</string>
     <string name="default_info_title">Title</string>
     <string name="default_info_snippet">Snippet</string>
+    <string name="info_text">If you don\'t find your vehicle model from the list then let us know at <a href="#"> info@aber.com</a>.</string>
+
+    <string-array name="vehicle_manu_arrays">
+        <item>Afzal Motors.</item>
+        <item>Al-Ghazi Tractors.</item>
+        <item>Al Haj FAW.</item>
+        <item>Al Haj Proton.</item>
+        <item>Atlas Honda.</item>
+        <item>Cavalier Automotive.</item>
+        <item>DYL Motorcycles.</item>
+        <item>Ghandhara Industries.</item>
+    </string-array>
+
+    <string-array name="vehicle_model_arrays">
+        <item>Abarth</item>
+        <item>Acura</item>
+        <item>Alfa Romeo</item>
+        <item>Aston Martin</item>
+        <item>Audi</item>
+        <item>Bentley</item>
+        <item>BMW</item>
+        <item>Buick</item>
+        <item>Cadillac</item>
+        <item>Chevrolet</item>
+        <item>Chrysler</item>
+        <item>Citroen</item>
+        <item>Dacia</item>
+        <item>Dodge</item>
+        <item>Ferrari</item>
+        <item>Fiat</item>
+        <item>Ford</item>
+        <item>GMC</item>
+        <item>Honda</item>
+        <item>Hummer</item>
+        <item>Hyundai</item>
+        <item>Kia</item>
+        <item>Lamborghini</item>
+        <item>Land Rover</item>
+    </string-array>
+
+
+    <string-array name="vehicle_year_arrays">
+        <item>2000</item>
+        <item>2001</item>
+        <item>2002</item>
+        <item>2003</item>
+        <item>2004</item>
+        <item>2005</item>
+        <item>2006</item>
+        <item>2007</item>
+        <item>2008</item>
+        <item>2009</item>
+        <item>2010</item>
+        <item>2011</item>
+        <item>2012</item>
+        <item>2013</item>
+        <item>2014</item>
+        <item>2015</item>
+        <item>2016</item>
+        <item>2017</item>
+        <item>2018</item>
+        <item>2019</item>
+        <item>2020</item>
+        <item>2021</item>
+    </string-array>
 </resources>
