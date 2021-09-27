@@ -38,8 +38,13 @@
     <string name="default_info_title">Title</string>
     <string name="default_info_snippet">Snippet</string>
     <string name="info_text">If you don\'t find your vehicle model from the list then let us know at <a href="#"> info@aber.com</a>.</string>
+    <string name="profile_pic_text">Please provide a clear portrait picture (not a full body picture) of yourself. It should show your full face, front view, with eyes open.</string>
+    <string name="lasdri_lin">Visit <a href="#">Lagos State Drivers Institute</a></string>
+    <string name="badge_lin">Visit <a href="#">LASG MoT Department of Public Transport and Computer Services</a></string>
+    <string name="lasrra_lin">Visit <a href="#">Lagos State Resident Registration Agency</a></string>
 
     <string-array name="vehicle_manu_arrays">
+        <item>Vehicle manufacturer</item>
         <item>Afzal Motors.</item>
         <item>Al-Ghazi Tractors.</item>
         <item>Al Haj FAW.</item>
@@ -51,6 +56,7 @@
     </string-array>
 
     <string-array name="vehicle_model_arrays">
+        <item>Vehicle model</item>
         <item>Abarth</item>
         <item>Acura</item>
         <item>Alfa Romeo</item>
@@ -79,6 +85,7 @@
 
 
     <string-array name="vehicle_year_arrays">
+        <item>Vehicle year</item>
         <item>2000</item>
         <item>2001</item>
         <item>2002</item>
@@ -101,5 +108,30 @@
         <item>2019</item>
         <item>2020</item>
         <item>2021</item>
+    </string-array>
+    <string-array name="vehicle_color">
+        <item>Vehicle color</item>
+        <item>Red</item>
+        <item>Blue</item>
+        <item>Black</item>
+        <item>IndianRed</item>
+        <item>LightCoral</item>
+        <item>Salmon</item>
+        <item>DarkSalmon</item>
+        <item>LightSalmon</item>
+        <item>Crimson</item>
+        <item>OrangeRed</item>
+        <item>Gold</item>
+        <item>DarkKhaki</item>
+        <item>Magenta</item>
+        <item>DarkMagenta</item>
+        <item>LimeGreen</item>
+        <item>SeaGreen</item>
+        <item>Olive</item>
+        <item>Teal</item>
+        <item>MediumTurquoise</item>
+        <item>SteelBlue</item>
+        <item>PowderBlue</item>
+        <item>SkyBlue</item>
     </string-array>
 </resources>

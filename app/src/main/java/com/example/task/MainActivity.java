@@ -37,23 +37,22 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     TextView login_txt;
-    EditText email,password;
+    EditText email, password;
     Context context;
+    String countrycode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        context =this;
-
-        login_txt= findViewById(R.id.login_txt);
-        email= findViewById(R.id.email);
-        password= findViewById(R.id.password);
+        context = this;
+        Intent intent= getIntent();
+        countrycode= intent.getStringExtra("countrycode");
+        login_txt = findViewById(R.id.login_txt);
+        email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
 
         login_txt.setText(getText(R.string.login_text));
-
-
-
 
 
     }
@@ -80,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
 
-    public void login(String email,String password) {
+    public void login(String email, String password) {
         RequestLogin requestLogin = new RequestLogin();
         requestLogin.setEmail(email);
         requestLogin.setPassword(password);
@@ -93,44 +92,51 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(MainActivity.this, ""+response.body().message, Toast.LENGTH_SHORT).show();
-                    if (response.body().message.equals("Login Successfully"))
-                    {
-
+                    Toast.makeText(MainActivity.this, "" + response.body().message, Toast.LENGTH_SHORT).show();
+                    if (response.body().message.equals("Login Successfully")) {
                         String idClient = response.body().data.id;
-                        String firstName = response.body().data.f_name;
-                        String lastname = response.body().data.l_name;
-                        String city = response.body().data.city;
-                        String email = response.body().data.email;
-                        String number = response.body().data.mobile_number;
-
-                        setClientId(context,idClient);
-                        setFirstName(context,firstName);
-                        setLastName(context,lastname);
-                        setMobileNumber(context,number);
-                        setEmail(context,email);
-                        setCity(context,city);
-                        setStatus(context,"0");
+                        setClientId(context, idClient);
+                        if (response.body().data.f_name != null) {
 
 
+                            String firstName = response.body().data.f_name;
+                            String lastname = response.body().data.l_name;
+                            String city = response.body().data.city;
+                            String email = response.body().data.email;
+                            String number = response.body().data.mobile_number;
 
-                        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+1:00"));
-                        Date currentLocalTime = cal.getTime();
-                        DateFormat date = new SimpleDateFormat("HH:mm a");
+
+                            setFirstName(context, firstName);
+                            setLastName(context, lastname);
+                            setMobileNumber(context, number);
+                            setEmail(context, email);
+                            setCity(context, city);
+                            setStatus(context, "0");
+
+
+                            Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+1:00"));
+                            Date currentLocalTime = cal.getTime();
+                            DateFormat date = new SimpleDateFormat("HH:mm a");
 // you can get seconds by adding  "...:ss" to it
-                        date.setTimeZone(TimeZone.getTimeZone("GMT+1:00"));
+                            date.setTimeZone(TimeZone.getTimeZone("GMT+1:00"));
 
-                        String localTime = date.format(currentLocalTime);
+                            String localTime = date.format(currentLocalTime);
 
 
-
-                        loginvalues(idClient,number,localTime);
+                            loginvalues(idClient, number, localTime);
 
 //                        setClientId(context,idClient,firstName,lastname,email,number,password,city);
 //                        Toast.makeText(MainActivity.this, ""+response.body().data.id, Toast.LENGTH_LONG).show();
-                        Intent intent = new Intent(MainActivity.this, SetupGPSLocationActivity.class);
-                        startActivity(intent);
-                        finish();
+                            Intent intent = new Intent(MainActivity.this, SetupGPSLocationActivity.class);
+                            startActivity(intent);
+                            finish();
+
+                        } else {
+                            Intent intent = new Intent(MainActivity.this, PersonalInformationScreen.class);
+                            intent.putExtra("countrycode", countrycode);
+                            startActivity(intent);
+                            finish();
+                        }
                     }
 
                 } else {
@@ -147,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void loginvalues(String driverId,String mobile,String logged_in) {
+    public void loginvalues(String driverId, String mobile, String logged_in) {
         RequestLoginValues requestLoginValues = new RequestLoginValues();
         requestLoginValues.setDriver_id(driverId);
         requestLoginValues.setMobile(mobile);
@@ -177,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void forget_password(View view) {
-        startActivity(new Intent(MainActivity.this,ForgetPassword.class));
+        startActivity(new Intent(MainActivity.this, ForgetPassword.class));
     }
 
     public void back_button(View view) {

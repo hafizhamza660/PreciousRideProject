@@ -4,6 +4,7 @@ import com.example.task.AllDocumentFiles.UserServiceAllDocument;
 import com.example.task.AllNotificiationFiles.UserServiceAllNotification;
 import com.example.task.ClientDataFiles.UserServiceClientData;
 import com.example.task.DataSendFiles.UserServiceDataSend;
+import com.example.task.DocumentDataFiles.UserServiceDocumentCountrywise;
 import com.example.task.DocumentUploadFiles.RequestDocument;
 import com.example.task.DocumentUploadFiles.UserServiceDocumentUpload;
 import com.example.task.FilesLogin.UserServiceSiginIn;
@@ -17,6 +18,7 @@ import com.example.task.LogoutStatusFiles.UserServiceLogoutStatus;
 import com.example.task.Messages.MessageWithChatId.UserServiceMessagesWithChatId;
 import com.example.task.Messages.MessageWithoutChatId.UserServiceMessagesWithoutChatId;
 import com.example.task.NotificationFiles.UserServiceNotification;
+import com.example.task.PersonalInformationFiles.UserServicePersonalInformation;
 import com.example.task.PhoneVerificationFiles.UserServicePhoneVerification;
 import com.example.task.RangeFiles.UserServiceRange;
 import com.example.task.ResetPasswordFiles.UserServiceResetPassword;
@@ -176,6 +178,16 @@ public class ApiClass {
     public static UserServiceAllDocument getUserServiceAllDocument(){
         UserServiceAllDocument userServiceAllDocument =getRetrofit().create(UserServiceAllDocument.class);
         return userServiceAllDocument;
+    }
+
+    public static UserServicePersonalInformation getUserServicePersonalInformation(){
+        UserServicePersonalInformation userServicePersonalInformation =getRetrofit().create(UserServicePersonalInformation.class);
+        return userServicePersonalInformation;
+    }
+
+    public static UserServiceDocumentCountrywise getUserServiceDocumentCountrywise(){
+        UserServiceDocumentCountrywise userServiceDocumentCountrywise =getRetrofit().create(UserServiceDocumentCountrywise.class);
+        return userServiceDocumentCountrywise;
     }
 
 }

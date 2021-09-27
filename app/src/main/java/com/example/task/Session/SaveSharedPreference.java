@@ -16,6 +16,7 @@ public class SaveSharedPreference {
     static final String PREF_CHAT_ID= "chat_id";
     static final String PREF_RANGE= "1";
     static final String PREF_IMAGE_URL= "123.jpg";
+    static final String PREF_COUNTRY_CODE= "2654848";
 
     static SharedPreferences getSharedPreferences(Context ctx) {
         return PreferenceManager.getDefaultSharedPreferences(ctx);
@@ -98,6 +99,13 @@ public class SaveSharedPreference {
         editor.commit();
     }
 
+    public static void setCountryCode(Context ctx,String countrycode)
+    {
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putString(PREF_COUNTRY_CODE, countrycode);
+        editor.commit();
+    }
+
     public static String getClientId(Context ctx)
     {
         return getSharedPreferences(ctx).getString(PREF_USER_ID, "");
@@ -150,6 +158,11 @@ public class SaveSharedPreference {
     public static String getImageUrl(Context ctx)
     {
         return getSharedPreferences(ctx).getString(PREF_IMAGE_URL, "");
+    }
+
+    public static String getCountryCode(Context ctx)
+    {
+        return getSharedPreferences(ctx).getString(PREF_COUNTRY_CODE, "");
     }
 
     public static void clearClientId(Context ctx)

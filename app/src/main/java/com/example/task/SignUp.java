@@ -1,5 +1,7 @@
 package com.example.task;
 
+import static com.example.task.Session.SaveSharedPreference.setCountryCode;
+
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -34,41 +36,35 @@ public class SignUp extends AppCompatActivity {
     TextView city_name;
     String name;
     Context context;
-    EditText first_name,last_name,email,number,password,invite_code,confim_password;
-    String sfirst_name,slast_name,semail,snumber,spassword,scity,sinvite_code,sconfim_password;
+    EditText first_name, last_name, email, number, password, invite_code, confim_password;
+    String sfirst_name, slast_name, semail, snumber, spassword, scity, sinvite_code, sconfim_password;
     private List<Place.Field> fields;
-    final int place_picker_req_code =1;
+    final int place_picker_req_code = 1;
     CountryCodePicker ccp;
     CheckBox terms_and_conditions;
+    String countrycode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        context=this;
+        context = this;
 
 
+        first_name = findViewById(R.id.first_name);
+        last_name = findViewById(R.id.last_name);
+        email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
+        number = findViewById(R.id.number);
+        city_name = findViewById(R.id.city_name);
+        invite_code = findViewById(R.id.invite_code);
+        ccp = findViewById(R.id.ccp);
+        terms_and_conditions = findViewById(R.id.terms_and_conditions);
+        confim_password = findViewById(R.id.confim_password);
 
 
-        first_name=findViewById(R.id.first_name);
-        last_name=findViewById(R.id.last_name);
-        email=findViewById(R.id.email);
-        password=findViewById(R.id.password);
-        number=findViewById(R.id.number);
-        city_name=findViewById(R.id.city_name);
-        invite_code=findViewById(R.id.invite_code);
-        ccp=findViewById(R.id.ccp);
-        terms_and_conditions=findViewById(R.id.terms_and_conditions);
-        confim_password=findViewById(R.id.confim_password);
-
-
-
-
-
-        fields = Arrays.asList(Place.Field.ID,Place.Field.NAME,Place.Field.LAT_LNG);
+        fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG);
         Places.initialize(getApplicationContext(), "AIzaSyAd8q-fqcHslANRJ3WZxR5cMYY1CgtBe9I");
-
-
 
 
     }
@@ -77,8 +73,7 @@ public class SignUp extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        switch (requestCode)
-        {
+        switch (requestCode) {
             case place_picker_req_code:
                 Place place;
                 if (resultCode == 0) {
@@ -101,12 +96,12 @@ public class SignUp extends AppCompatActivity {
     }
 
     public void sign_in(View view) {
-        Intent intent = new Intent(SignUp.this,MainActivity.class);
+        Intent intent = new Intent(SignUp.this, MainActivity.class);
         startActivity(intent);
     }
 
     public void google_sign_in(View view) {
-        startNewActivity(context,"com.google.android.googlequicksearchbox");
+        startNewActivity(context, "com.google.android.googlequicksearchbox");
     }
 
 
@@ -126,7 +121,7 @@ public class SignUp extends AppCompatActivity {
     }
 
     public void facebook_sign_in(View view) {
-        startNewActivity(context,"com.facebook.katana");
+        startNewActivity(context, "com.facebook.katana");
     }
 
     public void worldgrin_sign_in(View view) {
@@ -138,82 +133,66 @@ public class SignUp extends AppCompatActivity {
     }
 
     public void city_get(View view) {
-        Intent i = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN,fields).build(SignUp.this);
-        startActivityForResult(i,place_picker_req_code);
+        Intent i = new Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields).build(SignUp.this);
+        startActivityForResult(i, place_picker_req_code);
     }
 
 
-
-
-    public void dataget(){
-        sfirst_name = first_name.getText().toString();
-        slast_name = last_name.getText().toString();
+    public void dataget() {
+//        sfirst_name = first_name.getText().toString();
+//        slast_name = last_name.getText().toString();
         semail = email.getText().toString();
-        String numbercheck=number.getText().toString();
-        snumber = ccp.getDefaultCountryCodeWithPlus()+number.getText().toString();
+        String numbercheck = number.getText().toString();
+
+        snumber = ccp.getDefaultCountryCodeWithPlus() + number.getText().toString();
+        countrycode = ccp.getDefaultCountryCodeWithPlus();
+        setCountryCode(context,countrycode);
         spassword = password.getText().toString();
         scity = city_name.getText().toString();
-        sinvite_code = invite_code.getText().toString();
+//        sinvite_code = invite_code.getText().toString();
         sconfim_password = confim_password.getText().toString();
-        Log.d("Data","\n"+sfirst_name+"\n"+slast_name+"\n"+semail+"\n"+snumber+"\n"+spassword+"\n"+scity+"\n"+sinvite_code);
-        if(sfirst_name.isEmpty())
-        {
-            first_name.setError("Fill this field");
-            first_name.requestFocus();
-        }
-        else if(slast_name.isEmpty())
-        {
-            last_name.setError("Fill this field");
-            last_name.requestFocus();
-        }
-        else if(semail.isEmpty())
-        {
+        Log.d("Data", "\n" + sfirst_name + "\n" + slast_name + "\n" + semail + "\n" + snumber + "\n" + spassword + "\n" + scity + "\n" + sinvite_code);
+//        if(sfirst_name.isEmpty())
+//        {
+//            first_name.setError("Fill this field");
+//            first_name.requestFocus();
+//        }
+//        else if(slast_name.isEmpty())
+//        {
+//            last_name.setError("Fill this field");
+//            last_name.requestFocus();
+//        }
+        if (semail.isEmpty()) {
             email.setError("Fill this field");
             email.requestFocus();
-        }
-        else if(numbercheck.isEmpty())
-        {
+        } else if (numbercheck.isEmpty()) {
             number.setError("Enter the valid number");
             number.requestFocus();
-        }
-        else if(numbercheck.length()>10)
-        {
+        } else if (numbercheck.length() > 10) {
             number.setError("Enter the valid number");
             number.requestFocus();
-        }
-        else if(spassword.isEmpty())
-        {
+        } else if (spassword.isEmpty()) {
             password.setError("Fill this field");
             password.requestFocus();
-        }
-        else if(!(sconfim_password.equals(spassword)))
-        {
+        } else if (!(sconfim_password.equals(spassword))) {
             confim_password.setError("Password does not match");
             confim_password.requestFocus();
-        }
-        else if(scity.isEmpty())
-        {
+        } else if (scity.isEmpty()) {
             city_name.setError("Fill this field");
             city_name.requestFocus();
-        }
-        else if(!(terms_and_conditions.isChecked()))
-        {
+        } else if (!(terms_and_conditions.isChecked())) {
             terms_and_conditions.setError("Check");
-        }
+        } else {
 
-        else{
-
-            signupf(sfirst_name,slast_name,semail,snumber,spassword,scity,sinvite_code);
+            signupf(sfirst_name, slast_name, semail, snumber, spassword, scity, sinvite_code);
         }
     }
 
 
-
-
-    public void signupf(String first_name,String last_name,String email,String number,String password,String city,String invite_code) {
+    public void signupf(String first_name, String last_name, String email, String number, String password, String city, String invite_code) {
         RequestSignUp requestSignUp = new RequestSignUp();
-        requestSignUp.setF_name(first_name);
-        requestSignUp.setL_name(last_name);
+//        requestSignUp.setF_name(first_name);
+//        requestSignUp.setL_name(last_name);
         requestSignUp.setEmail(email);
         requestSignUp.setNumber(number);
         requestSignUp.setPassword(password);
@@ -226,14 +205,15 @@ public class SignUp extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseSignUp> call, Response<ResponseSignUp> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(SignUp.this, ""+response.body().message, Toast.LENGTH_SHORT).show();
-                    if (response.body().message.equals("Driver Successfully Stored"))
-                    {
-//                        Toast.makeText(SignUp.this, ""+response.body().data.verification_code, Toast.LENGTH_LONG).show();
-//                        Toast.makeText(SignUp.this, ""+response.body().signUpData.id, Toast.LENGTH_LONG).show();
+                    Toast.makeText(SignUp.this, "" + response.body().message, Toast.LENGTH_SHORT).show();
+                    if (response.body().message.equals("Driver Successfully Stored")) {
+
+
                         Intent intent = new Intent(SignUp.this, MainActivity.class);
+                        intent.putExtra("countrycode", countrycode);
                         startActivity(intent);
                         finish();
+
                     }
 //                    Toast.makeText(getActivity(), "Login Successfull", Toast.LENGTH_SHORT).show();
 //                    Intent intent = new Intent(getActivity(), PhoneVerification.class);
