@@ -46,24 +46,68 @@
                     android:textColor="@android:color/holo_red_light"
                     android:gravity="center|end"/>
             </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/expiry_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Expiry Date"
+                    android:textColor="@color/Secondary"
+                    android:fontFamily="@font/se_ui_display"
+                    />
+                <TextView
+                    android:id="@+id/expiry_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/background_edit_text_dark"
+                    android:padding="16sp"
+                    android:textSize="18sp"
+                    android:textColor="@color/Secondary"
+                    android:hint="Select date"
+                    />
+
+            </LinearLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/unique_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
             <TextView
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Exprires"
+                android:text="Unique Code"
                 android:textColor="@color/Secondary"
                 android:fontFamily="@font/se_ui_display"
                 />
-            <TextView
-
+            <EditText
+                android:id="@+id/unique_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_edit_text_dark"
                 android:padding="16sp"
-                android:textSize="18sp"
-                android:hint="Date Select"
+                android:textColor="@color/Secondary"
+                android:hint="000 000 000 000"
                 />
+        </LinearLayout>
 
+            <TextView
+                android:id="@+id/image_name"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/Secondary"
+                android:fontFamily="@font/se_ui_display"
+                />
             <LinearLayout
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
@@ -71,6 +115,7 @@
                 android:gravity="end"
                 >
                 <Button
+                    android:id="@+id/uploadBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/button_yellow_background"

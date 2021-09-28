@@ -7,6 +7,7 @@ import com.example.task.DataSendFiles.UserServiceDataSend;
 import com.example.task.DocumentDataFiles.UserServiceDocumentCountrywise;
 import com.example.task.DocumentUploadFiles.RequestDocument;
 import com.example.task.DocumentUploadFiles.UserServiceDocumentUpload;
+import com.example.task.DocumentsStartFiles.UserServiceDocumentsStartSend;
 import com.example.task.FilesLogin.UserServiceSiginIn;
 import com.example.task.FilesSignUp.UserServiceSignUp;
 import com.example.task.ForgetPasswordFiles.UserServiceForgetPassword;
@@ -188,6 +189,11 @@ public class ApiClass {
     public static UserServiceDocumentCountrywise getUserServiceDocumentCountrywise(){
         UserServiceDocumentCountrywise userServiceDocumentCountrywise =getRetrofit().create(UserServiceDocumentCountrywise.class);
         return userServiceDocumentCountrywise;
+    }
+
+    public static UserServiceDocumentsStartSend getUserServiceDocumentsStartSend (){
+        UserServiceDocumentsStartSend userServiceDocumentsStartSend =getRetrofit().create(UserServiceDocumentsStartSend.class);
+        return userServiceDocumentsStartSend;
     }
 
 }
