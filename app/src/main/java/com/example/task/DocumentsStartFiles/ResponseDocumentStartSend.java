@@ -13,13 +13,13 @@ public class ResponseDocumentStartSend {
 //        this.listdoc = listdoc;
 //    }
 
-//    public List<ListDocument> listDocuments;
-//
-//    public List<ListDocument> getListDocuments() {
-//        return listDocuments;
-//    }
-//
-//    public void setListDocuments(List<ListDocument> listDocuments) {
-//        this.listDocuments = listDocuments;
-//    }
+    public List<ListDocument> listDocuments;
+
+    public List<ListDocument> getListDocuments() {
+        return listDocuments;
+    }
+
+    public void setListDocuments(List<ListDocument> listDocuments) {
+        this.listDocuments = listDocuments;
+    }
 }

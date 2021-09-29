@@ -134,4 +134,29 @@
         <item>PowderBlue</item>
         <item>SkyBlue</item>
     </string-array>
+
+
+
+    <string-array name="bank_names_arrays">
+        <item>Bank Names</item>
+        <item>Meezan Bank Limited.</item>
+        <item>Soneri Mustaqeem Islamic Bank.</item>
+        <item>Dubai Islamic Bank.</item>
+        <item>Al Baraka Bank.</item>
+        <item>Bank Alfalah Islamic.</item>
+        <item>BankIslami Pakistan Limited.</item>
+        <item>Askari Bank Ltd.</item>
+        <item>MCB Islamic Banking.</item>
+    </string-array>
+
+    <string-array name="account_type_arrays">
+        <item>Account type</item>
+        <item>Company</item>
+        <item>Personal</item>
+        <item>Joint-Account</item>
+    </string-array>
+
+
+
+
 </resources>

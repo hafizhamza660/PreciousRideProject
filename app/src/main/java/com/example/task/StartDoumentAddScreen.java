@@ -1,5 +1,7 @@
 package com.example.task;
 
+import static com.example.task.Session.SaveSharedPreference.getClientId;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -142,7 +144,7 @@ public class StartDoumentAddScreen extends AppCompatActivity implements Document
             @Override
             public void onResponse(Call<ResponseDocumentStartSend> call, Response<ResponseDocumentStartSend> response) {
                 if (response.isSuccessful()) {
-                    Log.d("responsedb", " " + response.body());
+                    Log.d("responsedb", " " + response.body().listDocuments.get(0).unique_code);
                 } else {
 //                    Toast.makeText(SignUp.this, "API not Hit", Toast.LENGTH_SHORT).show();
                 }
@@ -232,8 +234,10 @@ public class StartDoumentAddScreen extends AppCompatActivity implements Document
                 String[] ary= new String[]{data_name, data_type, data_document_type, data_unique_code, data_expiry_code, front_base_code};
 //                arraydata.add(positon_array, new String[]{data_name, data_type, data_document_type, data_unique_code, data_expiry_code, front_base_code});
                 arraydata.add(positon_array,ary);
+                String driverId = getClientId(context);
 
-                ListDocument listDocument = new ListDocument(data_name, data_type, data_document_type, data_unique_code, data_expiry_code, front_base_code);
+                Log.d("Row",positon_array+" :"+driverId+"\n"+data_name+"\n"+data_type+"\n"+data_document_type+"\n"+data_unique_code+"\n"+data_expiry_code);
+                ListDocument listDocument = new ListDocument(driverId,data_name, data_type, data_document_type, data_unique_code, data_expiry_code, front_base_code);
                 listDocuments.add(positon_array,listDocument);
 //                for (String[] arry:arraydata
 //                     ) {

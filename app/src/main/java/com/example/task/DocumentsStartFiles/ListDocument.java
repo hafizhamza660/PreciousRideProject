@@ -1,6 +1,7 @@
 package com.example.task.DocumentsStartFiles;
 
 public class ListDocument {
+    public String driver_id;
     public String name;
     public String type;
     public String document_type;
@@ -8,13 +9,22 @@ public class ListDocument {
     public String expiry_date;
     public String imagecode;
 
-    public ListDocument(String name, String type, String document_type, String unique_code, String expiry_date, String imagecode) {
+    public ListDocument(String driver_id,String name, String type, String document_type, String unique_code, String expiry_date, String imagecode) {
+        this.driver_id = driver_id;
         this.name = name;
         this.type = type;
         this.document_type = document_type;
         this.unique_code = unique_code;
         this.expiry_date = expiry_date;
         this.imagecode = imagecode;
+    }
+
+    public String getDriver_id() {
+        return driver_id;
+    }
+
+    public void setDriver_id(String driver_id) {
+        this.driver_id = driver_id;
     }
 
     public String getName() {
