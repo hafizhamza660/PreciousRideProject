@@ -1,8 +1,15 @@
 package com.example.task;
 
 import static com.example.task.Session.SaveSharedPreference.getClientId;
+import static com.example.task.Session.SaveSharedPreference.setCity;
+import static com.example.task.Session.SaveSharedPreference.setEmail;
+import static com.example.task.Session.SaveSharedPreference.setFirstName;
+import static com.example.task.Session.SaveSharedPreference.setLastName;
+import static com.example.task.Session.SaveSharedPreference.setMobileNumber;
+import static com.example.task.Session.SaveSharedPreference.setStatus;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -16,6 +23,7 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,6 +54,8 @@ public class PersonalInformationScreen extends AppCompatActivity {
     String countrycode;
     String f_name,l_name,v_year,v_manu,v_color,v_model,check,v_plate,ref_code;
     Calendar myCalendar;
+    ProgressBar simpleProgressBar;
+    ConstraintLayout rootContainer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +64,8 @@ public class PersonalInformationScreen extends AppCompatActivity {
 
         Intent intent= getIntent();
         countrycode= intent.getStringExtra("countrycode");
+//        rootContainer=findViewById(R.id.rootContainer);
+        simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
         vehicle_manufacture=findViewById(R.id.vehicle_manufacture);
         vehicle_model=findViewById(R.id.vehicle_model);
         vehicle_year=findViewById(R.id.vehicle_year);
@@ -145,6 +157,9 @@ public class PersonalInformationScreen extends AppCompatActivity {
 //                    first_name.setFocusable(true);
 //                }
                 else{
+                    next_btn.setEnabled(false);
+//                    rootContainer.setEnabled(false);
+                    simpleProgressBar.setVisibility(View.VISIBLE);
                     personalInfoAdd(f_name,l_name,check,v_manu,v_model,v_year,v_plate,ref_code);
                 }
 
@@ -203,15 +218,31 @@ public class PersonalInformationScreen extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponsePersonalInformation> call, Response<ResponsePersonalInformation> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(PersonalInformationScreen.this, ""+response.body().message, Toast.LENGTH_SHORT).show();
+
                     if (response.body().message.equals("Success"))
                     {
+                        next_btn.setEnabled(true);
+                        String firstName = first_name;
+                        String lastname = last_name;
+
+
+
+                        setFirstName(context, firstName);
+                        setLastName(context, lastname);
+
+                        simpleProgressBar.setVisibility(View.GONE);
                         Intent intent= new Intent(PersonalInformationScreen.this,DrivingLicenceScreen.class);
                         intent.putExtra("countrycode", countrycode);
                         startActivity(intent);
                     }
+                    else {
+                        next_btn.setEnabled(true);
+                        simpleProgressBar.setVisibility(View.GONE);
+                        Toast.makeText(PersonalInformationScreen.this, ""+response.body().message, Toast.LENGTH_SHORT).show();
+                    }
 
                 } else {
+
                 }
             }
 

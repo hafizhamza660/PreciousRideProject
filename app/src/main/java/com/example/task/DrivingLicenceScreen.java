@@ -1,6 +1,7 @@
 package com.example.task;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,12 +9,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 public class DrivingLicenceScreen extends AppCompatActivity {
     String countrycode;
     CheckBox i_dont_have_taxi;
     LinearLayout taxi_info_layout;
     Button next_btn;
+    ProgressBar simpleProgressBar;
+    ConstraintLayout rootContainer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,10 +45,11 @@ public class DrivingLicenceScreen extends AppCompatActivity {
     public void agree_check(View view) {
         if (i_dont_have_taxi.isChecked())
         {
-            taxi_info_layout.setVisibility(View.VISIBLE);
+            taxi_info_layout.setVisibility(View.GONE);
         }
         else{
-            taxi_info_layout.setVisibility(View.GONE);
+
+            taxi_info_layout.setVisibility(View.VISIBLE);
         }
     }
 }

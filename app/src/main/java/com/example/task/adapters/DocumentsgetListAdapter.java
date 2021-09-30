@@ -174,7 +174,19 @@ public class DocumentsgetListAdapter extends RecyclerView.Adapter<DocumentsgetLi
                         }  else {
                             unique_code_txt=holder.unique_code.getText().toString();
                         }
-                       mCallback.onHandleSelection(position, data.name,data.type,data.document_type,unique_code_txt,expiry_txt);
+//                        if (unique_code_txt.isEmpty())
+//                        {
+//                            holder.unique_code.setError("Required");
+//                            holder.unique_code.setFocusable(true);
+//                        }
+//                        else if (expiry_txt.isEmpty())
+//                        {
+//                            holder.expiry_date.setError("Required");
+//
+//                        }
+//                        else {
+                            mCallback.onHandleSelection(position, data.name, data.type, data.document_type, unique_code_txt, expiry_txt);
+//                        }
 //                       Log.d("DocumentListImage","ImageName :"+name_image);
 //                       holder.image_name.setText(name_image);
                     }
@@ -233,9 +245,21 @@ public class DocumentsgetListAdapter extends RecyclerView.Adapter<DocumentsgetLi
                         }  else {
                             unique_code_txt=holder.unique_code.getText().toString();
                         }
-                        mCallback.onHandleSelection(position, data.name,data.type,data.document_type,unique_code_txt,expiry_txt);
+//                        if (unique_code_txt.isEmpty())
+//                        {
+//                            holder.unique_code.setError("Required");
+//                            holder.unique_code.setFocusable(true);
+//                        }
+//                        else if (expiry_txt.isEmpty())
+//                        {
+//                            holder.expiry_date.setError("Required");
+//
+//                        }
+//                        else {
+                            mCallback.onHandleSelection(position, data.name, data.type, data.document_type, unique_code_txt, expiry_txt);
 //                       Log.d("DocumentListImage","ImageName :"+name_image);
 //                       holder.image_name.setText(name_image);
+//                        }
                     }
                 }
             });

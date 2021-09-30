@@ -1,8 +1,10 @@
 package com.example.task.API;
 
+import com.example.task.AccountDetailsFiles.UserServiceAccountDetails;
 import com.example.task.AllDocumentFiles.UserServiceAllDocument;
 import com.example.task.AllNotificiationFiles.UserServiceAllNotification;
 import com.example.task.ClientDataFiles.UserServiceClientData;
+import com.example.task.CountryNameFiles.UserServiceCountryName;
 import com.example.task.DataSendFiles.UserServiceDataSend;
 import com.example.task.DocumentDataFiles.UserServiceDocumentCountrywise;
 import com.example.task.DocumentUploadFiles.RequestDocument;
@@ -194,6 +196,17 @@ public class ApiClass {
     public static UserServiceDocumentsStartSend getUserServiceDocumentsStartSend (){
         UserServiceDocumentsStartSend userServiceDocumentsStartSend =getRetrofit().create(UserServiceDocumentsStartSend.class);
         return userServiceDocumentsStartSend;
+    }
+
+    public static UserServiceAccountDetails getUserServiceAccountDetails (){
+        UserServiceAccountDetails userServiceAccountDetails =getRetrofit().create(UserServiceAccountDetails.class);
+        return userServiceAccountDetails;
+    }
+
+    public static UserServiceCountryName getUserServiceCountryName(){
+        UserServiceCountryName userServiceCountryName =getRetrofit().create(UserServiceCountryName.class);
+        return userServiceCountryName;
+
     }
 
 }

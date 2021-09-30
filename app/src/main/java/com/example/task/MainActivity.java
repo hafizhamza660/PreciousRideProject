@@ -9,13 +9,17 @@ import static com.example.task.Session.SaveSharedPreference.setMobileNumber;
 import static com.example.task.Session.SaveSharedPreference.setStatus;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,12 +44,20 @@ public class MainActivity extends AppCompatActivity {
     EditText email, password;
     Context context;
     String countrycode;
+    ConstraintLayout parentLayout;
+    ProgressBar simpleProgressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         context = this;
+
+        simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
+
+        parentLayout = findViewById(R.id.parentLayout);
+
+
         Intent intent= getIntent();
         countrycode= intent.getStringExtra("countrycode");
         login_txt = findViewById(R.id.login_txt);
@@ -71,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
 
             login(semail, spassword);
+            simpleProgressBar.setVisibility(View.VISIBLE);
         }
     }
 
@@ -98,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                         setClientId(context, idClient);
                         if (response.body().data.f_name != null) {
 
-
+                            simpleProgressBar.setVisibility(View.GONE);
                             String firstName = response.body().data.f_name;
                             String lastname = response.body().data.l_name;
                             String city = response.body().data.city;

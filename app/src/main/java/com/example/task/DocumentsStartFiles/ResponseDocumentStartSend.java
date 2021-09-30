@@ -13,6 +13,16 @@ public class ResponseDocumentStartSend {
 //        this.listdoc = listdoc;
 //    }
 
+    public String message;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public List<ListDocument> listDocuments;
 
     public List<ListDocument> getListDocuments() {

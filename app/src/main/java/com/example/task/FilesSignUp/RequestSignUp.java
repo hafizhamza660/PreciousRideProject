@@ -1,6 +1,7 @@
 package com.example.task.FilesSignUp;
 
 public class RequestSignUp {
+    public String codecountry;
     public String f_name;
     public String l_name;
     public String number;
@@ -8,6 +9,14 @@ public class RequestSignUp {
     public String email;
     public String password;
     public String i_code;
+
+    public String getCodecountry() {
+        return codecountry;
+    }
+
+    public void setCodecountry(String codecountry) {
+        this.codecountry = codecountry;
+    }
 
     public String getF_name() {
         return f_name;

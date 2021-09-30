@@ -68,7 +68,7 @@ public class StartDoumentAddScreen extends AppCompatActivity implements Document
      Button next_btn;
 
      List<ListDocument> listDocuments;
-
+    ProgressBar simpleProgressBar;
      String data_name,data_type,data_document_type,data_unique_code,data_expiry_code;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +78,7 @@ public class StartDoumentAddScreen extends AppCompatActivity implements Document
         context = this;
         Intent intent = getIntent();
         countrycode = intent.getStringExtra("countrycode");
-
+        simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
         arraydata = new ArrayList<>();
         listDocuments= new ArrayList<>();
 //        dataDocumentget(getCountryCode(context));
@@ -88,27 +88,32 @@ public class StartDoumentAddScreen extends AppCompatActivity implements Document
         next_btn = findViewById(R.id.next_btn);
 
         // Create progressBar dynamically...
-        progressBar = new ProgressBar(this);
-        progressBar.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
         linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         recyclerViewdocument.setLayoutManager(linearLayoutManager);
 
         next_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (listDocuments.size()<=0)
+                {
+                    Toast.makeText(StartDoumentAddScreen.this, "Fill the data", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    next_btn.setEnabled(false);
+//                    rootContainer.setEnabled(false);
                 dataDocumentsent(listDocuments);
+                    simpleProgressBar.setVisibility(View.VISIBLE);
+                }
 //                dataDocumentsent(arraydata);
             }
         });
 
     }
 
-    //    public void dataDocumentget(String countrycode) {
     public void dataDocumentget() {
         RequestDocumentCountrywise requestSignUp = new RequestDocumentCountrywise();
-//
         requestSignUp.setNumber("+92");
-//        signUpRequest.setI_code(invite_code);
 
 
         Call<ResponseDocumentCountrywise> signUpResponseCall = ApiClass.getUserServiceDocumentCountrywise().userLogin(requestSignUp);
@@ -121,19 +126,17 @@ public class StartDoumentAddScreen extends AppCompatActivity implements Document
                         recyclerViewdocument.setAdapter(rideStepsListAdapter);
                     }
                 } else {
-//                    Toast.makeText(SignUp.this, "API not Hit", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseDocumentCountrywise> call, Throwable t) {
-//                Toast.makeText(SignUp.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
+
                 Log.d("TAG", "Error " + t);
             }
         });
     }
 
-    //    public void dataDocumentget(String countrycode) {
     public void dataDocumentsent(List<ListDocument> arrydata) {
         RequestDocumentStartSend requestSignUp = new RequestDocumentStartSend();
         requestSignUp.setListDocuments(arrydata);
@@ -144,9 +147,19 @@ public class StartDoumentAddScreen extends AppCompatActivity implements Document
             @Override
             public void onResponse(Call<ResponseDocumentStartSend> call, Response<ResponseDocumentStartSend> response) {
                 if (response.isSuccessful()) {
-                    Log.d("responsedb", " " + response.body().listDocuments.get(0).unique_code);
+                    if (response.body().message.equals("Success")) {
+                        next_btn.setEnabled(true);
+                        simpleProgressBar.setVisibility(View.GONE);
+                        Intent intent = new Intent(StartDoumentAddScreen.this, PaymentMethodScreenFirst.class);
+                        startActivity(intent);
+                    }
+                    else{
+                        next_btn.setEnabled(true);
+                        simpleProgressBar.setVisibility(View.GONE);
+                        Toast.makeText(StartDoumentAddScreen.this, ""+response.body().message, Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-//                    Toast.makeText(SignUp.this, "API not Hit", Toast.LENGTH_SHORT).show();
+
                 }
             }
 
@@ -158,36 +171,7 @@ public class StartDoumentAddScreen extends AppCompatActivity implements Document
         });
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        switch(resultCode){
-//
-//            case RESULT_OK:
-//
-//                // ... Check for some data from the intent
-//                if(requestCode == MY_REQUEST){
-//                    // .. lets toast again
-//                    int position = -1;
-//                    if(data != null){
-//                        position = data.getIntExtra("Position", 0);
-//                    }
-//
-//                    if(position != -1) {
-//                        Toast.makeText(this, "Handled the result successfully at position " + position, Toast.LENGTH_SHORT).show();
-//                    }else{
-//                        Toast.makeText(this, "Failed to get data from intent" , Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//
-//                break;
-//
-//            case RESULT_CANCELED:
-//
-//                // ... Handle this situation
-//                break;
-//        }
-//    }
+
 
 
     @Override
@@ -201,8 +185,8 @@ public class StartDoumentAddScreen extends AppCompatActivity implements Document
             Uri selectedImage = data.getData();
             filename = selectedImage.getPath();
             path = true;
-            Toast.makeText(activity, selectedImage.toString(),
-                    Toast.LENGTH_LONG).show();
+//            Toast.makeText(activity, selectedImage.toString(),
+//                    Toast.LENGTH_LONG).show();
 //            txtmsg.setText(selectedImage.toString());
             InputStream imageStream;
             try {
@@ -250,8 +234,8 @@ public class StartDoumentAddScreen extends AppCompatActivity implements Document
 //                Log.d("ArrayData", "Array : " + );
 //                arraydata.add(data_name,data_type,data_document_type,data_unique_code,data_expiry_code,front_base_code);
 //                }
-                Toast.makeText(StartDoumentAddScreen.this, "Conversion Done",
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(StartDoumentAddScreen.this, "Conversion Done",
+//                        Toast.LENGTH_SHORT).show();
 //                progressBar.setVisibility(View.GONE);
 //                int visibility = (progressBar.getVisibility() == View.GONE) ? View.VISIBLE : View.GONE;
 //
@@ -307,43 +291,3 @@ public class StartDoumentAddScreen extends AppCompatActivity implements Document
 
 
 
-
-//    class TestAsync extends AsyncTask<Void, Integer, String> {
-//        String TAG = getClass().getSimpleName();
-//
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//            Log.d(TAG + " PreExceute","On pre Exceute......");
-//
-//        }
-//
-//        protected String doInBackground(Void...arg0) {
-//            Log.d(TAG + " DoINBackGround", "On doInBackground...");
-//            String name =ChooseImage();
-//
-////            for (int i=0; i<10; i++){
-////                Integer in = new Integer(i);
-////                publishProgress(i);
-////            }
-//
-////            while(filename==null){
-////                timeseconds++;
-////            }
-//
-//
-//
-//                return name;
-//        }
-//
-//        protected void onProgressUpdate(Integer...a) {
-//            super.onProgressUpdate(a);
-//            Log.d(TAG + " onProgressUpdate", "You are in progress update ... " + a[0]);
-//        }
-//
-//        protected void onPostExecute(String result) {
-//            super.onPostExecute(result);
-//            Log.d(TAG + " onPostExecute", "" + result);
-//        }
-//
-//
-//    }

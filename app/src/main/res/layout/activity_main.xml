@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/parentLayout"
     android:background="@color/background">
+
+
 
     <View
         android:layout_width="0dp"
@@ -16,8 +20,8 @@
 
     <ImageView
         android:id="@+id/back_button"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:onClick="back_button"
         android:src="@drawable/back_icon"
         app:layout_constraintBottom_toBottomOf="@id/back_button_guideline"
@@ -25,7 +29,8 @@
         app:layout_constraintHorizontal_bias="0.03"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/white" />
+        app:tint="@color/white"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <androidx.constraintlayout.widget.Guideline
         android:layout_width="wrap_content"
@@ -142,23 +147,21 @@
         app:layout_constraintGuide_percent="0.60"/>
 
 
-
-
     <TextView
-        android:onClick="forget_password"
-        android:gravity="center"
-        android:textStyle="bold"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:fontFamily="@font/se_ui_display"
+        android:gravity="center"
+        android:onClick="forget_password"
         android:text="Forget password"
         android:textColor="@color/Secondary"
         android:textSize="16sp"
-        android:fontFamily="@font/se_ui_display"
-        app:layout_constraintTop_toTopOf="@id/signup_text_start_guideline"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/signup_text_end_guideline"
-        app:layout_constraintRight_toRightOf="@id/signup_text_right_guideline"
         app:layout_constraintLeft_toLeftOf="@id/signup_text_left_guideline"
-        />
+        app:layout_constraintRight_toRightOf="@id/signup_text_right_guideline"
+        app:layout_constraintTop_toTopOf="@id/signup_text_start_guideline"
+        tools:ignore="TouchTargetSizeCheck" />
 
 
     <androidx.constraintlayout.widget.Guideline
@@ -189,6 +192,16 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.90"/>
 
+    <ProgressBar
+        android:id="@+id/simpleProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.79" />
 
 <!--    <LinearLayout-->
 <!--        android:layout_width=""-->
