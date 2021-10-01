@@ -121,7 +121,11 @@ public class SignUp extends AppCompatActivity {
     public void sign_up(View view) {
 //        Intent intent = new Intent(SignUp.this,HomeOffline.class);
 //        startActivity(intent);
-        dataget();
+//        dataget();
+
+        Intent intent = new Intent(SignUp.this, PersonalInformationScreen.class);
+        startActivity(intent);
+        finish();
     }
 
     public void sign_in(View view) {
@@ -170,52 +174,56 @@ public class SignUp extends AppCompatActivity {
     public void dataget() {
 //        sfirst_name = first_name.getText().toString();
 //        slast_name = last_name.getText().toString();
-        semail = email.getText().toString();
-        String numbercheck = number.getText().toString();
-
-        snumber = countrycode.getSelectedItem().toString()+ number.getText().toString();
-        countrycode_s = countrycode.getSelectedItem().toString();
-        setCountryCode(context,countrycode_s);
-        spassword = password.getText().toString();
-        scity = city_name.getText().toString();
-//        sinvite_code = invite_code.getText().toString();
-        sconfim_password = confim_password.getText().toString();
-        Log.d("Data", "\n" + sfirst_name + "\n" + slast_name + "\n" + semail + "\n" + snumber + "\n" + spassword + "\n" + scity + "\n" + sinvite_code);
-//        if(sfirst_name.isEmpty())
-//        {
-//            first_name.setError("Fill this field");
-//            first_name.requestFocus();
+//        semail = email.getText().toString();
+//        String numbercheck = number.getText().toString();
+//
+//        snumber = countrycode.getSelectedItem().toString()+ number.getText().toString();
+//        countrycode_s = countrycode.getSelectedItem().toString();
+//        setCountryCode(context,countrycode_s);
+//        spassword = password.getText().toString();
+//        scity = city_name.getText().toString();
+////        sinvite_code = invite_code.getText().toString();
+//        sconfim_password = confim_password.getText().toString();
+//        Log.d("Data", "\n" + sfirst_name + "\n" + slast_name + "\n" + semail + "\n" + snumber + "\n" + spassword + "\n" + scity + "\n" + sinvite_code);
+////        if(sfirst_name.isEmpty())
+////        {
+////            first_name.setError("Fill this field");
+////            first_name.requestFocus();
+////        }
+////        else if(slast_name.isEmpty())
+////        {
+////            last_name.setError("Fill this field");
+////            last_name.requestFocus();
+////        }
+//        if (semail.isEmpty()) {
+//            email.setError("Fill this field");
+//            email.requestFocus();
+//        } else if (numbercheck.isEmpty()) {
+//            number.setError("Enter the valid number");
+//            number.requestFocus();
+//        } else if (numbercheck.length() > 10) {
+//            number.setError("Enter the valid number");
+//            number.requestFocus();
+//        } else if (spassword.isEmpty()) {
+//            password.setError("Fill this field");
+//            password.requestFocus();
+//        } else if (!(sconfim_password.equals(spassword))) {
+//            confim_password.setError("Password does not match");
+//            confim_password.requestFocus();
+//        } else if (scity.isEmpty()) {
+//            city_name.setError("Fill this field");
+//            city_name.requestFocus();
+//        } else if (!(terms_and_conditions.isChecked())) {
+//            terms_and_conditions.setError("Check");
+//        } else {
+//
+//            simpleProgressBar.setVisibility(View.VISIBLE);
+//            signupf(sfirst_name, countrycode_s, semail, snumber, spassword, scity, sinvite_code);
 //        }
-//        else if(slast_name.isEmpty())
-//        {
-//            last_name.setError("Fill this field");
-//            last_name.requestFocus();
-//        }
-        if (semail.isEmpty()) {
-            email.setError("Fill this field");
-            email.requestFocus();
-        } else if (numbercheck.isEmpty()) {
-            number.setError("Enter the valid number");
-            number.requestFocus();
-        } else if (numbercheck.length() > 10) {
-            number.setError("Enter the valid number");
-            number.requestFocus();
-        } else if (spassword.isEmpty()) {
-            password.setError("Fill this field");
-            password.requestFocus();
-        } else if (!(sconfim_password.equals(spassword))) {
-            confim_password.setError("Password does not match");
-            confim_password.requestFocus();
-        } else if (scity.isEmpty()) {
-            city_name.setError("Fill this field");
-            city_name.requestFocus();
-        } else if (!(terms_and_conditions.isChecked())) {
-            terms_and_conditions.setError("Check");
-        } else {
 
-            simpleProgressBar.setVisibility(View.VISIBLE);
-            signupf(sfirst_name, countrycode_s, semail, snumber, spassword, scity, sinvite_code);
-        }
+        Intent intent = new Intent(SignUp.this, PersonalInformationScreen.class);
+        startActivity(intent);
+        finish();
     }
 
 

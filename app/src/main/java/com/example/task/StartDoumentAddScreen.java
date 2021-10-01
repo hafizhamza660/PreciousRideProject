@@ -95,17 +95,20 @@ public class StartDoumentAddScreen extends AppCompatActivity implements Document
         next_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listDocuments.size()<=0)
-                {
-                    Toast.makeText(StartDoumentAddScreen.this, "Fill the data", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    next_btn.setEnabled(false);
-//                    rootContainer.setEnabled(false);
-                dataDocumentsent(listDocuments);
-                    simpleProgressBar.setVisibility(View.VISIBLE);
-                }
-//                dataDocumentsent(arraydata);
+//                if (listDocuments.size()<=0)
+//                {
+//                    Toast.makeText(StartDoumentAddScreen.this, "Fill the data", Toast.LENGTH_SHORT).show();
+//                }
+//                else{
+//                    next_btn.setEnabled(false);
+////                    rootContainer.setEnabled(false);
+//                dataDocumentsent(listDocuments);
+//                    simpleProgressBar.setVisibility(View.VISIBLE);
+//                }
+////                dataDocumentsent(arraydata);
+
+                Intent intent = new Intent(StartDoumentAddScreen.this, PaymentMethodScreenFirst.class);
+                startActivity(intent);
             }
         });
 

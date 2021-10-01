@@ -136,7 +136,6 @@
     </string-array>
 
 
-
     <string-array name="bank_names_arrays">
         <item>Bank Names</item>
         <item>Meezan Bank Limited.</item>
@@ -155,8 +154,6 @@
         <item>Personal</item>
         <item>Joint-Account</item>
     </string-array>
-
-
 
 
 </resources>

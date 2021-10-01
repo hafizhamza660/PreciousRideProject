@@ -48,7 +48,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:visibility="gone"
+                android:visibility="visible"
                 android:id="@+id/expiry_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
             </LinearLayout>
 
         <LinearLayout
-            android:visibility="gone"
+            android:visibility="visible"
             android:id="@+id/unique_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

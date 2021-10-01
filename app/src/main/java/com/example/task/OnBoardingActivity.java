@@ -8,10 +8,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.task.adapters.OnBoardingAdapter;
-import com.example.task.models.OnBoardingModel;
+import com.example.task.Models.OnBoardingModel;
 
 import java.util.ArrayList;
 import java.util.List;

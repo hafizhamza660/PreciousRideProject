@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.task.R;
-import com.example.task.models.OnBoardingModel;
+import com.example.task.Models.OnBoardingModel;
 
 import java.util.List;
 

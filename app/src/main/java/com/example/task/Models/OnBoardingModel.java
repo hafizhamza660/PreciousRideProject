@@ -1,4 +1,4 @@
-package com.example.task.models;
+package com.example.task.Models;
 
 public class OnBoardingModel {
     public int onBoardingImage;

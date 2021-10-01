@@ -120,48 +120,52 @@ public class PersonalInformationScreen extends AppCompatActivity {
         next_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 f_name = first_name.getText().toString();
-                 l_name = last_name.getText().toString();
-                 v_year = vehicle_year.getText().toString();
-                v_plate = license_plate.getText().toString();
-                ref_code = invite_code.getText().toString();
-                if (i_have_vehicle_check.isChecked())
-                {
-                     v_manu = vehicle_manufacture.getSelectedItem().toString();
-                     v_color = vehicle_color.getSelectedItem().toString();
-                     v_model = vehicle_model.getSelectedItem().toString();
-                     check = "1";
-                }
-                else{
-                    check = "0";
-                }
-
-                if (f_name.isEmpty())
-                {
-                    first_name.setError("Fill this field");
-                    first_name.setFocusable(true);
-                }
-                else if (l_name.isEmpty())
-                {
-                    last_name.setError("Fill this field");
-                    last_name.setFocusable(true);
-                }
-//                else if (ref_code.isEmpty())
+//                 f_name = first_name.getText().toString();
+//                 l_name = last_name.getText().toString();
+//                 v_year = vehicle_year.getText().toString();
+//                v_plate = license_plate.getText().toString();
+//                ref_code = invite_code.getText().toString();
+//                if (i_have_vehicle_check.isChecked())
 //                {
-//                    invite_code.setError("Fill this field");
-//                    invite_code.setFocusable(true);
+//                     v_manu = vehicle_manufacture.getSelectedItem().toString();
+//                     v_color = vehicle_color.getSelectedItem().toString();
+//                     v_model = vehicle_model.getSelectedItem().toString();
+//                     check = "1";
 //                }
-//                else if (f_name.isEmpty())
+//                else{
+//                    check = "0";
+//                }
+//
+//                if (f_name.isEmpty())
 //                {
 //                    first_name.setError("Fill this field");
 //                    first_name.setFocusable(true);
 //                }
-                else{
-                    next_btn.setEnabled(false);
-//                    rootContainer.setEnabled(false);
-                    simpleProgressBar.setVisibility(View.VISIBLE);
-                    personalInfoAdd(f_name,l_name,check,v_manu,v_model,v_year,v_plate,ref_code);
-                }
+//                else if (l_name.isEmpty())
+//                {
+//                    last_name.setError("Fill this field");
+//                    last_name.setFocusable(true);
+//                }
+////                else if (ref_code.isEmpty())
+////                {
+////                    invite_code.setError("Fill this field");
+////                    invite_code.setFocusable(true);
+////                }
+////                else if (f_name.isEmpty())
+////                {
+////                    first_name.setError("Fill this field");
+////                    first_name.setFocusable(true);
+////                }
+//                else{
+//                    next_btn.setEnabled(false);
+////                    rootContainer.setEnabled(false);
+//                    simpleProgressBar.setVisibility(View.VISIBLE);
+//                    personalInfoAdd(f_name,l_name,check,v_manu,v_model,v_year,v_plate,ref_code);
+
+                Intent intent= new Intent(PersonalInformationScreen.this,DrivingLicenceScreen.class);
+                    startActivity(intent);
+                    finish();
+//                }
 
             }
         });
