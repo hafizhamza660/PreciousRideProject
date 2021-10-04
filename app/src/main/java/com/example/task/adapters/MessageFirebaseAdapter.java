@@ -1,6 +1,7 @@
 package com.example.task.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +57,7 @@ public class MessageFirebaseAdapter extends RecyclerView.Adapter<MessageFirebase
 
         Chat chat = mChat.get(position);
 
+        Log.d("TagMessages","Message : "+chat.getMessage());
         holder.show_message.setText(chat.getMessage());
 //
 //        if (imageurl.equals("default")){

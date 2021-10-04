@@ -18,8 +18,7 @@ import com.example.task.DataSendFiles.ResponseDataSend;
 import com.example.task.FilesSignUp.RequestSignUp;
 import com.example.task.FilesSignUp.ResponseSignUp;
 import com.example.task.MainActivity;
-import com.example.task.RoomDatabaseFiles.DatabaseClient;
-import com.example.task.RoomDatabaseFiles.RideDataTable;
+
 import com.example.task.SignUp;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -173,17 +172,17 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
             @Override
             protected Void doInBackground(Void... voids) {
 
-                //creating a task
-                RideDataTable dataTable = new RideDataTable();
-                dataTable.setTotal_distance(total_distance);
-                dataTable.setDuration(duration);
-                dataTable.setStart_address(start_address);
-                dataTable.setEnd_address(end_address);
-
-                //adding to database
-                DatabaseClient.getInstance(context).getAppDatabase()
-                        .rideDao()
-                        .insert(dataTable);
+//                //creating a task
+//                RideDataTable dataTable = new RideDataTable();
+//                dataTable.setTotal_distance(total_distance);
+//                dataTable.setDuration(duration);
+//                dataTable.setStart_address(start_address);
+//                dataTable.setEnd_address(end_address);
+//
+//                //adding to database
+//                DatabaseClient.getInstance(context).getAppDatabase()
+//                        .rideDao()
+//                        .insert(dataTable);
                 return null;
             }
 

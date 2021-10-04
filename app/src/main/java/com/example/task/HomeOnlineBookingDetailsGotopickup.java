@@ -37,8 +37,7 @@ import com.example.task.DataSendFiles.RequestDataSend;
 import com.example.task.DataSendFiles.ResponseDataSend;
 import com.example.task.Directionhelpers.FetchURL;
 import com.example.task.Directionhelpers.TaskLoadedCallback;
-import com.example.task.RoomDatabaseFiles.DatabaseClient;
-import com.example.task.RoomDatabaseFiles.RideDataTable;
+
 import com.example.task.adapters.RideStepsListAdapter;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -91,7 +90,7 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
     MapFragment mapFragment;
 
     TextView pickup_location, duration_txt, distance_txt;
-    List<RideDataTable> rideDataTables;
+//    List<RideDataTable> rideDataTables;
 
 
     RecyclerView recyclerViewRideRequest;
@@ -390,33 +389,33 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
         Log.d("Latitude","status");
     }
 
-
-    private void getTasks() {
-        class GetTasks extends AsyncTask<Void, Void, List<RideDataTable>> {
-
-            @Override
-            protected List<RideDataTable> doInBackground(Void... voids) {
-                List<RideDataTable> taskList = DatabaseClient
-                        .getInstance(getApplicationContext())
-                        .getAppDatabase()
-                        .rideDao()
-                        .getAll();
-                return taskList;
-            }
-
-            @Override
-            protected void onPostExecute(List<RideDataTable> tasks) {
-                super.onPostExecute(tasks);
-                Log.d("Ridedatatable","Ride Data: "+tasks);
-//                Log.d("Ridedatatable","Ride Data: "+tasks.get(0).getEnd_address());
-//                rideDataTables=tasks;
-
-            }
-        }
-
-        GetTasks gt = new GetTasks();
-        gt.execute();
-    }
+//
+//    private void getTasks() {
+//        class GetTasks extends AsyncTask<Void, Void, List<RideDataTable>> {
+//
+//            @Override
+//            protected List<RideDataTable> doInBackground(Void... voids) {
+//                List<RideDataTable> taskList = DatabaseClient
+//                        .getInstance(getApplicationContext())
+//                        .getAppDatabase()
+//                        .rideDao()
+//                        .getAll();
+//                return taskList;
+//            }
+//
+//            @Override
+//            protected void onPostExecute(List<RideDataTable> tasks) {
+//                super.onPostExecute(tasks);
+//                Log.d("Ridedatatable","Ride Data: "+tasks);
+////                Log.d("Ridedatatable","Ride Data: "+tasks.get(0).getEnd_address());
+////                rideDataTables=tasks;
+//
+//            }
+//        }
+//
+//        GetTasks gt = new GetTasks();
+//        gt.execute();
+//    }
 
 
 

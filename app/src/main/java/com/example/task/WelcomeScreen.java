@@ -23,6 +23,6 @@ public class WelcomeScreen extends AppCompatActivity {
     }
 
     public void sign_up(View view) {
-        startActivity(new Intent(WelcomeScreen.this,SignUp.class));
+        startActivity(new Intent(WelcomeScreen.this,RegisterScreen.class));
     }
 }

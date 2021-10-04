@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.task">
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -26,23 +27,11 @@
             android:name=".PaymentMethodScreenFirst"
             android:exported="true">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".StartDoumentAddScreen"
             android:exported="true">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".DrivingLicenceScreen"
@@ -51,12 +40,6 @@
             android:name=".PersonalInformationScreen"
             android:exported="true">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".ResetPassword"
@@ -70,12 +53,15 @@
         <activity
             android:name=".WelcomeScreen"
             android:exported="true" />
-        <activity android:name=".Dialog.AmountEnter" />
+        <activity android:name=".Dialog.AmountEnter"
+            tools:ignore="Instantiatable" />
         <activity android:name=".CampaignView" />
         <activity android:name=".BankDetailsAdd" />
-        <activity android:name=".Dialog.CurrencySelection" />
+        <activity android:name=".Dialog.CurrencySelection"
+            tools:ignore="Instantiatable" />
         <activity android:name=".TravelRequest" />
-        <activity android:name=".Dialog.Rules" />
+        <activity android:name=".Dialog.Rules"
+            tools:ignore="Instantiatable" />
         <activity android:name=".InterCityRequests" />
         <activity android:name=".PaymentMethod" />
         <activity android:name=".Wallet" />
@@ -107,11 +93,11 @@
         <activity android:name=".EditInformation" />
         <activity android:name=".MyAccount" />
         <activity android:name=".Message" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity android:name=".InviteFriends" />
         <activity android:name=".Recipt" />
@@ -120,11 +106,11 @@
         <activity android:name=".SetupGPSLocationActivity" />
         <activity android:name=".OnBoardingActivity" />
         <activity android:name=".SplashActivity">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".FirstScreen" />
         <activity android:name=".HomeOffline" />
@@ -136,6 +122,15 @@
             android:enabled="true"
             android:exported="false" />
         <service android:name=".Service.ServiceClass" />
+
+        <service
+            android:name=".API.MyFirebaseMessaging"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>

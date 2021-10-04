@@ -22,7 +22,10 @@ import com.example.task.API.APIServices;
 import com.example.task.API.ApiClass;
 import com.example.task.API.Client;
 import com.example.task.API.Data;
+import com.example.task.API.DataModel;
 import com.example.task.API.MyResponse;
+import com.example.task.API.NotificationModel;
+import com.example.task.API.RootModel;
 import com.example.task.API.Sender;
 import com.example.task.API.Token;
 import com.example.task.Messages.MessageWithChatId.MessageWithChatidRequest;
@@ -33,17 +36,21 @@ import com.example.task.RideAcceptFiles.RequestRideAccept;
 import com.example.task.RideAcceptFiles.ResponseRideAccept;
 import com.example.task.adapters.MessageAdapter;
 import com.example.task.adapters.MessageFirebaseAdapter;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -53,7 +60,7 @@ public class Message extends AppCompatActivity {
     MessageFirebaseAdapter messageAdapter;
     EditText message;
     ImageButton button_gchat_send;
-    String driver_id, client_id,id_F,messagepostid;
+    String driver_id, client_id,id_F,messagepostid,token_id;
     Context context;
     APIServices apiServices;
     boolean notify = false;
@@ -92,7 +99,24 @@ public class Message extends AppCompatActivity {
         driver_id = "26";
         client_id = "88";
 
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                String token = instanceIdResult.getToken();
+                // send it to server
 
+                HashMap<String, Object> hashMap = new HashMap<>();
+                hashMap.put("token",token);
+
+
+//                reference.child("Tokens").push().setValue(hashMap);
+
+                DatabaseReference tokenref = FirebaseDatabase.getInstance().getReference();
+                tokenref.child("Tokens").child(driver_id).setValue(hashMap);
+            }
+        });
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("drivers").child("id");
         button_gchat_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,46 +149,13 @@ public class Message extends AppCompatActivity {
         });
 
 
-//
-//        HashMap<String, Object> hashMap = new HashMap<>();
-//        hashMap.put("sender",sender);
-//        hashMap.put("receiver",receiver);
-//        hashMap.put("message",message);
-////        hashMap.put("messagepostid",id_F);
-//        hashMap.put("isseen",false);
-//
-//        reference.child("Chats").push().setValue(hashMap);
-//
-//        DatabaseReference usertokeref = FirebaseDatabase.getInstance().getReference("Tokens").child(receiver);
-//
-//
-//        final DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("Chatlist")
-//                .child(driver_id)
-//                .child(client_id);
-//
-//        chatRef.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (!snapshot.exists())
-//                {
-//                    chatRef.child("id").setValue(client_id);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
 
 
 
 
-
-//
-//        databaseReference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 //                Hirer hirer = snapshot.getValue(Hirer.class);
 //                username.setText(hirer.getUsername());
 //                if (hirer.getImageUrl().equals("default")){
@@ -174,17 +165,19 @@ public class Message extends AppCompatActivity {
 //                {
 //                    Glide.with(getApplicationContext()).load(hirer.getImageUrl()).into(profileImg);
 //                }
-//
-//                readMessage(firebaseUser.getUid(),userid,hirer.getImageUrl());
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
 
-        readMessage(driver_id,client_id);
+                readMessage(driver_id,client_id);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+//        readMessage(driver_id,client_id);
+
+//        seenMessage(driver_id);
 
         seenMessage(driver_id);
     }
@@ -290,19 +283,35 @@ public class Message extends AppCompatActivity {
 
         reference.child("Chats").push().setValue(hashMap);
 
-        DatabaseReference usertokeref = FirebaseDatabase.getInstance().getReference("Tokens").child(receiver);
+        DatabaseReference usertokeref = FirebaseDatabase.getInstance().getReference("Tokens").child(client_id).child("token");
+        usertokeref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+
+                    token_id = snapshot.getValue().toString();
+                    Log.d("TokenId",":"+token_id);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
 
         final DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference("Chatlist")
-                .child(driver_id)
-                .child(client_id);
+                .child(client_id)
+                .child(driver_id);
 
         chatRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!snapshot.exists())
                 {
-                    chatRef.child("id").setValue(client_id);
+                    chatRef.child("id").setValue(token_id);
                 }
             }
 
@@ -322,9 +331,10 @@ public class Message extends AppCompatActivity {
 ////                if (notify) {
 //                Log.d("MyTag : Notification ","Notification Call");
 //                    sendNoti(usertoken,sender,message);
-                sendNotification(receiver,driver_id,message);
+//        sendNotification(client_id,driver_id,message,token_id);
+        sendNotificationToUser(token_id);
 //                }
-                notify =false;
+        notify =false;
 //            }
 //
 //            @Override
@@ -334,43 +344,97 @@ public class Message extends AppCompatActivity {
 //        });
     }
 
-    private void sendNotification(final String receiver, final String username, final String msg) {
-        DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens");
-        Query query = tokens.orderByKey().equalTo(receiver);
-        query.addValueEventListener(new ValueEventListener() {
+    private void sendNotification(final String receiver, final String username, final String msg,final String token) {
+
+//        Token tokendata = new Token();
+//        tokendata.setToken(token);
+//
+//        Data data = new Data(client_id,R.mipmap.ic_launcher,username+": "+msg,"New Message",driver_id);
+////                    Toast.makeText(MessageActivity.this, "Message Recived "+username+": "+msg, Toast.LENGTH_SHORT).show();
+////                    Toast.makeText(MessageActivity.this, "Tokenn"+token, Toast.LENGTH_SHORT).show();
+//        Sender sender = new Sender(data,tokendata.getToken());
+//
+//        apiServices.sendNotification(sender)
+//                .enqueue(new Callback<MyResponse>() {
+//                    @Override
+//                    public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+//                        if (response.code() == 200) {
+//                            if (response.body().success == 1) {
+//                                Toast.makeText(Message.this, "Failed!", Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<MyResponse> call, Throwable t) {
+//
+//                    }
+//                });
+//
+
+
+
+
+
+
+
+//        DatabaseReference tokens = FirebaseDatabase.getInstance().getReference("Tokens").child(receiver);
+
+
+//        Query query = tokens.orderByKey().equalTo(receiver);
+//        query.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for (DataSnapshot dataSnapshot : snapshot.getChildren())
+//                {
+//                    Token token = dataSnapshot.getValue(Token.class);
+//                    Data data = new Data(driver_id,R.mipmap.ic_launcher,username+": "+msg,"New Message",client_id);
+////                    Toast.makeText(MessageActivity.this, "Message Recived "+username+": "+msg, Toast.LENGTH_SHORT).show();
+////                    Toast.makeText(MessageActivity.this, "Tokenn"+token, Toast.LENGTH_SHORT).show();
+//                    Sender sender = new Sender(data,token.getToken());
+//
+//                    apiServices.sendNotification(sender)
+//                            .enqueue(new Callback<MyResponse>() {
+//                                @Override
+//                                public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
+//                                    if (response.code() == 200){
+//                                        if (response.body().success != 1)
+//                                        {
+//                                            Toast.makeText(Messages.this, "Failed!", Toast.LENGTH_SHORT).show();
+//                                        }
+//                                    }
+//                                }
+//
+//                                @Override
+//                                public void onFailure(Call<MyResponse> call, Throwable t) {
+//
+//                                }
+//                            });
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Toast.makeText(Messages.this, ""+error, Toast.LENGTH_SHORT).show();
+//            }
+//        });
+    }
+
+    private void sendNotificationToUser(String token) {
+        RootModel rootModel = new RootModel(token, new NotificationModel("Title", "Body"), new DataModel("Name", "30"));
+
+        APIServices apiService =  Client.getClient("http://fcm.googleapis.com/").create(APIServices.class);
+        retrofit2.Call<ResponseBody> responseBodyCall = apiService.sendNotification(rootModel);
+
+        responseBodyCall.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren())
-                {
-                    Token token = dataSnapshot.getValue(Token.class);
-                    Data data = new Data(driver_id,R.mipmap.ic_launcher,username+": "+msg,"New Message",client_id);
-//                    Toast.makeText(MessageActivity.this, "Message Recived "+username+": "+msg, Toast.LENGTH_SHORT).show();
-//                    Toast.makeText(MessageActivity.this, "Tokenn"+token, Toast.LENGTH_SHORT).show();
-                    Sender sender = new Sender(data,token.getToken());
-
-                    apiServices.sendNotification(sender)
-                            .enqueue(new Callback<MyResponse>() {
-                                @Override
-                                public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
-                                    if (response.code() == 200){
-                                        if (response.body().success != 1)
-                                        {
-                                            Toast.makeText(Message.this, "Failed!", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<MyResponse> call, Throwable t) {
-
-                                }
-                            });
-                }
+            public void onResponse(retrofit2.Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                Log.d("TAG","Successfully notification send by using retrofit.");
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(Message.this, ""+error, Toast.LENGTH_SHORT).show();
+            public void onFailure(retrofit2.Call<ResponseBody> call, Throwable t) {
+
             }
         });
     }
@@ -390,16 +454,16 @@ public class Message extends AppCompatActivity {
                     Chat chat = dataSnapshot.getValue(Chat.class);
                     Log.d("MyTag : Receiver",chat.getReceiver());
                     Log.d("MyTag",chat.getSender());
-//                    if(chat.getReceiver().equals(myId) && chat.getSender().equals(userId) || chat.getReceiver().equals(userId) && chat.getSender().equals(myId))
-//                    {
+                    if(chat.getReceiver().equals(myId) && chat.getSender().equals(userId) || chat.getReceiver().equals(userId) && chat.getSender().equals(myId))
+                    {
 //                        messagepostid= chat.getMessagepostid();
 //                        SharedPreferences.Editor editor = sharedpreferences.edit();
 //
 //                        editor.putString("messagepostid", messagepostid);
 //                        editor.commit();
-//                        mChat.add(chat);
+                        mChat.add(chat);
 //                        Log.d("MyTag","id :"+messagepostid);
-//                    }
+                    }
 
                     messageAdapter = new MessageFirebaseAdapter(Message.this, mChat,driver_id);
                     recyclerView.setAdapter(messageAdapter);

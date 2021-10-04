@@ -58,7 +58,7 @@ public class RegisterScreen extends AppCompatActivity {
             webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         }
 
-        webView.loadUrl("https://www.google.com/");
+        webView.loadUrl("http://precious-ride.ragzon.com/signup");
 
     }
 
@@ -129,6 +129,10 @@ public class RegisterScreen extends AppCompatActivity {
 
     }
 
+    public void back_button(View view) {
+        onBackPressed();
+    }
+
     public class PQChromeClient extends WebChromeClient {
 
         @Override
@@ -195,9 +199,9 @@ public class RegisterScreen extends AppCompatActivity {
                 return true;
 
             }
-            else if(url.contains("youtube.com"))
+            else if(url.contains("https://precious-ride.ragzon.com/app_start"))
             {
-                startActivity(new Intent(RegisterScreen.this,MainActivity.class));
+                startActivity(new Intent(RegisterScreen.this,HomeOffline.class));
                 return true;
             }
             else {
