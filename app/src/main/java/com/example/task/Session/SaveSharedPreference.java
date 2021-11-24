@@ -17,6 +17,8 @@ public class SaveSharedPreference {
     static final String PREF_RANGE= "1";
     static final String PREF_IMAGE_URL= "123.jpg";
     static final String PREF_COUNTRY_CODE= "2654848";
+    static final String LOCATION_LAT= "9854";
+    static final String LOCATION_LNG= "12635";
 
     static SharedPreferences getSharedPreferences(Context ctx) {
         return PreferenceManager.getDefaultSharedPreferences(ctx);
@@ -106,6 +108,20 @@ public class SaveSharedPreference {
         editor.commit();
     }
 
+    public static void setLocaionLat(Context ctx,String lat)
+    {
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putString(LOCATION_LAT, lat);
+        editor.commit();
+    }
+
+    public static void setLocaitonLng(Context ctx,String lng)
+    {
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putString(LOCATION_LNG, lng);
+        editor.commit();
+    }
+
     public static String getClientId(Context ctx)
     {
         return getSharedPreferences(ctx).getString(PREF_USER_ID, "");
@@ -163,6 +179,16 @@ public class SaveSharedPreference {
     public static String getCountryCode(Context ctx)
     {
         return getSharedPreferences(ctx).getString(PREF_COUNTRY_CODE, "");
+    }
+
+    public static String getLocationLat(Context ctx)
+    {
+        return getSharedPreferences(ctx).getString(LOCATION_LAT, "");
+    }
+
+    public static String getLocaitonLng(Context ctx)
+    {
+        return getSharedPreferences(ctx).getString(LOCATION_LNG, "");
     }
 
     public static void clearClientId(Context ctx)

@@ -3,6 +3,7 @@ package com.example.task;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
@@ -23,6 +24,10 @@ public class WelcomeScreen extends AppCompatActivity {
     }
 
     public void sign_up(View view) {
-        startActivity(new Intent(WelcomeScreen.this,RegisterScreen.class));
+        String url = "http://precious-ride.ragzon.com/signup";
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
+//        startActivity(new Intent(WelcomeScreen.this,RegisterScreen.class));
     }
 }

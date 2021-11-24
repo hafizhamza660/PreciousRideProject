@@ -21,26 +21,23 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".RideConfimDriverAddAmount"
+            android:exported="true" />
+        <activity
             android:name=".RegisterScreen"
             android:exported="true" />
         <activity
             android:name=".PaymentMethodScreenFirst"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".StartDoumentAddScreen"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".DrivingLicenceScreen"
             android:exported="true" />
         <activity
             android:name=".PersonalInformationScreen"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".ResetPassword"
             android:exported="true" />
@@ -53,14 +50,17 @@
         <activity
             android:name=".WelcomeScreen"
             android:exported="true" />
-        <activity android:name=".Dialog.AmountEnter"
+        <activity
+            android:name=".Dialog.AmountEnter"
             tools:ignore="Instantiatable" />
         <activity android:name=".CampaignView" />
         <activity android:name=".BankDetailsAdd" />
-        <activity android:name=".Dialog.CurrencySelection"
+        <activity
+            android:name=".Dialog.CurrencySelection"
             tools:ignore="Instantiatable" />
         <activity android:name=".TravelRequest" />
-        <activity android:name=".Dialog.Rules"
+        <activity
+            android:name=".Dialog.Rules"
             tools:ignore="Instantiatable" />
         <activity android:name=".InterCityRequests" />
         <activity android:name=".PaymentMethod" />
@@ -92,12 +92,14 @@
         <activity android:name=".InviteFriendList" />
         <activity android:name=".EditInformation" />
         <activity android:name=".MyAccount" />
-        <activity android:name=".Message" >
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+        <activity android:name=".Message">
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity android:name=".InviteFriends" />
         <activity android:name=".Recipt" />
@@ -122,7 +124,6 @@
             android:enabled="true"
             android:exported="false" />
         <service android:name=".Service.ServiceClass" />
-
         <service
             android:name=".API.MyFirebaseMessaging"
             android:exported="false">
@@ -130,7 +131,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
     </application>
 
 </manifest>

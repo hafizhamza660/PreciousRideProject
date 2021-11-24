@@ -43,6 +43,7 @@
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/activity_phone_verification.xml" value="0.19519927536231885" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/activity_register_screen.xml" value="0.20652173913043478" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/activity_reset_password.xml" value="0.19519927536231885" />
+        <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/activity_ride_confim_driver_add_amount.xml" value="0.23645833333333333" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/activity_setting.xml" value="0.21920289855072464" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/activity_setup_gpslocation.xml" value="0.11614583333333334" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/activity_sign_up.xml" value="0.264" />
@@ -67,14 +68,14 @@
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/header_toolbar.xml" value="0.2033514492753623" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/inter_city_request_item.xml" value="0.2" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/invite_list_item.xml" value="0.2033514492753623" />
-        <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/item_stack.xml" value="0.2033514492753623" />
+        <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/item_stack.xml" value="0.264" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/layout_floating_widget.xml" value="0.2033514492753623" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/mapstepsitem.xml" value="0.264" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/month_year_picker_dialog.xml" value="0.2269021739130435" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/notification_layout.xml" value="0.2033514492753623" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/onboarding_single_item.xml" value="0.2033514492753623" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/payment_item.xml" value="0.2033514492753623" />
-        <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/travel_request_item.xml" value="0.264" />
+        <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/travel_request_item.xml" value="0.16799999999999998" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/vehicle_management_item.xml" value="0.2033514492753623" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/menu/main_menu_inter_city.xml" value="0.23645833333333333" />
         <entry key="..\:/Office Work/26 July 2021/Task/Task/Task/app/src/main/res/layout-hdpi/bottom_layout.xml" value="0.4" />

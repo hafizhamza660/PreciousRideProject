@@ -17,9 +17,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +31,7 @@ import com.example.task.FilesLogin.RequestLogin;
 import com.example.task.FilesLogin.ResponseLogin;
 import com.example.task.LoginValues.RequestLoginValues;
 import com.example.task.LoginValues.ResponseLoginValues;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -44,8 +48,9 @@ public class MainActivity extends AppCompatActivity {
     EditText email, password;
     Context context;
     String countrycode;
-    ConstraintLayout parentLayout;
-    ProgressBar simpleProgressBar;
+    RelativeLayout parentLayout;
+    private AVLoadingIndicatorView avi;
+    Button signIn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,9 +58,10 @@ public class MainActivity extends AppCompatActivity {
 
         context = this;
 
-        simpleProgressBar = (ProgressBar) findViewById(R.id.simpleProgressBar);
+        avi = (AVLoadingIndicatorView) findViewById(R.id.avi);
 
         parentLayout = findViewById(R.id.parentLayout);
+        signIn = findViewById(R.id.signIn);
 
 
         Intent intent= getIntent();
@@ -67,29 +73,32 @@ public class MainActivity extends AppCompatActivity {
         login_txt.setText(getText(R.string.login_text));
 
 
+        signIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
+                String semail, spassword;
+                semail = email.getText().toString();
+                spassword = password.getText().toString();
+                if (semail.isEmpty()) {
+                    email.setError("Required");
+                    signIn.setEnabled(true);
+                    stopAnim();
+                } else if (spassword.isEmpty()) {
+                    password.setError("Required");
+                    signIn.setEnabled(true);
+                    stopAnim();
+                } else {
+                    login(semail, spassword);
+                    startAnim();
+                    signIn.setEnabled(false);
+                }
+            }
+        });
+
     }
 
-    public void sign_in(View view) {
-//        Intent intent = new Intent(MainActivity.this,HomeOffline.class);
-//        startActivity(intent);
-
-        String semail, spassword;
-        semail = email.getText().toString();
-        spassword = password.getText().toString();
-        if (semail.isEmpty()) {
-            email.setError("Required");
-        } else if (spassword.isEmpty()) {
-            password.setError("Required");
-        } else {
-
-            login(semail, spassword);
-            simpleProgressBar.setVisibility(View.VISIBLE);
-        }
-    }
-
-//    public void clear(View view) {
-//        number.setText("");
-//    }
 
 
     public void login(String email, String password) {
@@ -105,13 +114,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
                 if (response.isSuccessful()) {
+                    stopAnim();
+                    signIn.setEnabled(true);
                     Toast.makeText(MainActivity.this, "" + response.body().message, Toast.LENGTH_SHORT).show();
                     if (response.body().message.equals("Login Successfully")) {
                         String idClient = response.body().data.id;
                         setClientId(context, idClient);
                         if (response.body().data.f_name != null) {
 
-                            simpleProgressBar.setVisibility(View.GONE);
+                            stopAnim();
                             String firstName = response.body().data.f_name;
                             String lastname = response.body().data.l_name;
                             String city = response.body().data.city;
@@ -161,6 +172,7 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Call<ResponseLogin> call, Throwable t) {
 //                Toast.makeText(MainActivity.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
+                stopAnim();
             }
         });
     }
@@ -201,5 +213,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void back_button(View view) {
         onBackPressed();
+    }
+
+    void startAnim(){
+        avi.show();
+        // or avi.smoothToShow();
+    }
+
+    void stopAnim(){
+        avi.hide();
+        // or avi.smoothToHide();
     }
 }

@@ -79,4 +79,7 @@ dependencies {
     implementation 'com.github.angads25:filepicker:1.1.1'
 
 
+    //Loading
+    implementation 'com.wang.avi:library:2.1.3'
+
 }

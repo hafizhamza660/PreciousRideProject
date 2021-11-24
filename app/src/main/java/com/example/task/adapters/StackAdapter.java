@@ -1,9 +1,13 @@
 package com.example.task.adapters;
 
+import static com.example.task.Session.SaveSharedPreference.getLocaitonLng;
+import static com.example.task.Session.SaveSharedPreference.getLocationLat;
+
 import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Parcelable;
@@ -21,7 +25,9 @@ import androidx.cardview.widget.CardView;
 import com.example.task.HomeOnlineBookingDetails;
 import com.example.task.HomeSwipeUp;
 import com.example.task.R;
+import com.example.task.RideConfimDriverAddAmount;
 import com.example.task.RideRequestedHistory.Data;
+import com.google.firebase.database.core.utilities.Utilities;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -36,15 +42,16 @@ public class StackAdapter extends ArrayAdapter {
     int itemLayout;
     int size;
     CardView card_stack;
-    Button accept,ignore_btn;
-    TextView timer,pickup_location,dropoff_location,price;
+    Button accept, ignore_btn;
+    TextView timer, pickup_location, dropoff_location, price, client_price;
+    double picklat, picklng, droplat, droplng;
+    String pickup, dropoff;
 
-    public StackAdapter(List<Data> dataList,Context context,int resource)
-    {
-        super(context,resource,dataList);
-        this.dataList=dataList;
-        c =context;
-        itemLayout =resource;
+    public StackAdapter(List<Data> dataList, Context context, int resource) {
+        super(context, resource, dataList);
+        this.dataList = dataList;
+        c = context;
+        itemLayout = resource;
         size = dataList.size();
     }
 
@@ -61,72 +68,91 @@ public class StackAdapter extends ArrayAdapter {
 
     @NonNull
     @Override
-    public View getView(int position, View convertView,ViewGroup parent) {
-        if (convertView==null){
-            convertView = LayoutInflater.from(parent.getContext()).inflate(itemLayout,parent,false);
+    public View getView(int position, View convertView, ViewGroup parent) {
+        if (convertView == null) {
+            convertView = LayoutInflater.from(parent.getContext()).inflate(itemLayout, parent, false);
         }
 
         final Data data = dataList.get(position);
+//
+//        double lat1, lat2, long1, long2,total;
+//        lat1 = Float.parseFloat(getLocationLat(c));
+//        long1 = Float.parseFloat(getLocaitonLng(c));
+//        lat2 = Double.parseDouble(data.start_lat);
+//        long2 = Double.parseDouble(data.start_long);
+//        total = getKmFromLatLong(lat1, long1, lat2, long2);
+//        if (total<1.0) {
+        picklat = Double.parseDouble(data.start_lat);
+        picklng = Double.parseDouble(data.start_long);
+        pickup = getStringAddres(picklat, picklng);
 
-        double picklat = Double.parseDouble(data.start_lat);
-        double picklng = Double.parseDouble(data.start_long);
-        String pickup = getStringAddres(picklat,picklng);
-
-        double droplat = Double.parseDouble(data.end_lat);
-        double droplng = Double.parseDouble(data.end_long);
-        String dropoff = getStringAddres(droplat,droplng);
+        droplat = Double.parseDouble(data.end_lat);
+        droplng = Double.parseDouble(data.end_long);
+        dropoff = getStringAddres(droplat, droplng);
 
 
-
-        card_stack= convertView.findViewById(R.id.card_stack);
-         accept = convertView.findViewById(R.id.accept);
-        ignore_btn = convertView.findViewById(R.id.ignore_btn);
-         timer = convertView.findViewById(R.id.timer_1q);
+        card_stack = convertView.findViewById(R.id.card_stack);
+        accept = convertView.findViewById(R.id.accept);
+        timer = convertView.findViewById(R.id.timer_1q);
         pickup_location = convertView.findViewById(R.id.pickup_location);
         dropoff_location = convertView.findViewById(R.id.dropoff_location);
         price = convertView.findViewById(R.id.price);
+        client_price = convertView.findViewById(R.id.client_price);
         timer.setVisibility(View.GONE);
-
-//        reverseTimer(30,timer);
 
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent intent= new Intent(c, HomeOnlineBookingDetails.class);
-                intent.putExtra("id",data.id);
-                intent.putExtra("start_lat",data.start_lat);
-                intent.putExtra("start_long",data.start_long);
-                intent.putExtra("end_lat",data.end_lat);
-                intent.putExtra("end_long",data.end_long);
-                intent.putExtra("price",data.price);
-                intent.putExtra("negotiated_price",data.negotiated_price);
-                intent.putExtra("distance",data.distance);
-                intent.putExtra("status",data.status);
-                intent.putExtra("client_id",data.client_id);
-                intent.putExtra("driver_id",data.driver_id);
+//                Intent intent = new Intent(c, HomeOnlineBookingDetails.class);
+//                intent.putExtra("id", data.id);
+//                intent.putExtra("start_lat", data.start_lat);
+//                intent.putExtra("start_long", data.start_long);
+//                intent.putExtra("end_lat", data.end_lat);
+//                intent.putExtra("end_long", data.end_long);
+//                intent.putExtra("price", data.price);
+//                intent.putExtra("negotiated_price", data.negotiated_price);
+//                intent.putExtra("distance", data.distance);
+//                intent.putExtra("status", data.status);
+//                intent.putExtra("client_id", data.client_id);
+//                intent.putExtra("driver_id", data.driver_id);
+//                c.startActivity(intent);
+
+
+                Intent intent = new Intent(c, RideConfimDriverAddAmount.class);
+                intent.putExtra("id", data.id);
+                intent.putExtra("start_lat", data.start_lat);
+                intent.putExtra("start_long", data.start_long);
+                intent.putExtra("end_lat", data.end_lat);
+                intent.putExtra("end_long", data.end_long);
+                intent.putExtra("price", data.price);
+                intent.putExtra("client_price", data.client_price);
+                intent.putExtra("negotiated_price", data.negotiated_price);
+                intent.putExtra("distance", data.distance);
+                intent.putExtra("status", data.status);
+                intent.putExtra("client_id", data.client_id);
+                intent.putExtra("driver_id", data.driver_id);
                 c.startActivity(intent);
 
             }
         });
-        ignore_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                c.startActivity(new Intent(c, HomeOnlineBookingDetails.class));
-            }
-        });
+
 
         pickup_location.setText(pickup);
         dropoff_location.setText(dropoff);
-        price.setText(data.price);
+        price.setText("$"+data.price);
+        client_price.setText("$"+data.client_price);
+//        }
+//        reverseTimer(30,timer);
+
 
         return convertView;
     }
 
 
-    public void reverseTimer(int Seconds,final TextView tv){
+    public void reverseTimer(int Seconds, final TextView tv) {
 
-        new CountDownTimer(Seconds* 1000+1000, 1000) {
+        new CountDownTimer(Seconds * 1000 + 1000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 int seconds = (int) (millisUntilFinished / 1000);
@@ -164,6 +190,17 @@ public class StackAdapter extends ArrayAdapter {
         return address + "  " + city;
     }
 
+
+    public static double getKmFromLatLong(double lat1, double lng1, double lat2, double lng2) {
+        Location loc1 = new Location("");
+        loc1.setLatitude(lat1);
+        loc1.setLongitude(lng1);
+        Location loc2 = new Location("");
+        loc2.setLatitude(lat2);
+        loc2.setLongitude(lng2);
+        double distanceInMeters = loc1.distanceTo(loc2);
+        return distanceInMeters / 1000;
+    }
 
 
 }

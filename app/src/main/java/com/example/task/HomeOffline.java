@@ -7,6 +7,8 @@ import static com.example.task.Session.SaveSharedPreference.getEmail;
 import static com.example.task.Session.SaveSharedPreference.getFirstName;
 import static com.example.task.Session.SaveSharedPreference.getInterCity;
 import static com.example.task.Session.SaveSharedPreference.getLastName;
+import static com.example.task.Session.SaveSharedPreference.getLocaitonLng;
+import static com.example.task.Session.SaveSharedPreference.getLocationLat;
 import static com.example.task.Session.SaveSharedPreference.getMobileNumber;
 
 import static com.example.task.Session.SaveSharedPreference.getRange;
@@ -16,6 +18,8 @@ import static com.example.task.Session.SaveSharedPreference.setClientId;
 import static com.example.task.Session.SaveSharedPreference.setEmail;
 import static com.example.task.Session.SaveSharedPreference.setFirstName;
 import static com.example.task.Session.SaveSharedPreference.setLastName;
+import static com.example.task.Session.SaveSharedPreference.setLocaionLat;
+import static com.example.task.Session.SaveSharedPreference.setLocaitonLng;
 import static com.example.task.Session.SaveSharedPreference.setMobileNumber;
 import static com.example.task.Session.SaveSharedPreference.setRange;
 import static com.example.task.Session.SaveSharedPreference.setStatus;
@@ -79,6 +83,7 @@ import com.example.task.LogoutStatusFiles.ResponseLogoutStatus;
 import com.example.task.RangeFiles.RequestRange;
 import com.example.task.RangeFiles.ResponseRange;
 import com.example.task.RideRequestFiles.RideRequestResponse;
+import com.example.task.RideRequestedHistory.Data;
 import com.example.task.RideRequestedHistory.RideRequestHistoryResponse;
 import com.example.task.Service.ServiceClass;
 import com.example.task.Session.SaveSharedPreference;
@@ -110,6 +115,7 @@ import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.wang.avi.AVLoadingIndicatorView;
 import com.wenchao.cardstack.CardStack;
 
 import java.io.IOException;
@@ -207,6 +213,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
     SupportMapFragment mapFragment;
     double radiusvalue;
     static List<Circle> mCircleList;
+    private AVLoadingIndicatorView avi;
 
 
     @Override
@@ -297,7 +304,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
 //                /*ToolBar With NavBar End*/
 //                nvDrawer2.getMenu().getItem(0).setChecked(true);
 //            }
-
+        avi = (AVLoadingIndicatorView) findViewById(R.id.avi);
         bottomSheetLayout = findViewById(R.id.bottom_sheet);
         floatingActionButton = findViewById(R.id.floatingActionButton);
         floatingActionButton_online = findViewById(R.id.floatingActionButton_online);
@@ -402,10 +409,14 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
         minus_range.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startAnim();
+                minus_range.setEnabled(false);
+                add_range.setEnabled(false);
                 counter--;
                 km_range.setText(counter + " KM");
                 if (counter <1) {
                     minus_range.setEnabled(false);
+
 
 //                    map.addCircle(new CircleOptions()
 //                            .center(latLng)
@@ -428,6 +439,9 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
         add_range.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startAnim();
+                minus_range.setEnabled(false);
+                add_range.setEnabled(false);
                 counter++;
 
 //                km_range.setText(counter + " KM");
@@ -616,8 +630,23 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
 //                        rideRequestListAdapter = new RideRequestListAdapter(HomeOffline.this, context, response.body().data);
 //                        recyclerViewRideRequest.setAdapter(rideRequestListAdapter);
 
+                        List<Data> data = new ArrayList<>();
+//                        data.addAll(response.body().data);
+                        for(int i =0;i<response.body().data.size();i++)
+                        {
 
-                        StackAdapter adapter = new StackAdapter(response.body().data, HomeOffline.this, R.layout.item_stack);
+                            double lat1, lat2, long1, long2,total;
+                            lat1 = Float.parseFloat(getLocationLat(context));
+                            long1 = Float.parseFloat(getLocaitonLng(context));
+                            lat2 = Double.parseDouble(response.body().data.get(i).start_lat);
+                            long2 = Double.parseDouble(response.body().data.get(i).start_long);
+                            total = getKmFromLatLong(lat1, long1, lat2, long2);
+                            if (total<1.0) {
+                                data.add(response.body().data.get(i));
+                            }
+                        }
+
+                        StackAdapter adapter = new StackAdapter(data, HomeOffline.this, R.layout.item_stack);
 
                         stackView.setAdapter(adapter);
                         YourListner yourListner = new YourListner();
@@ -659,6 +688,9 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
                         double lng = Double.parseDouble(currentLng);
                         LatLng latLng = new LatLng(lat, lng);
                         createcircle(latLng, counter);
+                        minus_range.setEnabled(true);
+                        add_range.setEnabled(true);
+                        stopAnim();
 
                     }
                     else if(typebtn.equals("minus")){
@@ -669,6 +701,9 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
                         double lng = Double.parseDouble(currentLng);
                         LatLng latLng = new LatLng(lat, lng);
                         reducecircle(latLng);
+                        minus_range.setEnabled(true);
+                        add_range.setEnabled(true);
+                        stopAnim();
                     }
                     else{
                         counter = Float.parseFloat(response.body().range);
@@ -678,6 +713,9 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
                         double lng = Double.parseDouble(currentLng);
                         LatLng latLng = new LatLng(lat, lng);
                         createcircle(latLng, counter);
+                        minus_range.setEnabled(true);
+                        add_range.setEnabled(true);
+                        stopAnim();
                     }
 
 
@@ -1138,6 +1176,8 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
 //                                pickuplocation.setText(currentName);
                                 currentLat = Lat.toString();
                                 currentLng = Long.toString();
+                                setLocaionLat(context,currentLat);
+                                setLocaitonLng(context,currentLng);
                                 if (lastKnownLocation != null) {
 
                                     map.moveCamera(CameraUpdateFactory.newLatLngZoom(
@@ -1351,11 +1391,15 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
                 map.setMyLocationEnabled(true);
                 map.getUiSettings().setMyLocationButtonEnabled(true);
 
+
+
             } else {
                 map.setMyLocationEnabled(false);
                 map.getUiSettings().setMyLocationButtonEnabled(false);
                 lastKnownLocation = null;
                 getLocationPermission();
+
+
             }
         } catch (SecurityException e) {
             Log.e("Exception: %s", e.getMessage());
@@ -1390,6 +1434,8 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
         switch (requestCode) {
             case place_picker_req_code:
                 Place place = Autocomplete.getPlaceFromIntent(data);
+
+
 //                if (resultCode == 0) {
 //
 //                } else {
@@ -1417,6 +1463,29 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
         }
 
     }
+
+
+    void startAnim(){
+        avi.show();
+        // or avi.smoothToShow();
+    }
+
+    void stopAnim(){
+        avi.hide();
+        // or avi.smoothToHide();
+    }
+
+    public static double getKmFromLatLong(double lat1, double lng1, double lat2, double lng2) {
+        Location loc1 = new Location("");
+        loc1.setLatitude(lat1);
+        loc1.setLongitude(lng1);
+        Location loc2 = new Location("");
+        loc2.setLatitude(lat2);
+        loc2.setLongitude(lng2);
+        double distanceInMeters = loc1.distanceTo(loc2);
+        return distanceInMeters / 1000;
+    }
+
 
 }
 
