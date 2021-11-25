@@ -21,6 +21,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".WaitingScreenActivity"
+            android:exported="true" />
+        <activity
             android:name=".RideConfimDriverAddAmount"
             android:exported="true" />
         <activity
@@ -28,16 +31,16 @@
             android:exported="true" />
         <activity
             android:name=".PaymentMethodScreenFirst"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".StartDoumentAddScreen"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".DrivingLicenceScreen"
             android:exported="true" />
         <activity
             android:name=".PersonalInformationScreen"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".ResetPassword"
             android:exported="true" />

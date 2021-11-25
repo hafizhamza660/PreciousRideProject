@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,7 @@ import com.example.task.R;
 import com.example.task.RideConfimDriverAddAmount;
 import com.example.task.RideRequestedHistory.Data;
 import com.google.firebase.database.core.utilities.Utilities;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -43,9 +45,10 @@ public class StackAdapter extends ArrayAdapter {
     int size;
     CardView card_stack;
     Button accept, ignore_btn;
-    TextView timer, pickup_location, dropoff_location, price, client_price;
+    TextView timer, pickup_location, dropoff_location, price, client_price,name_client;
     double picklat, picklng, droplat, droplng;
     String pickup, dropoff;
+    ImageView client_image;
 
     public StackAdapter(List<Data> dataList, Context context, int resource) {
         super(context, resource, dataList);
@@ -98,8 +101,19 @@ public class StackAdapter extends ArrayAdapter {
         dropoff_location = convertView.findViewById(R.id.dropoff_location);
         price = convertView.findViewById(R.id.price);
         client_price = convertView.findViewById(R.id.client_price);
+        name_client = convertView.findViewById(R.id.name_client);
+        client_image = convertView.findViewById(R.id.client_image);
         timer.setVisibility(View.GONE);
 
+
+
+        pickup_location.setText(pickup);
+        dropoff_location.setText(dropoff);
+        price.setText("$"+data.price);
+        client_price.setText("$"+data.client_price);
+        name_client.setText(data.client_details.name);
+        String url= "http://precious-ride.ragzon.com/"+data.client_details.image;
+        Picasso.get().load(url).into(client_image);
         accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,6 +131,7 @@ public class StackAdapter extends ArrayAdapter {
 //                intent.putExtra("client_id", data.client_id);
 //                intent.putExtra("driver_id", data.driver_id);
 //                c.startActivity(intent);
+                String image = data.client_details.image.toString();
 
 
                 Intent intent = new Intent(c, RideConfimDriverAddAmount.class);
@@ -132,16 +147,16 @@ public class StackAdapter extends ArrayAdapter {
                 intent.putExtra("status", data.status);
                 intent.putExtra("client_id", data.client_id);
                 intent.putExtra("driver_id", data.driver_id);
+                intent.putExtra("image_url", url);
+                intent.putExtra("name_client", data.client_details.name);
+
                 c.startActivity(intent);
 
             }
         });
 
 
-        pickup_location.setText(pickup);
-        dropoff_location.setText(dropoff);
-        price.setText("$"+data.price);
-        client_price.setText("$"+data.client_price);
+
 //        }
 //        reverseTimer(30,timer);
 

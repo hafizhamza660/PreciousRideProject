@@ -26,6 +26,7 @@ import com.example.task.PhoneVerificationFiles.UserServicePhoneVerification;
 import com.example.task.RangeFiles.UserServiceRange;
 import com.example.task.ResetPasswordFiles.UserServiceResetPassword;
 import com.example.task.RideAcceptFiles.UserServiceRideAccept;
+import com.example.task.RideAcceptWithPrice.UserServiceAcceptRideWithPrice;
 import com.example.task.RideCancel.UserServiceRideCancel;
 import com.example.task.RideNegotiate.UserServiceRideNegotiate;
 import com.example.task.RideRequestFiles.UserServiceRideRequest;
@@ -206,6 +207,11 @@ public class ApiClass {
     public static UserServiceCountryName getUserServiceCountryName(){
         UserServiceCountryName userServiceCountryName =getRetrofit().create(UserServiceCountryName.class);
         return userServiceCountryName;
+
+    }
+    public static UserServiceAcceptRideWithPrice getUserServiceAcceptRideWithPrice(){
+        UserServiceAcceptRideWithPrice userServiceAcceptRideWithPrice =getRetrofit().create(UserServiceAcceptRideWithPrice.class);
+        return userServiceAcceptRideWithPrice;
 
     }
 

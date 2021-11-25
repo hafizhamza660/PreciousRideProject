@@ -1,5 +1,7 @@
 package com.example.task.RideRequestedHistory;
 
+import java.util.List;
+
 public class Data {
     public String id;
     public String start_lat;
@@ -15,6 +17,15 @@ public class Data {
     public String driver_id;
     public String created_at;
     public String updated_at;
+    public Client_Details client_details;
+
+    public Client_Details getClient_details() {
+        return client_details;
+    }
+
+    public void setClient_details(Client_Details client_details) {
+        this.client_details = client_details;
+    }
 
     public String getClient_price() {
         return client_price;
