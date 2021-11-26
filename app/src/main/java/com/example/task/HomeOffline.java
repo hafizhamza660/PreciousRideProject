@@ -160,6 +160,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
 
     float counter=1;
     String val;
+    List<Data> data;
 
     // Make sure to be using androidx.appcompat.app.ActionBarDrawerToggle version.
     private ActionBarDrawerToggle drawerToggle;
@@ -385,6 +386,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
         switchbtn = findViewById(R.id.switchbtn);
         homeOffline = findViewById(R.id.homeOffline);
         homeOnline = findViewById(R.id.homeOnline);
+        data = new ArrayList<>();
 
         stackView = findViewById(R.id.stackview);
         toolbar_title = findViewById(R.id.toolbar_title);
@@ -406,6 +408,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
 
 //        counter= Double.parseDouble(getRange(context));
         rideRange(String.valueOf(counter),"nothing");
+        minus_range.setEnabled(false);
         minus_range.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -414,23 +417,13 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
                 add_range.setEnabled(false);
                 counter--;
                 km_range.setText(counter + " KM");
-                if (counter <1) {
+                if (counter <2) {
                     minus_range.setEnabled(false);
-
-
-//                    map.addCircle(new CircleOptions()
-//                            .center(latLng)
-//                            .radius(counter+999)
-//                            .strokeWidth(0f)
-//                            .fillColor(0x550000FF));
+                    rideRange(String.valueOf(counter),"minus");
 
                 }
                 else{
                     rideRange(String.valueOf(counter),"minus");
-//                    double lat = Double.parseDouble(currentLat);
-//                    double lng = Double.parseDouble(currentLng);
-//                    LatLng latLng = new LatLng(lat, lng);
-//                    reducecircle(latLng);
 
                 }
 
@@ -445,7 +438,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
                 counter++;
 
 //                km_range.setText(counter + " KM");
-                if (counter > 0) {
+                if (counter > 1) {
                     minus_range.setEnabled(true);
                     rideRange(String.valueOf(counter),"add");
 //                    double lat = Double.parseDouble(currentLat);
@@ -468,6 +461,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
             bottomSheetLayout.setVisibility(View.GONE);
             homeOnline.setVisibility(View.VISIBLE);
             toolbar_title.setText("Online");
+            data.clear();
             ridehistoryrequest();
             floatingActionButton.setVisibility(View.GONE);
 //            floatingActionButton_online.setVisibility(View.VISIBLE);
@@ -630,7 +624,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
 //                        rideRequestListAdapter = new RideRequestListAdapter(HomeOffline.this, context, response.body().data);
 //                        recyclerViewRideRequest.setAdapter(rideRequestListAdapter);
 
-                        List<Data> data = new ArrayList<>();
+
 //                        data.addAll(response.body().data);
                         for(int i =0;i<response.body().data.size();i++)
                         {
@@ -679,46 +673,67 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onResponse(Call<ResponseRange> call, Response<ResponseRange> response) {
                 if (response.isSuccessful()) {
+                    if(response.body()!=null) {
+                        if (typebtn.equals("add")) {
+                            counter = Float.parseFloat(response.body().range);
+                            setRange(context, String.valueOf(counter));
+                            km_range.setText(counter + " KM");
+                            double lat = Double.parseDouble(currentLat);
+                            double lng = Double.parseDouble(currentLng);
+                            LatLng latLng = new LatLng(lat, lng);
+                            createcircle(latLng, counter);
+                            if (counter<2){
 
-                    if (typebtn.equals("add")) {
-                        counter = Float.parseFloat(response.body().range);
-                        setRange(context, String.valueOf(counter));
-                        km_range.setText(counter + " KM");
-                        double lat = Double.parseDouble(currentLat);
-                        double lng = Double.parseDouble(currentLng);
-                        LatLng latLng = new LatLng(lat, lng);
-                        createcircle(latLng, counter);
-                        minus_range.setEnabled(true);
-                        add_range.setEnabled(true);
-                        stopAnim();
 
-                    }
-                    else if(typebtn.equals("minus")){
-                        counter = Float.parseFloat(response.body().range);
-                        setRange(context, String.valueOf(counter));
-                        km_range.setText(counter + " KM");
-                        double lat = Double.parseDouble(currentLat);
-                        double lng = Double.parseDouble(currentLng);
-                        LatLng latLng = new LatLng(lat, lng);
-                        reducecircle(latLng);
-                        minus_range.setEnabled(true);
-                        add_range.setEnabled(true);
-                        stopAnim();
+                            minus_range.setEnabled(false);
+                            add_range.setEnabled(true);
+                            }
+                            else{
+                                minus_range.setEnabled(true);
+                                add_range.setEnabled(true);
+                            }
+                            stopAnim();
+
+                        } else if (typebtn.equals("minus")) {
+                            counter = Float.parseFloat(response.body().range);
+                            setRange(context, String.valueOf(counter));
+                            km_range.setText(counter + " KM");
+                            double lat = Double.parseDouble(currentLat);
+                            double lng = Double.parseDouble(currentLng);
+                            LatLng latLng = new LatLng(lat, lng);
+                            reducecircle(latLng);
+                            if (counter<2) {
+                                minus_range.setEnabled(false);
+                                add_range.setEnabled(true);
+                            }
+                            else{
+                                minus_range.setEnabled(true);
+                                add_range.setEnabled(true);
+                            }
+                            stopAnim();
+                        } else {
+                            counter = Float.parseFloat(response.body().range);
+                            setRange(context, String.valueOf(counter));
+                            km_range.setText(counter + " KM");
+                            double lat = Double.parseDouble(currentLat);
+                            double lng = Double.parseDouble(currentLng);
+                            LatLng latLng = new LatLng(lat, lng);
+                            createcircle(latLng, counter);
+                            if (counter<2) {
+                                minus_range.setEnabled(false);
+                                add_range.setEnabled(true);
+                            }
+                            else{
+                                minus_range.setEnabled(true);
+                                add_range.setEnabled(true);
+                            }
+                            stopAnim();
+                        }
+
                     }
                     else{
-                        counter = Float.parseFloat(response.body().range);
-                        setRange(context, String.valueOf(counter));
-                        km_range.setText(counter + " KM");
-                        double lat = Double.parseDouble(currentLat);
-                        double lng = Double.parseDouble(currentLng);
-                        LatLng latLng = new LatLng(lat, lng);
-                        createcircle(latLng, counter);
-                        minus_range.setEnabled(true);
-                        add_range.setEnabled(true);
-                        stopAnim();
+
                     }
-
-
                 } else {
 //                    Toast.makeText(TravelRequest.this, "Not Successful", Toast.LENGTH_SHORT).show();
                 }
