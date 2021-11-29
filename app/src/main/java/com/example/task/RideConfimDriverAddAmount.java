@@ -1,17 +1,9 @@
 package com.example.task;
 
 import static com.example.task.Session.SaveSharedPreference.getClientId;
-import static com.example.task.Session.SaveSharedPreference.setChatId;
-import static com.example.task.Session.SaveSharedPreference.setCity;
-import static com.example.task.Session.SaveSharedPreference.setClientId;
-import static com.example.task.Session.SaveSharedPreference.setEmail;
-import static com.example.task.Session.SaveSharedPreference.setFirstName;
-import static com.example.task.Session.SaveSharedPreference.setLastName;
-import static com.example.task.Session.SaveSharedPreference.setMobileNumber;
-import static com.example.task.Session.SaveSharedPreference.setStatus;
+import static com.example.task.Session.SaveSharedPreference.setRideId;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
@@ -24,25 +16,15 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.task.API.ApiClass;
-import com.example.task.FilesSignUp.RequestSignUp;
-import com.example.task.FilesSignUp.ResponseSignUp;
-import com.example.task.RideAcceptFiles.RequestRideAccept;
-import com.example.task.RideAcceptFiles.ResponseRideAccept;
+import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.RideAcceptWithPrice.AcceptRideWithPriceRequest;
 import com.example.task.RideAcceptWithPrice.AcceptRideWithPriceResponse;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -122,6 +104,7 @@ public class RideConfimDriverAddAmount extends AppCompatActivity {
                     driver_price.setError("Required");
                 }
                 else{
+                    setRideId(context,s_id);
                     rideaccept(s_driver_id,s_id,driver_price_s);
                 }
             }
@@ -158,7 +141,7 @@ public class RideConfimDriverAddAmount extends AppCompatActivity {
         acceptRideWithPriceRequest.setPrice(price);
 
 
-        Call<AcceptRideWithPriceResponse> signUpResponseCall = ApiClass.getUserServiceAcceptRideWithPrice().userLogin(acceptRideWithPriceRequest);
+        Call<AcceptRideWithPriceResponse> signUpResponseCall = ApiClass.getUserServiceAPI().userAddDriverAddedPrice(acceptRideWithPriceRequest);
         signUpResponseCall.enqueue(new Callback<AcceptRideWithPriceResponse>() {
             @Override
             public void onResponse(Call<AcceptRideWithPriceResponse> call, Response<AcceptRideWithPriceResponse> response) {
@@ -166,6 +149,7 @@ public class RideConfimDriverAddAmount extends AppCompatActivity {
 //                    Toast.makeText(RideConfimDriverAddAmount.this, "" + response.body().message, Toast.LENGTH_SHORT).show();
                     if(response.body().message.equals("Success"))
                     {
+
                         startActivity(new Intent(RideConfimDriverAddAmount.this,WaitingScreenActivity.class));
                         finish();
                     }

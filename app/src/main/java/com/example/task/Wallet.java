@@ -15,21 +15,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.task.API.ApiClass;
-import com.example.task.Floating.FloatingViewService;
+import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.LogoutStatusFiles.RequestLogoutStatus;
 import com.example.task.LogoutStatusFiles.ResponseLogoutStatus;
 import com.example.task.adapters.PaymentHistoryAdapter;
-import com.example.task.adapters.VehicleManagementAdapter;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -241,7 +237,7 @@ public class Wallet extends AppCompatActivity {
         requestLogoutStatus.setDriver_id(getClientId(context));
 
 
-        Call<ResponseLogoutStatus> signUpResponseCall = ApiClass.getUserServiceLogoutStatus().userLogin(requestLogoutStatus);
+        Call<ResponseLogoutStatus> signUpResponseCall = ApiClass.getUserServiceAPI().userDriverLogoutStatus(requestLogoutStatus);
         signUpResponseCall.enqueue(new Callback<ResponseLogoutStatus>() {
             @Override
             public void onResponse(Call<ResponseLogoutStatus> call, Response<ResponseLogoutStatus> response) {

@@ -27,9 +27,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.task.API.ApiClass;
+import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.Dialog.CurrencySelection;
-import com.example.task.Dialog.Rules;
 import com.example.task.LogoutStatusFiles.RequestLogoutStatus;
 import com.example.task.LogoutStatusFiles.ResponseLogoutStatus;
 import com.google.android.material.navigation.NavigationView;
@@ -298,7 +297,7 @@ RelativeLayout container_2,currency_button,bank_button,campaign_button;
         requestLogoutStatus.setDriver_id(getClientId(context));
 
 
-        Call<ResponseLogoutStatus> signUpResponseCall = ApiClass.getUserServiceLogoutStatus().userLogin(requestLogoutStatus);
+        Call<ResponseLogoutStatus> signUpResponseCall = ApiClass.getUserServiceAPI().userDriverLogoutStatus(requestLogoutStatus);
         signUpResponseCall.enqueue(new Callback<ResponseLogoutStatus>() {
             @Override
             public void onResponse(Call<ResponseLogoutStatus> call, Response<ResponseLogoutStatus> response) {

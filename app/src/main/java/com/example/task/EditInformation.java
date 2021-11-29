@@ -1,7 +1,6 @@
 package com.example.task;
 
 import static com.example.task.Session.SaveSharedPreference.clearClientId;
-import static com.example.task.Session.SaveSharedPreference.getCity;
 import static com.example.task.Session.SaveSharedPreference.getClientId;
 import static com.example.task.Session.SaveSharedPreference.getEmail;
 import static com.example.task.Session.SaveSharedPreference.getFirstName;
@@ -17,7 +16,6 @@ import static com.example.task.Session.SaveSharedPreference.setMobileNumber;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,9 +24,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.task.API.ApiClass;
-import com.example.task.FilesSignUp.RequestSignUp;
-import com.example.task.FilesSignUp.ResponseSignUp;
+import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.UpdateFiles.RequestUpdate;
 import com.example.task.UpdateFiles.ResponseUpdate;
 
@@ -97,7 +93,7 @@ public class EditInformation extends AppCompatActivity {
 
 
 
-        Call<ResponseUpdate> signUpResponseCall = ApiClass.getUserServiceUpdate().userLogin(requestUpdate);
+        Call<ResponseUpdate> signUpResponseCall = ApiClass.getUserServiceAPI().userDriverProfileUpdate(requestUpdate);
         signUpResponseCall.enqueue(new Callback<ResponseUpdate>() {
             @Override
             public void onResponse(Call<ResponseUpdate> call, Response<ResponseUpdate> response) {

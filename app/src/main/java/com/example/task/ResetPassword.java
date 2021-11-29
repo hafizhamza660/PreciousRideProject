@@ -9,9 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.task.API.ApiClass;
-import com.example.task.PhoneVerificationFiles.RequestPhoneVerfication;
-import com.example.task.PhoneVerificationFiles.ResponsePhoneVerification;
+import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.ResetPasswordFiles.RequestResetPassword;
 import com.example.task.ResetPasswordFiles.ResponseResetPassword;
 
@@ -78,7 +76,7 @@ public class ResetPassword extends AppCompatActivity {
 //        signUpRequest.setI_code(invite_code);
 
 
-        Call<ResponseResetPassword> signUpResponseCall = ApiClass.getUserServiceResetPassword().userLogin(requestResetPassword);
+        Call<ResponseResetPassword> signUpResponseCall = ApiClass.getUserServiceAPI().userDriverResetPw(requestResetPassword);
         signUpResponseCall.enqueue(new Callback<ResponseResetPassword>() {
             @Override
             public void onResponse(Call<ResponseResetPassword> call, Response<ResponseResetPassword> response) {

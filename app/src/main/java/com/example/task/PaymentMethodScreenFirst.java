@@ -1,7 +1,5 @@
 package com.example.task;
 
-import static com.example.task.Session.SaveSharedPreference.getClientId;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -17,11 +15,9 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.task.API.ApiClass;
+import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.AccountDetailsFiles.RequestAccountDetails;
 import com.example.task.AccountDetailsFiles.ResponseAccountDetails;
-import com.example.task.DocumentUploadFiles.RequestDocument;
-import com.example.task.DocumentUploadFiles.ResponseDocumentUpload;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -133,7 +129,7 @@ public class PaymentMethodScreenFirst extends AppCompatActivity {
 
 
 
-        Call<ResponseAccountDetails> responseDocumentUploadCall = ApiClass.getUserServiceAccountDetails().userLogin(requestAccountDetails);
+        Call<ResponseAccountDetails> responseDocumentUploadCall = ApiClass.getUserServiceAPI().userAddDriverBankingDetails(requestAccountDetails);
         responseDocumentUploadCall.enqueue(new Callback<ResponseAccountDetails>() {
             @Override
             public void onResponse(Call<ResponseAccountDetails> call, Response<ResponseAccountDetails> response) {

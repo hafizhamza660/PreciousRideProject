@@ -9,24 +9,20 @@ import static com.example.task.Session.SaveSharedPreference.setMobileNumber;
 import static com.example.task.Session.SaveSharedPreference.setStatus;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.task.API.ApiClass;
+import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.FilesLogin.RequestLogin;
 import com.example.task.FilesLogin.ResponseLogin;
 import com.example.task.LoginValues.RequestLoginValues;
@@ -109,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
 //        signUpRequest.setI_code(invite_code);
 
 
-        Call<ResponseLogin> signUpResponseCall = ApiClass.getUserServiceLogin().userLogin(requestLogin);
+        Call<ResponseLogin> signUpResponseCall = ApiClass.getUserServiceAPI().userDriverLogin(requestLogin);
         signUpResponseCall.enqueue(new Callback<ResponseLogin>() {
             @Override
             public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
@@ -187,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
 //        signUpRequest.setI_code(invite_code);
 
 
-        Call<ResponseLoginValues> responseLoginValuesCall = ApiClass.getUserServiceLoginValues().userLogin(requestLoginValues);
+        Call<ResponseLoginValues> responseLoginValuesCall = ApiClass.getUserServiceAPI().userDriverLoginStatus(requestLoginValues);
         responseLoginValuesCall.enqueue(new Callback<ResponseLoginValues>() {
             @Override
             public void onResponse(Call<ResponseLoginValues> call, Response<ResponseLoginValues> response) {

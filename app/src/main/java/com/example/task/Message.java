@@ -1,15 +1,11 @@
 package com.example.task;
 
-import static com.example.task.Session.SaveSharedPreference.getChatId;
-import static com.example.task.Session.SaveSharedPreference.setChatId;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,29 +15,17 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.task.API.APIServices;
-import com.example.task.API.ApiClass;
 import com.example.task.API.Client;
-import com.example.task.API.Data;
 import com.example.task.API.DataModel;
-import com.example.task.API.MyResponse;
 import com.example.task.API.NotificationModel;
 import com.example.task.API.RootModel;
-import com.example.task.API.Sender;
-import com.example.task.API.Token;
-import com.example.task.Messages.MessageWithChatId.MessageWithChatidRequest;
-import com.example.task.Messages.MessageWithChatId.MessagesResponse;
-import com.example.task.Messages.MessageWithoutChatId.MessageWithoutChatidRequest;
 import com.example.task.Models.Chat;
-import com.example.task.RideAcceptFiles.RequestRideAccept;
-import com.example.task.RideAcceptFiles.ResponseRideAccept;
-import com.example.task.adapters.MessageAdapter;
 import com.example.task.adapters.MessageFirebaseAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
@@ -51,9 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import okhttp3.ResponseBody;
-import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 
 public class Message extends AppCompatActivity {
     RecyclerView recyclerView;
@@ -493,6 +475,6 @@ public class Message extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
+        super.onBackPressed();
     }
 }

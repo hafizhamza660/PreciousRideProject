@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -22,15 +21,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.task.API.ApiClass;
-import com.example.task.Dialog.AmountEnter;
-import com.example.task.Dialog.Rules;
-import com.example.task.FilesSignUp.RequestSignUp;
-import com.example.task.FilesSignUp.ResponseSignUp;
-import com.example.task.HomeOffline;
-import com.example.task.HomeOnlineBookingDetails;
+import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.HomeOnlineBookingDetailsGotopickup;
-import com.example.task.MainActivity;
 import com.example.task.R;
 import com.example.task.RideAcceptFiles.RequestRideAccept;
 import com.example.task.RideAcceptFiles.ResponseRideAccept;
@@ -39,10 +31,8 @@ import com.example.task.RideCancel.RideCancelResponse;
 import com.example.task.RideNegotiate.RequestRideNegotiate;
 import com.example.task.RideNegotiate.ResponseRideNegotiate;
 import com.example.task.RideRequestFiles.Data;
-import com.example.task.SignUp;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -233,7 +223,7 @@ public class RideRequestListAdapter extends RecyclerView.Adapter<RideRequestList
         requestRideAccept.setRide_id(ride_id);
 
 
-        Call<ResponseRideAccept> signUpResponseCall = ApiClass.getUserServiceRideAccept().userLogin(requestRideAccept);
+        Call<ResponseRideAccept> signUpResponseCall = ApiClass.getUserServiceAPI().userDriverAcceptRide(requestRideAccept);
         signUpResponseCall.enqueue(new Callback<ResponseRideAccept>() {
             @Override
             public void onResponse(Call<ResponseRideAccept> call, Response<ResponseRideAccept> response) {
@@ -273,7 +263,7 @@ public class RideRequestListAdapter extends RecyclerView.Adapter<RideRequestList
         requestRideNegotiate.setNegotiate_price(price);
 
 
-        Call<ResponseRideNegotiate> responseRideNegotiateCall = ApiClass.getUserServiceRideNegotiate().userLogin(requestRideNegotiate);
+        Call<ResponseRideNegotiate> responseRideNegotiateCall = ApiClass.getUserServiceAPI().userDriverNegotitateRide(requestRideNegotiate);
         responseRideNegotiateCall.enqueue(new Callback<ResponseRideNegotiate>() {
             @Override
             public void onResponse(Call<ResponseRideNegotiate> call, Response<ResponseRideNegotiate> response) {
@@ -309,7 +299,7 @@ public class RideRequestListAdapter extends RecyclerView.Adapter<RideRequestList
         rideCancelRequest.setRide_id(ride_id);
 
 
-        Call<RideCancelResponse> responseRideNegotiateCall = ApiClass.getUserServiceRideCancel().userLogin(rideCancelRequest);
+        Call<RideCancelResponse> responseRideNegotiateCall = ApiClass.getUserServiceAPI().userDriverCancelRide(rideCancelRequest);
         responseRideNegotiateCall.enqueue(new Callback<RideCancelResponse>() {
             @Override
             public void onResponse(Call<RideCancelResponse> call, Response<RideCancelResponse> response) {

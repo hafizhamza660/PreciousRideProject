@@ -19,7 +19,6 @@ import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.style.BackgroundColorSpan;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,11 +26,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.task.API.ApiClass;
+import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.LogoutStatusFiles.RequestLogoutStatus;
 import com.example.task.LogoutStatusFiles.ResponseLogoutStatus;
 import com.google.android.material.navigation.NavigationView;
-import com.wenchao.cardstack.CardStack;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -512,7 +510,7 @@ public class History extends AppCompatActivity {
         requestLogoutStatus.setDriver_id(getClientId(context));
 
 
-        Call<ResponseLogoutStatus> signUpResponseCall = ApiClass.getUserServiceLogoutStatus().userLogin(requestLogoutStatus);
+        Call<ResponseLogoutStatus> signUpResponseCall = ApiClass.getUserServiceAPI().userDriverLogoutStatus(requestLogoutStatus);
         signUpResponseCall.enqueue(new Callback<ResponseLogoutStatus>() {
             @Override
             public void onResponse(Call<ResponseLogoutStatus> call, Response<ResponseLogoutStatus> response) {

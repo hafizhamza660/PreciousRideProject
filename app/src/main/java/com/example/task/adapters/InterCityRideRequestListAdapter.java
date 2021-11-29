@@ -20,7 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.task.API.ApiClass;
+import com.example.task.UserServiceInterface.ApiClass;
 
 import com.example.task.InterCityNegotiate.RequestRideNegotiateInterCity;
 import com.example.task.InterCityNegotiate.ResponseRideNegotiateInterCity;
@@ -212,7 +212,7 @@ public class InterCityRideRequestListAdapter extends RecyclerView.Adapter<InterC
        requestRideAcceptInterCity.setRide_id(ride_id);
 
 
-        Call<ResponseRideAcceptInterCity> signUpResponseCall = ApiClass.getUserServiceRideAcceptInterCity().userLogin(requestRideAcceptInterCity);
+        Call<ResponseRideAcceptInterCity> signUpResponseCall = ApiClass.getUserServiceAPI().userInterCityDriverAccepts(requestRideAcceptInterCity);
         signUpResponseCall.enqueue(new Callback<ResponseRideAcceptInterCity>() {
             @Override
             public void onResponse(Call<ResponseRideAcceptInterCity> call, Response<ResponseRideAcceptInterCity> response) {
@@ -250,7 +250,7 @@ public class InterCityRideRequestListAdapter extends RecyclerView.Adapter<InterC
         requestRideNegotiate.setNegotiate_price(price);
 
 
-        Call<ResponseRideNegotiateInterCity> responseRideNegotiateCall = ApiClass.getUserServiceRideNegotiateInterCity().userLogin(requestRideNegotiate);
+        Call<ResponseRideNegotiateInterCity> responseRideNegotiateCall = ApiClass.getUserServiceAPI().userInterCityDriverNegotitate(requestRideNegotiate);
         responseRideNegotiateCall.enqueue(new Callback<ResponseRideNegotiateInterCity>() {
             @Override
             public void onResponse(Call<ResponseRideNegotiateInterCity> call, Response<ResponseRideNegotiateInterCity> response) {

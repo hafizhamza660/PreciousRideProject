@@ -19,6 +19,7 @@ public class SaveSharedPreference {
     static final String PREF_COUNTRY_CODE= "2654848";
     static final String LOCATION_LAT= "9854";
     static final String LOCATION_LNG= "12635";
+    static final String RIDE_ID= "3256";
 
     static SharedPreferences getSharedPreferences(Context ctx) {
         return PreferenceManager.getDefaultSharedPreferences(ctx);
@@ -122,6 +123,13 @@ public class SaveSharedPreference {
         editor.commit();
     }
 
+    public static void setRideId(Context ctx,String ride_id)
+    {
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putString(RIDE_ID, ride_id);
+        editor.commit();
+    }
+
     public static String getClientId(Context ctx)
     {
         return getSharedPreferences(ctx).getString(PREF_USER_ID, "");
@@ -189,6 +197,11 @@ public class SaveSharedPreference {
     public static String getLocaitonLng(Context ctx)
     {
         return getSharedPreferences(ctx).getString(LOCATION_LNG, "");
+    }
+
+    public static String getRideId(Context ctx)
+    {
+        return getSharedPreferences(ctx).getString(RIDE_ID, "");
     }
 
     public static void clearClientId(Context ctx)

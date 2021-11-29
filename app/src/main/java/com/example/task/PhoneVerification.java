@@ -6,11 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
-import com.example.task.API.ApiClass;
-import com.example.task.ForgetPasswordFiles.RequestForgetPassword;
-import com.example.task.ForgetPasswordFiles.ResponseForgetPassword;
+import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.PhoneVerificationFiles.RequestPhoneVerfication;
 import com.example.task.PhoneVerificationFiles.ResponsePhoneVerification;
 import com.mukesh.OtpView;
@@ -56,7 +53,7 @@ public class PhoneVerification extends AppCompatActivity {
 //        signUpRequest.setI_code(invite_code);
 
 
-        Call<ResponsePhoneVerification> signUpResponseCall = ApiClass.getUserServicePhoneVerification().userLogin(requestPhoneVerfication);
+        Call<ResponsePhoneVerification> signUpResponseCall = ApiClass.getUserServiceAPI().userDriverConfirmOtp(requestPhoneVerfication);
         signUpResponseCall.enqueue(new Callback<ResponsePhoneVerification>() {
             @Override
             public void onResponse(Call<ResponsePhoneVerification> call, Response<ResponsePhoneVerification> response) {

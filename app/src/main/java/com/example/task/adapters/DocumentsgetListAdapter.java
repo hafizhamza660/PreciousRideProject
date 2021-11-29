@@ -1,20 +1,9 @@
 package com.example.task.adapters;
 
-import static android.app.Activity.RESULT_OK;
-import static com.example.task.Session.SaveSharedPreference.getClientId;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.location.Address;
-import android.location.Geocoder;
-import android.net.Uri;
-import android.os.Environment;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,38 +13,18 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.task.API.ApiClass;
-import com.example.task.AddNewDocument;
 import com.example.task.DocumentDataFiles.Data;
-import com.example.task.HomeOnlineBookingDetailsGotopickup;
-import com.example.task.PersonalInformationScreen;
 import com.example.task.R;
-import com.example.task.RideAcceptFiles.RequestRideAccept;
-import com.example.task.RideAcceptFiles.ResponseRideAccept;
-import com.example.task.RideCancel.RideCancelRequest;
-import com.example.task.RideCancel.RideCancelResponse;
-import com.example.task.RideNegotiate.RequestRideNegotiate;
-import com.example.task.RideNegotiate.ResponseRideNegotiate;
 
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class DocumentsgetListAdapter extends RecyclerView.Adapter<DocumentsgetListAdapter.MyViewHolder> {
     private CallbackInterface mCallback;

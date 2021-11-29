@@ -1,26 +1,15 @@
 package com.example.task;
 
 import static com.example.task.Session.SaveSharedPreference.clearClientId;
-import static com.example.task.Session.SaveSharedPreference.getCity;
 import static com.example.task.Session.SaveSharedPreference.getClientId;
-import static com.example.task.Session.SaveSharedPreference.getEmail;
 import static com.example.task.Session.SaveSharedPreference.getFirstName;
 import static com.example.task.Session.SaveSharedPreference.getInterCity;
-import static com.example.task.Session.SaveSharedPreference.getLastName;
 import static com.example.task.Session.SaveSharedPreference.getLocaitonLng;
 import static com.example.task.Session.SaveSharedPreference.getLocationLat;
-import static com.example.task.Session.SaveSharedPreference.getMobileNumber;
 
-import static com.example.task.Session.SaveSharedPreference.getRange;
 import static com.example.task.Session.SaveSharedPreference.getStatus;
-import static com.example.task.Session.SaveSharedPreference.setCity;
-import static com.example.task.Session.SaveSharedPreference.setClientId;
-import static com.example.task.Session.SaveSharedPreference.setEmail;
-import static com.example.task.Session.SaveSharedPreference.setFirstName;
-import static com.example.task.Session.SaveSharedPreference.setLastName;
 import static com.example.task.Session.SaveSharedPreference.setLocaionLat;
 import static com.example.task.Session.SaveSharedPreference.setLocaitonLng;
-import static com.example.task.Session.SaveSharedPreference.setMobileNumber;
 import static com.example.task.Session.SaveSharedPreference.setRange;
 import static com.example.task.Session.SaveSharedPreference.setStatus;
 
@@ -30,16 +19,10 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.motion.utils.HyperSpline;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -47,7 +30,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
-import android.icu.util.MeasureUnit;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -56,7 +38,6 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.MenuItem;
@@ -68,28 +49,20 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.StackView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.task.API.ApiClass;
+import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.Dialog.Rules;
-import com.example.task.FilesLogin.RequestLogin;
-import com.example.task.FilesLogin.ResponseLogin;
-import com.example.task.Floating.FloatingViewService;
 import com.example.task.LogoutStatusFiles.RequestLogoutStatus;
 import com.example.task.LogoutStatusFiles.ResponseLogoutStatus;
 import com.example.task.RangeFiles.RequestRange;
 import com.example.task.RangeFiles.ResponseRange;
-import com.example.task.RideRequestFiles.RideRequestResponse;
 import com.example.task.RideRequestedHistory.Data;
 import com.example.task.RideRequestedHistory.RideRequestHistoryResponse;
-import com.example.task.Service.ServiceClass;
-import com.example.task.Session.SaveSharedPreference;
 import com.example.task.StatusFiles.RequestStatus;
 import com.example.task.StatusFiles.ResponseStatus;
-import com.example.task.adapters.RideRequestListAdapter;
 import com.example.task.adapters.StackAdapter;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -125,7 +98,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-import in.arjsna.swipecardlib.SwipeCardView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -278,6 +250,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
         View hView =  nvDrawer.getHeaderView(0);
         TextView drivername = (TextView)hView.findViewById(R.id.driver_name);
+        ImageView profile_dp = (ImageView) hView.findViewById(R.id.user_image);
         drivername.setText(getFirstName(context));
 //            nvDrawer2 = (NavigationView) findViewById(R.id.nvView2);
 
@@ -611,14 +584,14 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
     public void ridehistoryrequest() {
 
 
-        Call<RideRequestHistoryResponse> signUpResponseCall = ApiClass.getUserServiceRideHistoryRequest().userLogin();
+        Call<RideRequestHistoryResponse> signUpResponseCall = ApiClass.getUserServiceAPI().userGetDriverRequestedRideRequests();
         signUpResponseCall.enqueue(new Callback<RideRequestHistoryResponse>() {
             @Override
             public void onResponse(Call<RideRequestHistoryResponse> call, Response<RideRequestHistoryResponse> response) {
                 if (response.isSuccessful()) {
 //                    Toast.makeText(TravelRequest.this, ""+response.body().data, Toast.LENGTH_LONG).show();
 //                    Log.d(TAG,"Data : "+response.body().data.get(0).id);
-                    if (response.body().data.equals(null)) {
+                    if (response.body().status.equals("0")) {
 
                     } else {
 //                        rideRequestListAdapter = new RideRequestListAdapter(HomeOffline.this, context, response.body().data);
@@ -635,7 +608,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
                             lat2 = Double.parseDouble(response.body().data.get(i).start_lat);
                             long2 = Double.parseDouble(response.body().data.get(i).start_long);
                             total = getKmFromLatLong(lat1, long1, lat2, long2);
-                            if (total<1.0) {
+                            if (total<5) {
                                 data.add(response.body().data.get(i));
                             }
                         }
@@ -668,7 +641,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
         requestRange.setRange(range);
 
 
-        Call<ResponseRange> responseRangeCall = ApiClass.getUserServiceRange().userLogin(requestRange);
+        Call<ResponseRange> responseRangeCall = ApiClass.getUserServiceAPI().userRangeUpdate(requestRange);
         responseRangeCall.enqueue(new Callback<ResponseRange>() {
             @Override
             public void onResponse(Call<ResponseRange> call, Response<ResponseRange> response) {
@@ -1022,7 +995,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
         requestStatus.setId(driver_id);
 
 
-        Call<ResponseStatus> signUpResponseCall = ApiClass.getUserServiceStatus().userLogin(requestStatus);
+        Call<ResponseStatus> signUpResponseCall = ApiClass.getUserServiceAPI().userDriverStatus(requestStatus);
         signUpResponseCall.enqueue(new Callback<ResponseStatus>() {
             @Override
             public void onResponse(Call<ResponseStatus> call, Response<ResponseStatus> response) {
@@ -1079,7 +1052,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
         requestLogoutStatus.setDriver_id(driver_id);
 
 
-        Call<ResponseLogoutStatus> signUpResponseCall = ApiClass.getUserServiceLogoutStatus().userLogin(requestLogoutStatus);
+        Call<ResponseLogoutStatus> signUpResponseCall = ApiClass.getUserServiceAPI().userDriverLogoutStatus(requestLogoutStatus);
         signUpResponseCall.enqueue(new Callback<ResponseLogoutStatus>() {
             @Override
             public void onResponse(Call<ResponseLogoutStatus> call, Response<ResponseLogoutStatus> response) {

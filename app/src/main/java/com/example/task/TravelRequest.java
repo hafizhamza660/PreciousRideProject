@@ -4,24 +4,14 @@ import static com.example.task.Session.SaveSharedPreference.clearClientId;
 import static com.example.task.Session.SaveSharedPreference.getClientId;
 import static com.example.task.Session.SaveSharedPreference.getFirstName;
 import static com.example.task.Session.SaveSharedPreference.getInterCity;
-import static com.example.task.Session.SaveSharedPreference.getStatus;
-import static com.example.task.Session.SaveSharedPreference.setCity;
-import static com.example.task.Session.SaveSharedPreference.setClientId;
-import static com.example.task.Session.SaveSharedPreference.setEmail;
-import static com.example.task.Session.SaveSharedPreference.setFirstName;
-import static com.example.task.Session.SaveSharedPreference.setLastName;
-import static com.example.task.Session.SaveSharedPreference.setMobileNumber;
-import static com.example.task.Session.SaveSharedPreference.setStatus;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -31,31 +21,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.task.API.ApiClass;
+import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.Dialog.AmountEnter;
-import com.example.task.Dialog.CurrencySelection;
-import com.example.task.Dialog.Rules;
-import com.example.task.FilesLogin.RequestLogin;
-import com.example.task.FilesLogin.ResponseLogin;
 import com.example.task.LogoutStatusFiles.RequestLogoutStatus;
 import com.example.task.LogoutStatusFiles.ResponseLogoutStatus;
 import com.example.task.RideRequestFiles.Data;
 import com.example.task.RideRequestFiles.RideRequestResponse;
-import com.example.task.StatusFiles.RequestStatus;
-import com.example.task.StatusFiles.ResponseStatus;
 import com.example.task.adapters.RideRequestListAdapter;
-import com.example.task.adapters.StackAdapter;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -278,7 +258,7 @@ public class TravelRequest extends AppCompatActivity {
     public void riderequest() {
 
 
-        Call<RideRequestResponse> signUpResponseCall = ApiClass.getUserServiceRideRequest().userLogin();
+        Call<RideRequestResponse> signUpResponseCall = ApiClass.getUserServiceAPI().userGetDriverRideRequest();
         signUpResponseCall.enqueue(new Callback<RideRequestResponse>() {
             @Override
             public void onResponse(Call<RideRequestResponse> call, Response<RideRequestResponse> response) {
@@ -346,7 +326,7 @@ public class TravelRequest extends AppCompatActivity {
         requestLogoutStatus.setDriver_id(getClientId(context));
 
 
-        Call<ResponseLogoutStatus> signUpResponseCall = ApiClass.getUserServiceLogoutStatus().userLogin(requestLogoutStatus);
+        Call<ResponseLogoutStatus> signUpResponseCall = ApiClass.getUserServiceAPI().userDriverLogoutStatus(requestLogoutStatus);
         signUpResponseCall.enqueue(new Callback<ResponseLogoutStatus>() {
             @Override
             public void onResponse(Call<ResponseLogoutStatus> call, Response<ResponseLogoutStatus> response) {

@@ -1,34 +1,21 @@
 package com.example.task;
 
 import static com.example.task.Session.SaveSharedPreference.getClientId;
-import static com.example.task.Session.SaveSharedPreference.getImageUrl;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.media.Image;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.task.API.ApiClass;
+import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.AllDocumentFiles.RequestAllDocument;
 import com.example.task.AllDocumentFiles.ResponseAllDocument;
-import com.example.task.DocumentUploadFiles.RequestDocument;
-import com.example.task.DocumentUploadFiles.ResponseDocumentUpload;
 import com.squareup.picasso.Picasso;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -103,7 +90,7 @@ public class DocumentManagement extends AppCompatActivity {
 
 
 
-        Call<ResponseAllDocument> responseDocumentUploadCall = ApiClass.getUserServiceAllDocument().userLogin(requestAllDocument);
+        Call<ResponseAllDocument> responseDocumentUploadCall = ApiClass.getUserServiceAPI().userDriverGetAllDocuments(requestAllDocument);
         responseDocumentUploadCall.enqueue(new Callback<ResponseAllDocument>() {
             @Override
             public void onResponse(Call<ResponseAllDocument> call, Response<ResponseAllDocument> response) {

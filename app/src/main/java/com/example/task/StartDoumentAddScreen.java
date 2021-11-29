@@ -13,21 +13,17 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.task.API.ApiClass;
+import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.DocumentDataFiles.RequestDocumentCountrywise;
 import com.example.task.DocumentDataFiles.ResponseDocumentCountrywise;
 import com.example.task.DocumentsStartFiles.ListDocument;
@@ -40,8 +36,6 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.concurrent.ExecutionException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -119,7 +113,7 @@ public class StartDoumentAddScreen extends AppCompatActivity implements Document
         requestSignUp.setNumber("+92");
 
 
-        Call<ResponseDocumentCountrywise> signUpResponseCall = ApiClass.getUserServiceDocumentCountrywise().userLogin(requestSignUp);
+        Call<ResponseDocumentCountrywise> signUpResponseCall = ApiClass.getUserServiceAPI().userDriverGetDocuments(requestSignUp);
         signUpResponseCall.enqueue(new Callback<ResponseDocumentCountrywise>() {
             @Override
             public void onResponse(Call<ResponseDocumentCountrywise> call, Response<ResponseDocumentCountrywise> response) {
@@ -145,7 +139,7 @@ public class StartDoumentAddScreen extends AppCompatActivity implements Document
         requestSignUp.setListDocuments(arrydata);
 
 
-        Call<ResponseDocumentStartSend> signUpResponseCall = ApiClass.getUserServiceDocumentsStartSend().userLogin(requestSignUp);
+        Call<ResponseDocumentStartSend> signUpResponseCall = ApiClass.getUserServiceAPI().userDriverAllDocuments(requestSignUp);
         signUpResponseCall.enqueue(new Callback<ResponseDocumentStartSend>() {
             @Override
             public void onResponse(Call<ResponseDocumentStartSend> call, Response<ResponseDocumentStartSend> response) {

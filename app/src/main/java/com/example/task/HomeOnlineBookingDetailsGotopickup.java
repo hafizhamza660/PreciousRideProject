@@ -13,7 +13,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -23,7 +22,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Html;
@@ -32,7 +30,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.task.API.ApiClass;
+import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.DataSendFiles.RequestDataSend;
 import com.example.task.DataSendFiles.ResponseDataSend;
 import com.example.task.Directionhelpers.FetchURL;
@@ -58,7 +56,6 @@ import com.google.gson.Gson;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
@@ -230,7 +227,7 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
                 JSONObject object= (JSONObject) getPreferenceObjectJson(context,"mapObject");
                 datasend(object);
             }
-        }, 0, 5000);
+        }, 0, 1000);
     }
 
     public void back_button(View view) {
@@ -438,7 +435,7 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
 //        signUpRequest.setI_code(invite_code);
 
 
-        Call<ResponseDataSend> signUpResponseCall = ApiClass.getUserServiceDataSend().userLogin(requestDataSend);
+        Call<ResponseDataSend> signUpResponseCall = ApiClass.getUserServiceAPI().userDriverApiObject(requestDataSend);
         signUpResponseCall.enqueue(new Callback<ResponseDataSend>() {
             @Override
             public void onResponse(Call<ResponseDataSend> call, Response<ResponseDataSend> response) {

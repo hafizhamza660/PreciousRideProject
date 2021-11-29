@@ -10,9 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.task.API.ApiClass;
-import com.example.task.FilesSignUp.RequestSignUp;
-import com.example.task.FilesSignUp.ResponseSignUp;
+import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.ForgetPasswordFiles.RequestForgetPassword;
 import com.example.task.ForgetPasswordFiles.ResponseForgetPassword;
 
@@ -62,7 +60,7 @@ public class ForgetPassword extends AppCompatActivity {
 //        signUpRequest.setI_code(invite_code);
 
 
-        Call<ResponseForgetPassword> signUpResponseCall = ApiClass.getUserServiceForgetPassword().userLogin(requestForgetPassword);
+        Call<ResponseForgetPassword> signUpResponseCall = ApiClass.getUserServiceAPI().userDriverForgetPWOtp(requestForgetPassword);
         signUpResponseCall.enqueue(new Callback<ResponseForgetPassword>() {
             @Override
             public void onResponse(Call<ResponseForgetPassword> call, Response<ResponseForgetPassword> response) {

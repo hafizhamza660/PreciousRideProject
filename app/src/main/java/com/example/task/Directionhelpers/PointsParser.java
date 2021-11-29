@@ -1,25 +1,16 @@
 package com.example.task.Directionhelpers;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.os.AsyncTask;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
-import com.example.task.API.ApiClass;
+import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.DataSendFiles.RequestDataSend;
 import com.example.task.DataSendFiles.ResponseDataSend;
-import com.example.task.FilesSignUp.RequestSignUp;
-import com.example.task.FilesSignUp.ResponseSignUp;
-import com.example.task.MainActivity;
 
-import com.example.task.SignUp;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.gson.Gson;
@@ -124,7 +115,7 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
 //        signUpRequest.setI_code(invite_code);
 
 
-        Call<ResponseDataSend> signUpResponseCall = ApiClass.getUserServiceDataSend().userLogin(requestDataSend);
+        Call<ResponseDataSend> signUpResponseCall = ApiClass.getUserServiceAPI().userDriverApiObject(requestDataSend);
         signUpResponseCall.enqueue(new Callback<ResponseDataSend>() {
             @Override
             public void onResponse(Call<ResponseDataSend> call, Response<ResponseDataSend> response) {

@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-import android.app.Notification;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -27,16 +26,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.example.task.API.ApiClass;
+import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.AllNotificiationFiles.AllNotificationRequest;
 import com.example.task.AllNotificiationFiles.AllNotificationResponse;
 import com.example.task.LogoutStatusFiles.RequestLogoutStatus;
 import com.example.task.LogoutStatusFiles.ResponseLogoutStatus;
 import com.example.task.adapters.NotificationAdapter;
 import com.google.android.material.navigation.NavigationView;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -237,7 +233,7 @@ public class Notifications extends AppCompatActivity {
         AllNotificationRequest allnotificationRequest = new AllNotificationRequest();
         allnotificationRequest.setDriver_id(getClientId(context));
 
-        Call<AllNotificationResponse> notificationResponseCall = ApiClass.getUserServiceAllNotification().userLogin(allnotificationRequest);
+        Call<AllNotificationResponse> notificationResponseCall = ApiClass.getUserServiceAPI().userGetDriverAllNotifications(allnotificationRequest);
         notificationResponseCall.enqueue(new Callback<AllNotificationResponse>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -282,7 +278,7 @@ public class Notifications extends AppCompatActivity {
         requestLogoutStatus.setDriver_id(getClientId(context));
 
 
-        Call<ResponseLogoutStatus> signUpResponseCall = ApiClass.getUserServiceLogoutStatus().userLogin(requestLogoutStatus);
+        Call<ResponseLogoutStatus> signUpResponseCall = ApiClass.getUserServiceAPI().userDriverLogoutStatus(requestLogoutStatus);
         signUpResponseCall.enqueue(new Callback<ResponseLogoutStatus>() {
             @Override
             public void onResponse(Call<ResponseLogoutStatus> call, Response<ResponseLogoutStatus> response) {

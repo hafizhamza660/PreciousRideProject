@@ -1,12 +1,8 @@
 package com.example.task;
 
 import static com.example.task.Session.SaveSharedPreference.getClientId;
-import static com.example.task.Session.SaveSharedPreference.setCity;
-import static com.example.task.Session.SaveSharedPreference.setEmail;
 import static com.example.task.Session.SaveSharedPreference.setFirstName;
 import static com.example.task.Session.SaveSharedPreference.setLastName;
-import static com.example.task.Session.SaveSharedPreference.setMobileNumber;
-import static com.example.task.Session.SaveSharedPreference.setStatus;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -28,9 +24,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.task.API.ApiClass;
-import com.example.task.FilesSignUp.RequestSignUp;
-import com.example.task.FilesSignUp.ResponseSignUp;
+import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.PersonalInformationFiles.RequestPersonalInformation;
 import com.example.task.PersonalInformationFiles.ResponsePersonalInformation;
 
@@ -217,7 +211,7 @@ public class PersonalInformationScreen extends AppCompatActivity {
         requestPersonalInformation.setReferral_code(referral_code);
 
 
-        Call<ResponsePersonalInformation> responsePersonalInformationCall = ApiClass.getUserServicePersonalInformation().userLogin(requestPersonalInformation);
+        Call<ResponsePersonalInformation> responsePersonalInformationCall = ApiClass.getUserServiceAPI().userAddDriverDetails(requestPersonalInformation);
         responsePersonalInformationCall.enqueue(new Callback<ResponsePersonalInformation>() {
             @Override
             public void onResponse(Call<ResponsePersonalInformation> call, Response<ResponsePersonalInformation> response) {

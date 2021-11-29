@@ -20,7 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.task.API.ApiClass;
+import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.ClientDataFiles.RequestClientData;
 import com.example.task.ClientDataFiles.ResponseClientData;
 import com.example.task.RideAcceptFiles.RequestRideAccept;
@@ -29,9 +29,6 @@ import com.example.task.RideCancel.RideCancelRequest;
 import com.example.task.RideCancel.RideCancelResponse;
 import com.example.task.RideNegotiate.RequestRideNegotiate;
 import com.example.task.RideNegotiate.ResponseRideNegotiate;
-import com.example.task.RideRequestedHistory.Data;
-import com.example.task.RideRequestedHistory.RideRequestHistoryResponse;
-import com.example.task.adapters.StackAdapter;
 
 import java.io.IOException;
 import java.util.List;
@@ -188,7 +185,7 @@ public class HomeOnlineBookingDetails extends AppCompatActivity {
         requestRideNegotiate.setNegotiate_price(price);
 
 
-        Call<ResponseRideNegotiate> responseRideNegotiateCall = ApiClass.getUserServiceRideNegotiate().userLogin(requestRideNegotiate);
+        Call<ResponseRideNegotiate> responseRideNegotiateCall = ApiClass.getUserServiceAPI().userDriverNegotitateRide(requestRideNegotiate);
         responseRideNegotiateCall.enqueue(new Callback<ResponseRideNegotiate>() {
             @Override
             public void onResponse(Call<ResponseRideNegotiate> call, Response<ResponseRideNegotiate> response) {
@@ -215,7 +212,7 @@ public class HomeOnlineBookingDetails extends AppCompatActivity {
         rideCancelRequest.setRide_id(ride_id);
 
 
-        Call<RideCancelResponse> responseRideNegotiateCall = ApiClass.getUserServiceRideCancel().userLogin(rideCancelRequest);
+        Call<RideCancelResponse> responseRideNegotiateCall = ApiClass.getUserServiceAPI().userDriverCancelRide(rideCancelRequest);
         responseRideNegotiateCall.enqueue(new Callback<RideCancelResponse>() {
             @Override
             public void onResponse(Call<RideCancelResponse> call, Response<RideCancelResponse> response) {
@@ -243,7 +240,7 @@ public class HomeOnlineBookingDetails extends AppCompatActivity {
         requestRideAccept.setRide_id(ride_id);
 
 
-        Call<ResponseRideAccept> signUpResponseCall = ApiClass.getUserServiceRideAccept().userLogin(requestRideAccept);
+        Call<ResponseRideAccept> signUpResponseCall = ApiClass.getUserServiceAPI().userDriverAcceptRide(requestRideAccept);
         signUpResponseCall.enqueue(new Callback<ResponseRideAccept>() {
             @Override
             public void onResponse(Call<ResponseRideAccept> call, Response<ResponseRideAccept> response) {
@@ -285,7 +282,7 @@ public class HomeOnlineBookingDetails extends AppCompatActivity {
 
 
 
-        Call<ResponseClientData> responseClientDataCall = ApiClass.getUserServiceClientData().userLogin(requestClientData);
+        Call<ResponseClientData> responseClientDataCall = ApiClass.getUserServiceAPI().userClientDetailsRide(requestClientData);
         responseClientDataCall.enqueue(new Callback<ResponseClientData>() {
             @Override
             public void onResponse(Call<ResponseClientData> call, Response<ResponseClientData> response) {

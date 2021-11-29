@@ -1,7 +1,6 @@
 package com.example.task;
 
 import static com.example.task.Session.SaveSharedPreference.getClientId;
-import static com.example.task.Session.SaveSharedPreference.setImageUrl;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -14,8 +13,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.FileUtils;
-import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -27,23 +24,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.example.task.API.ApiClass;
+import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.DocumentUploadFiles.RequestDocument;
 import com.example.task.DocumentUploadFiles.ResponseDocumentUpload;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -293,7 +285,7 @@ public class AddNewDocument extends AppCompatActivity {
 //        signUpRequest.setI_code(invite_code);
 
 
-        Call<ResponseDocumentUpload> responseDocumentUploadCall = ApiClass.getUserServiceDocumentUpload().userLogin(requestDocument);
+        Call<ResponseDocumentUpload> responseDocumentUploadCall = ApiClass.getUserServiceAPI().userDriverAddCards(requestDocument);
         responseDocumentUploadCall.enqueue(new Callback<ResponseDocumentUpload>() {
             @Override
             public void onResponse(Call<ResponseDocumentUpload> call, Response<ResponseDocumentUpload> response) {

@@ -2,7 +2,6 @@ package com.example.task;
 
 import static com.example.task.Session.SaveSharedPreference.setCity;
 import static com.example.task.Session.SaveSharedPreference.setClientId;
-import static com.example.task.Session.SaveSharedPreference.setCountryCode;
 import static com.example.task.Session.SaveSharedPreference.setEmail;
 import static com.example.task.Session.SaveSharedPreference.setFirstName;
 import static com.example.task.Session.SaveSharedPreference.setLastName;
@@ -15,7 +14,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -28,7 +26,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.example.task.API.ApiClass;
+import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.CountryNameFiles.CountryNameResponse;
 import com.example.task.FilesSignUp.RequestSignUp;
 import com.example.task.FilesSignUp.ResponseSignUp;
@@ -239,7 +237,7 @@ public class SignUp extends AppCompatActivity {
 //        signUpRequest.setI_code(invite_code);
 
 
-        Call<ResponseSignUp> signUpResponseCall = ApiClass.getUserServiceSignUp().userLogin(requestSignUp);
+        Call<ResponseSignUp> signUpResponseCall = ApiClass.getUserServiceAPI().userDriverSignUp(requestSignUp);
         signUpResponseCall.enqueue(new Callback<ResponseSignUp>() {
             @Override
             public void onResponse(Call<ResponseSignUp> call, Response<ResponseSignUp> response) {
@@ -257,6 +255,7 @@ public class SignUp extends AppCompatActivity {
                                 String city = response.body().data.city;
                                 String email = response.body().data.email;
                                 String number = response.body().data.mobile_number;
+//                                String imageurl = response.body().data.
 
 
                                 setFirstName(context, firstName);
@@ -322,7 +321,7 @@ public class SignUp extends AppCompatActivity {
 //        signUpRequest.setI_code(invite_code);
 
 
-        Call<ResponseLoginValues> responseLoginValuesCall = ApiClass.getUserServiceLoginValues().userLogin(requestLoginValues);
+        Call<ResponseLoginValues> responseLoginValuesCall = ApiClass.getUserServiceAPI().userDriverLoginStatus(requestLoginValues);
         responseLoginValuesCall.enqueue(new Callback<ResponseLoginValues>() {
             @Override
             public void onResponse(Call<ResponseLoginValues> call, Response<ResponseLoginValues> response) {
@@ -349,7 +348,7 @@ public class SignUp extends AppCompatActivity {
     public void countrycodeget() {
 
 
-        Call<CountryNameResponse> countryNameResponseCall = ApiClass.getUserServiceCountryName().userLogin();
+        Call<CountryNameResponse> countryNameResponseCall = ApiClass.getUserServiceAPI().userAllCountryCodes();
         countryNameResponseCall.enqueue(new Callback<CountryNameResponse>() {
             @Override
             public void onResponse(Call<CountryNameResponse> call, Response<CountryNameResponse> response) {

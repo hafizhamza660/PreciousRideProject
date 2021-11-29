@@ -1,45 +1,23 @@
 package com.example.task.adapters;
 
-import static com.example.task.Session.SaveSharedPreference.getClientId;
-
-import android.app.Activity;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.task.API.ApiClass;
-import com.example.task.DataSendFiles.NameValuePairs;
 import com.example.task.DataSendFiles.Steps;
 import com.example.task.R;
-import com.example.task.RideAcceptFiles.RequestRideAccept;
-import com.example.task.RideAcceptFiles.ResponseRideAccept;
-import com.example.task.RideCancel.RideCancelRequest;
-import com.example.task.RideCancel.RideCancelResponse;
-import com.example.task.RideNegotiate.RequestRideNegotiate;
-import com.example.task.RideNegotiate.ResponseRideNegotiate;
-import com.example.task.RideRequestFiles.Data;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class RideStepsListAdapter extends RecyclerView.Adapter<RideStepsListAdapter.MyViewHolder> {
     private List<Steps> steps;

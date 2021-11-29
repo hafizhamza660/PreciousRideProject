@@ -16,13 +16,12 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
 
-import com.example.task.API.ApiClass;
+import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.HomeOnlineBookingDetailsGotopickup;
 import com.example.task.NotificationFiles.NotificationRequest;
 import com.example.task.NotificationFiles.NotificationResponse;
@@ -87,7 +86,7 @@ public class ServiceClass extends Service {
         NotificationRequest notificationRequest = new NotificationRequest();
         notificationRequest.setDriver_id(driverId);
 
-        Call<NotificationResponse> notificationResponseCall = ApiClass.getUserServiceNotification().userLogin(notificationRequest);
+        Call<NotificationResponse> notificationResponseCall = ApiClass.getUserServiceAPI().userGetDriverNotification(notificationRequest);
         notificationResponseCall.enqueue(new Callback<NotificationResponse>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override

@@ -5,12 +5,10 @@ import static com.example.task.Session.SaveSharedPreference.getClientId;
 import static com.example.task.Session.SaveSharedPreference.getFirstName;
 import static com.example.task.Session.SaveSharedPreference.getInterCity;
 import static com.example.task.Session.SaveSharedPreference.getStatus;
-import static com.example.task.Session.SaveSharedPreference.setStatus;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,30 +20,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.task.API.ApiClass;
-import com.example.task.Dialog.Rules;
+import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.InterCityRequest.InterCityRideRequestResponse;
 import com.example.task.LogoutStatusFiles.RequestLogoutStatus;
 import com.example.task.LogoutStatusFiles.ResponseLogoutStatus;
 import com.example.task.RideRequestFiles.Data;
-import com.example.task.RideRequestFiles.RideRequestResponse;
-import com.example.task.StatusFiles.RequestStatus;
-import com.example.task.StatusFiles.ResponseStatus;
 import com.example.task.adapters.InterCityRideRequestListAdapter;
-import com.example.task.adapters.RideRequestListAdapter;
-import com.example.task.adapters.StackAdapter;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -265,7 +252,7 @@ public class InterCityRequests extends AppCompatActivity {
     public void riderequest() {
 
 
-        Call<InterCityRideRequestResponse> signUpResponseCall = ApiClass.getUserServiceInterCityRideRequest().userLogin();
+        Call<InterCityRideRequestResponse> signUpResponseCall = ApiClass.getUserServiceAPI().userInterCityRideHistory();
         signUpResponseCall.enqueue(new Callback<InterCityRideRequestResponse>() {
             @Override
             public void onResponse(Call<InterCityRideRequestResponse> call, Response<InterCityRideRequestResponse> response) {
@@ -330,7 +317,7 @@ public class InterCityRequests extends AppCompatActivity {
         requestLogoutStatus.setDriver_id(getClientId(context));
 
 
-        Call<ResponseLogoutStatus> signUpResponseCall = ApiClass.getUserServiceLogoutStatus().userLogin(requestLogoutStatus);
+        Call<ResponseLogoutStatus> signUpResponseCall = ApiClass.getUserServiceAPI().userDriverLogoutStatus(requestLogoutStatus);
         signUpResponseCall.enqueue(new Callback<ResponseLogoutStatus>() {
             @Override
             public void onResponse(Call<ResponseLogoutStatus> call, Response<ResponseLogoutStatus> response) {
