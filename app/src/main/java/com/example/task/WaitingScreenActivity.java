@@ -106,6 +106,7 @@ public class WaitingScreenActivity extends AppCompatActivity {
                         intent.putExtra("start_long",response.body().data.start_long);
                         intent.putExtra("end_lat",response.body().data.end_lat);
                         intent.putExtra("end_long",response.body().data.end_long);
+                        intent.putExtra("client_name",response.body().data.client_name);
                         startActivity(intent);
                         finish();
                     }
@@ -121,9 +122,9 @@ public class WaitingScreenActivity extends AppCompatActivity {
                     else if(response.body().getStatus().equals("1"))
                     {
 //                        handler.removeCallbacks(runnable);
-                        Snackbar snackbar = Snackbar
-                                .make(parentLayout, "Status 1", Snackbar.LENGTH_LONG);
-                        snackbar.show();
+//                        Snackbar snackbar = Snackbar
+//                                .make(parentLayout, "Status 1", Snackbar.LENGTH_LONG);
+//                        snackbar.show();
 //                        startActivity(new Intent(WaitingScreenActivity.this,HomeOffline.class));
 //                        finish();
                     }

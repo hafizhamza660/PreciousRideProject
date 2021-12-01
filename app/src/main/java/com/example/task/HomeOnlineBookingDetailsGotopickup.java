@@ -70,7 +70,7 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
     BottomSheetBehavior bottomSheetBehavior;
     ConstraintLayout bottomSheetLayout;
     FloatingActionButton floatingMessage;
-    String driver_id, client_id, end_long, start_lat, start_long, end_lat;
+    String driver_id, client_id, end_long, start_lat, start_long, end_lat,client_name;
     double flat, flng, tlat, tlng,live_lat,live_lng;
 
     private GoogleMap mMap;
@@ -119,6 +119,7 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
         start_long = intent.getStringExtra("start_long");
         end_lat = intent.getStringExtra("end_lat");
         end_long = intent.getStringExtra("end_long");
+        client_name = intent.getStringExtra("client_name");
 
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -186,6 +187,7 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
                 Intent intent = new Intent(HomeOnlineBookingDetailsGotopickup.this, Message.class);
                 intent.putExtra("client_id", client_id);
                 intent.putExtra("driver_id", driver_id);
+                intent.putExtra("client_name", client_name);
                 startActivity(intent);
             }
         });
@@ -209,11 +211,6 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
                 String pickup = getStringAddres(flat, flng);
 
                 String dropoff = getStringAddres(tlat, tlng);
-
-
-
-
-
 
                 place1 = new MarkerOptions().position(new LatLng(flat, flng)).title(pickup);
                 place2 = new MarkerOptions().position(new LatLng(live_lat, live_lng)).title(dropoff);

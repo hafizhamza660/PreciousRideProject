@@ -6,12 +6,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.task.API.APIServices;
@@ -42,7 +44,10 @@ public class Message extends AppCompatActivity {
     MessageFirebaseAdapter messageAdapter;
     EditText message;
     ImageButton button_gchat_send;
-    String driver_id, client_id,id_F,messagepostid,token_id;
+    String driver_id;
+    String client_id;
+    String token_id;
+    String client_name;
     Context context;
     APIServices apiServices;
     boolean notify = false;
@@ -50,6 +55,7 @@ public class Message extends AppCompatActivity {
     ValueEventListener seenlistner;
     List<Chat> mChat;
     SharedPreferences sharedpreferences;
+    TextView client_name_txt;
     public static final String MyPREFERENCES = "MyPrefs" ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +65,7 @@ public class Message extends AppCompatActivity {
 
         message = findViewById(R.id.message);
         button_gchat_send = findViewById(R.id.button_gchat_send);
+        client_name_txt = findViewById(R.id.client_name);
 
         apiServices = Client.getClient("http://fcm.googleapis.com/").create(APIServices.class);
 
@@ -74,12 +81,15 @@ public class Message extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
 
 
-//        Intent intent = getIntent();
-//        driver_id=intent.getStringExtra("driver_id");
-//        client_id=intent.getStringExtra("client_id");
+        Intent intent = getIntent();
+        driver_id=intent.getStringExtra("driver_id");
+        client_id=intent.getStringExtra("client_id");
+        client_name=intent.getStringExtra("client_name");
 
-        driver_id = "26";
-        client_id = "88";
+        client_name_txt.setText(client_name);
+
+//        driver_id = "26";
+//        client_id = "88";
 
         FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
             @Override
