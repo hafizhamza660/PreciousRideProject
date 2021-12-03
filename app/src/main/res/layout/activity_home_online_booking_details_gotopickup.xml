@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/parentLayout"
     tools:context=".HomeOnlineBookingDetailsGotopickup">
 
 
@@ -95,6 +96,27 @@
 
         </LinearLayout>
         </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:visibility="gone"
+            android:id="@+id/start_ride_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="20dp"
+            app:cardCornerRadius="20dp"
+            app:cardBackgroundColor="@color/orange"
+            app:cardElevation="4dp"
+            >
+           <TextView
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:text="Start Ride"
+               android:gravity="center"
+               android:padding="16sp"
+               android:textSize="20dp"
+               android:layout_margin="20dp"/>
+        </androidx.cardview.widget.CardView>
 
     </RelativeLayout>
 

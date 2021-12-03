@@ -19,6 +19,8 @@ import com.example.task.DocumentUploadFiles.RequestDocument;
 import com.example.task.DocumentUploadFiles.ResponseDocumentUpload;
 import com.example.task.DocumentsStartFiles.RequestDocumentStartSend;
 import com.example.task.DocumentsStartFiles.ResponseDocumentStartSend;
+import com.example.task.DriverAcceptRide.AcceptRideRequest;
+import com.example.task.DriverAcceptRide.AcceptRideResponse;
 import com.example.task.FilesLogin.RequestLogin;
 import com.example.task.FilesLogin.ResponseLogin;
 import com.example.task.FilesSignUp.RequestSignUp;
@@ -166,4 +168,7 @@ public interface UserServiceAPI {
 
     @POST("check_ride_status")
     Call<CheckRideStatusResponse> userCheckRideStatus(@Body CheckRideStatusRequest checkRideStatusRequest);
+
+    @POST("driver-accept-ride")
+    Call<AcceptRideResponse> userAcceptRide(@Body AcceptRideRequest acceptRideRequest);
 }

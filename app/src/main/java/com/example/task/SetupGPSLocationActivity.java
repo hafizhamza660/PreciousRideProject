@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.task.Floating.FloatingViewService;
+import com.example.task.Service.InternetSpeedService;
 import com.example.task.Session.SaveSharedPreference;
 
 public class SetupGPSLocationActivity extends AppCompatActivity {
@@ -33,6 +34,7 @@ public class SetupGPSLocationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup_gpslocation);
+
         if (SaveSharedPreference.getClientId(SetupGPSLocationActivity.this).length() == 0) {
             startActivity(new Intent(SetupGPSLocationActivity.this, WelcomeScreen.class));
             finish();

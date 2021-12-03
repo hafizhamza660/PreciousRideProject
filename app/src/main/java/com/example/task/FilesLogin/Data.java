@@ -17,6 +17,15 @@ public class Data {
     public String created_at;
     public String updated_at;
     public String code;
+    public String image;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public String getCode() {
         return code;

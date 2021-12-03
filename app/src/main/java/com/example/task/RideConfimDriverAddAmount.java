@@ -6,6 +6,7 @@ import static com.example.task.Session.SaveSharedPreference.setRideId;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
@@ -16,11 +17,15 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.task.DriverAcceptRide.AcceptRideRequest;
+import com.example.task.DriverAcceptRide.AcceptRideResponse;
 import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.RideAcceptWithPrice.AcceptRideWithPriceRequest;
 import com.example.task.RideAcceptWithPrice.AcceptRideWithPriceResponse;
 import com.squareup.picasso.Picasso;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.io.IOException;
 import java.util.List;
@@ -31,12 +36,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RideConfimDriverAddAmount extends AppCompatActivity {
-    TextView pickup_location,dropofflocation,price,client_price,client_name,price_top,rideId,name_client;
-    String s_id,s_start_lat,s_start_long,s_end_lat,s_end_long,s_price,s_client_price,s_negotiated_price,s_distance,s_status,s_client_id,s_driver_id,s_name_client,s_client_image;
+    TextView pickup_location,dropofflocation,price,client_name,price_top,rideId,name_client;
+    String s_id,s_start_lat,s_start_long,s_end_lat,s_end_long,s_price,s_negotiated_price,s_distance,s_status,s_client_id,s_driver_id,s_name_client,s_client_image;
     Context context;
     ImageView client_image_img;
     ConstraintLayout gotopickupLayout;
-    EditText driver_price;
+    private AVLoadingIndicatorView avi;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,12 +52,12 @@ public class RideConfimDriverAddAmount extends AppCompatActivity {
         pickup_location=findViewById(R.id.pickup_location);
         dropofflocation=findViewById(R.id.dropoff_location);
         price=findViewById(R.id.price);
-        client_price=findViewById(R.id.client_price);
+
         name_client=findViewById(R.id.name_client);
         client_image_img=findViewById(R.id.client_image);
         gotopickupLayout=findViewById(R.id.gotopickupLayout);
-        driver_price=findViewById(R.id.driver_price);
 
+        avi = (AVLoadingIndicatorView) findViewById(R.id.avi);
         client_name=findViewById(R.id.client_name);
         price_top=findViewById(R.id.price_top);
         rideId=findViewById(R.id.rideId);
@@ -64,7 +69,6 @@ public class RideConfimDriverAddAmount extends AppCompatActivity {
         s_end_lat= intent.getStringExtra("end_lat");
         s_end_long= intent.getStringExtra("end_long");
         s_price= intent.getStringExtra("price");
-        s_client_price= intent.getStringExtra("client_price");
         s_negotiated_price= intent.getStringExtra("negotiated_price");
         s_client_image= intent.getStringExtra("image_url");
         s_distance= intent.getStringExtra("distance");
@@ -76,6 +80,7 @@ public class RideConfimDriverAddAmount extends AppCompatActivity {
 
 //        clientDetails(s_id);
 
+        stopAnim();
 
         double picklat = Double.parseDouble(s_start_lat);
         double picklng = Double.parseDouble(s_start_long);
@@ -89,7 +94,6 @@ public class RideConfimDriverAddAmount extends AppCompatActivity {
         pickup_location.setText(pickup);
         dropofflocation.setText(dropoff);
         price.setText("$"+s_price);
-        client_price.setText("$"+s_client_price);
         price_top.setText(s_price);
         name_client.setText(s_name_client);
 //        String url= "http://precious-ride.ragzon.com/"+s_client_image;
@@ -98,15 +102,13 @@ public class RideConfimDriverAddAmount extends AppCompatActivity {
         gotopickupLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String driver_price_s = driver_price.getText().toString();
-                if (driver_price_s.isEmpty())
-                {
-                    driver_price.setError("Required");
-                }
-                else{
+                startAnim();
                     setRideId(context,s_id);
-                    rideaccept(s_driver_id,s_id,driver_price_s);
-                }
+                acceptride(s_driver_id,s_id);
+//                    rideaccept(s_driver_id,s_id,driver_price_s);
+//                    startActivity(new Intent(RideConfimDriverAddAmount.this,WaitingScreenActivity.class));
+//                    finish();
+
             }
         });
 
@@ -167,5 +169,63 @@ public class RideConfimDriverAddAmount extends AppCompatActivity {
         });
     }
 
+
+    public void acceptride(String driver_id,String ride_id) {
+        AcceptRideRequest acceptRideRequest = new AcceptRideRequest();
+        acceptRideRequest.setDriver_id(getClientId(context));
+        acceptRideRequest.setRide_id(ride_id);
+
+
+
+        Call<AcceptRideResponse> cancelride = ApiClass.getUserServiceAPI().userAcceptRide(acceptRideRequest);
+        cancelride.enqueue(new Callback<AcceptRideResponse>() {
+            @SuppressLint("ResourceAsColor")
+            @Override
+            public void onResponse(Call<AcceptRideResponse> call, Response<AcceptRideResponse> response) {
+                if (response.isSuccessful()) {
+
+                    if (response.body().message.equals("Ride confirmed successfully")) {
+                        stopAnim();
+                        Toast.makeText(context, "Ride Accepted", Toast.LENGTH_SHORT).show();
+                        Intent intent=new Intent(RideConfimDriverAddAmount.this, HomeOnlineBookingDetailsGotopickup.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("ride_id",response.body().data.id);
+                        intent.putExtra("driver_id",getClientId(context));
+                        intent.putExtra("client_id",response.body().data.client_id);
+                        intent.putExtra("start_lat",response.body().data.start_lat);
+                        intent.putExtra("start_long",response.body().data.start_long);
+                        intent.putExtra("end_lat",response.body().data.end_lat);
+                        intent.putExtra("end_long",response.body().data.end_long);
+                        intent.putExtra("client_name",response.body().data.client_name);
+                        startActivity(intent);
+                        finish();
+
+
+
+                    }
+
+                } else {
+                    stopAnim();
+//                    Toast.makeText(getApplicationContext(), "Register Not Successfull", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AcceptRideResponse> call, Throwable t) {
+                stopAnim();
+//                Toast.makeText(getApplicationContext(), "Throwable " + t, Toast.LENGTH_SHORT).show();
+                Log.d("TAG", "Error " + t);
+            }
+        });
+    }
+    void startAnim(){
+        avi.show();
+        // or avi.smoothToShow();
+    }
+
+    void stopAnim(){
+        avi.hide();
+        // or avi.smoothToHide();
+    }
 
 }

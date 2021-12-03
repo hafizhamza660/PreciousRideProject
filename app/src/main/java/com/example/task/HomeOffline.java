@@ -3,6 +3,7 @@ package com.example.task;
 import static com.example.task.Session.SaveSharedPreference.clearClientId;
 import static com.example.task.Session.SaveSharedPreference.getClientId;
 import static com.example.task.Session.SaveSharedPreference.getFirstName;
+import static com.example.task.Session.SaveSharedPreference.getImageUrl;
 import static com.example.task.Session.SaveSharedPreference.getInterCity;
 import static com.example.task.Session.SaveSharedPreference.getLocaitonLng;
 import static com.example.task.Session.SaveSharedPreference.getLocationLat;
@@ -20,6 +21,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -88,6 +90,8 @@ import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
+import com.squareup.picasso.Picasso;
 import com.wang.avi.AVLoadingIndicatorView;
 import com.wenchao.cardstack.CardStack;
 
@@ -115,8 +119,8 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
     CardStack stackView;
     TextView toolbar_title;
 
-    ImageView minus_range, add_range;
-    TextView km_range, id_name,driver_name;
+    ImageView minus_range, add_range, driver_image;
+    TextView km_range, id_name, driver_name;
     Context context;
     String status_s, driver_id;
 
@@ -130,7 +134,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
 //    private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
 
 
-    float counter=1;
+    float counter = 1;
     String val;
     List<Data> data;
 
@@ -187,6 +191,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
     double radiusvalue;
     static List<Circle> mCircleList;
     private AVLoadingIndicatorView avi;
+    CoordinatorLayout parentLayout;
 
 
     @Override
@@ -248,10 +253,12 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
         // ...From section above...
         // Find our drawer view
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
-        View hView =  nvDrawer.getHeaderView(0);
-        TextView drivername = (TextView)hView.findViewById(R.id.driver_name);
+        View hView = nvDrawer.getHeaderView(0);
+        TextView drivername = (TextView) hView.findViewById(R.id.driver_name);
         ImageView profile_dp = (ImageView) hView.findViewById(R.id.user_image);
         drivername.setText(getFirstName(context));
+
+
 //            nvDrawer2 = (NavigationView) findViewById(R.id.nvView2);
 
 
@@ -282,6 +289,17 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
         bottomSheetLayout = findViewById(R.id.bottom_sheet);
         floatingActionButton = findViewById(R.id.floatingActionButton);
         floatingActionButton_online = findViewById(R.id.floatingActionButton_online);
+        driver_image = findViewById(R.id.driver_image);
+        parentLayout = findViewById(R.id.parentLayout);
+
+
+        if (getImageUrl(context).equals("0") || getImageUrl(context).equals("123.jpg")) {
+
+        } else {
+            String url = "http://precious-ride.ragzon.com/" + getImageUrl(context);
+            Picasso.get().load(url).into(profile_dp);
+            Picasso.get().load(url).into(driver_image);
+        }
 
 //        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) floatingActionButton.getLayoutParams();
 
@@ -322,9 +340,6 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
         });
 
 
-
-
-
         if (savedInstanceState != null) {
             lastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
             cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
@@ -345,7 +360,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
 
         // Build the map.
         // [START maps_current_place_map_fragment]
-         mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         // [END maps_current_place_map_fragment]
@@ -380,7 +395,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
         id_name.setText(getFirstName(context));
 
 //        counter= Double.parseDouble(getRange(context));
-        rideRange(String.valueOf(counter),"nothing");
+        rideRange(String.valueOf(counter), "nothing");
         minus_range.setEnabled(false);
         minus_range.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -390,13 +405,12 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
                 add_range.setEnabled(false);
                 counter--;
                 km_range.setText(counter + " KM");
-                if (counter <2) {
+                if (counter < 2) {
                     minus_range.setEnabled(false);
-                    rideRange(String.valueOf(counter),"minus");
+                    rideRange(String.valueOf(counter), "minus");
 
-                }
-                else{
-                    rideRange(String.valueOf(counter),"minus");
+                } else {
+                    rideRange(String.valueOf(counter), "minus");
 
                 }
 
@@ -413,7 +427,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
 //                km_range.setText(counter + " KM");
                 if (counter > 1) {
                     minus_range.setEnabled(true);
-                    rideRange(String.valueOf(counter),"add");
+                    rideRange(String.valueOf(counter), "add");
 //                    double lat = Double.parseDouble(currentLat);
 //                    double lng = Double.parseDouble(currentLng);
 //                    LatLng latLng = new LatLng(lat, lng);
@@ -501,10 +515,10 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
 //    }
 
 
-    public void createcircle(LatLng latLng,double radius){
-        radiusvalue= radius*1000;
+    public void createcircle(LatLng latLng, double radius) {
+        radiusvalue = radius * 1000;
 
-        if (mCircleList==null){
+        if (mCircleList == null) {
             mCircleList = new ArrayList<Circle>();
         }
 
@@ -515,16 +529,15 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
                 .strokeColor(Color.BLUE)
                 .strokeWidth(5);
 
-        if (mCircleList.size()<8){
+        if (mCircleList.size() < 8) {
             Circle mCircle = map.addCircle(circleOptions);
             mCircleList.add(mCircle);
 
         }
-        for (int i = 0 ; i <= mCircleList.size() -2; i++){
+        for (int i = 0; i <= mCircleList.size() - 2; i++) {
             Circle mCircle = mCircleList.get(i);
             mCircle.remove();
         }
-
 
 
 //        CircleOptions mapCircle=new CircleOptions()
@@ -535,16 +548,17 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
 //        map.addCircle(mapCircle);
 //        mapFragment.getMapAsync(this);
     }
-    public void reducecircle(LatLng latLng){
 
-        for (int i = 0 ; i <= mCircleList.size() -1; i++){
+    public void reducecircle(LatLng latLng) {
+
+        for (int i = 0; i <= mCircleList.size() - 1; i++) {
             Circle mCircle = mCircleList.get(i);
             mCircle.remove();
         }
 
 
         mCircleList.clear();
-        createcircle(latLng,counter);
+        createcircle(latLng, counter);
 //        radiusvalue= radiusvalue-1000;
 //        map.
 //        CircleOptions mapCircle=new CircleOptions()
@@ -599,16 +613,15 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
 
 
 //                        data.addAll(response.body().data);
-                        for(int i =0;i<response.body().data.size();i++)
-                        {
+                        for (int i = 0; i < response.body().data.size(); i++) {
 
-                            double lat1, lat2, long1, long2,total;
+                            double lat1, lat2, long1, long2, total;
                             lat1 = Float.parseFloat(getLocationLat(context));
                             long1 = Float.parseFloat(getLocaitonLng(context));
                             lat2 = Double.parseDouble(response.body().data.get(i).start_lat);
                             long2 = Double.parseDouble(response.body().data.get(i).start_long);
                             total = getKmFromLatLong(lat1, long1, lat2, long2);
-                            if (total<5) {
+                            if (total < 5) {
                                 data.add(response.body().data.get(i));
                             }
                         }
@@ -627,6 +640,10 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
 
             @Override
             public void onFailure(Call<RideRequestHistoryResponse> call, Throwable t) {
+                stopAnim();
+                Snackbar snackbar = Snackbar
+                        .make(parentLayout, "Please change your internet connection and try again", Snackbar.LENGTH_LONG);
+                snackbar.show();
 //                Toast.makeText(TravelRequest.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
             }
@@ -634,8 +651,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
     }
 
 
-
-    public void rideRange(String range,String typebtn) {
+    public void rideRange(String range, String typebtn) {
         RequestRange requestRange = new RequestRange();
         requestRange.setDriver_id(getClientId(context));
         requestRange.setRange(range);
@@ -646,7 +662,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onResponse(Call<ResponseRange> call, Response<ResponseRange> response) {
                 if (response.isSuccessful()) {
-                    if(response.body()!=null) {
+                    if (response.body() != null) {
                         if (typebtn.equals("add")) {
                             counter = Float.parseFloat(response.body().range);
                             setRange(context, String.valueOf(counter));
@@ -655,13 +671,12 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
                             double lng = Double.parseDouble(currentLng);
                             LatLng latLng = new LatLng(lat, lng);
                             createcircle(latLng, counter);
-                            if (counter<2){
+                            if (counter < 2) {
 
 
-                            minus_range.setEnabled(false);
-                            add_range.setEnabled(true);
-                            }
-                            else{
+                                minus_range.setEnabled(false);
+                                add_range.setEnabled(true);
+                            } else {
                                 minus_range.setEnabled(true);
                                 add_range.setEnabled(true);
                             }
@@ -675,11 +690,10 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
                             double lng = Double.parseDouble(currentLng);
                             LatLng latLng = new LatLng(lat, lng);
                             reducecircle(latLng);
-                            if (counter<2) {
+                            if (counter < 2) {
                                 minus_range.setEnabled(false);
                                 add_range.setEnabled(true);
-                            }
-                            else{
+                            } else {
                                 minus_range.setEnabled(true);
                                 add_range.setEnabled(true);
                             }
@@ -692,19 +706,17 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
                             double lng = Double.parseDouble(currentLng);
                             LatLng latLng = new LatLng(lat, lng);
                             createcircle(latLng, counter);
-                            if (counter<2) {
+                            if (counter < 2) {
                                 minus_range.setEnabled(false);
                                 add_range.setEnabled(true);
-                            }
-                            else{
+                            } else {
                                 minus_range.setEnabled(true);
                                 add_range.setEnabled(true);
                             }
                             stopAnim();
                         }
 
-                    }
-                    else{
+                    } else {
 
                     }
                 } else {
@@ -714,12 +726,15 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
 
             @Override
             public void onFailure(Call<ResponseRange> call, Throwable t) {
-//                Toast.makeText(TravelRequest.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
+                stopAnim();
+                Snackbar snackbar = Snackbar
+                        .make(parentLayout, "Please change your internet connection and try again", Snackbar.LENGTH_LONG);
+                snackbar.show();
+
                 Log.d("TAG", "Error " + t);
             }
         });
     }
-
 
 
     @Override
@@ -1040,6 +1055,10 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
 
             @Override
             public void onFailure(Call<ResponseStatus> call, Throwable t) {
+                stopAnim();
+                Snackbar snackbar = Snackbar
+                        .make(parentLayout, "Please change your internet connection and try again", Snackbar.LENGTH_LONG);
+                snackbar.show();
 //                Toast.makeText(HomeOffline.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
             }
@@ -1164,8 +1183,8 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
 //                                pickuplocation.setText(currentName);
                                 currentLat = Lat.toString();
                                 currentLng = Long.toString();
-                                setLocaionLat(context,currentLat);
-                                setLocaitonLng(context,currentLng);
+                                setLocaionLat(context, currentLat);
+                                setLocaitonLng(context, currentLng);
                                 if (lastKnownLocation != null) {
 
                                     map.moveCamera(CameraUpdateFactory.newLatLngZoom(
@@ -1380,7 +1399,6 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
                 map.getUiSettings().setMyLocationButtonEnabled(true);
 
 
-
             } else {
                 map.setMyLocationEnabled(false);
                 map.getUiSettings().setMyLocationButtonEnabled(false);
@@ -1453,12 +1471,12 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
     }
 
 
-    void startAnim(){
+    void startAnim() {
         avi.show();
         // or avi.smoothToShow();
     }
 
-    void stopAnim(){
+    void stopAnim() {
         avi.hide();
         // or avi.smoothToHide();
     }

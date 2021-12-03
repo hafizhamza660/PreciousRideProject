@@ -4,6 +4,7 @@ import static com.example.task.Session.SaveSharedPreference.setCity;
 import static com.example.task.Session.SaveSharedPreference.setClientId;
 import static com.example.task.Session.SaveSharedPreference.setEmail;
 import static com.example.task.Session.SaveSharedPreference.setFirstName;
+import static com.example.task.Session.SaveSharedPreference.setImageUrl;
 import static com.example.task.Session.SaveSharedPreference.setLastName;
 import static com.example.task.Session.SaveSharedPreference.setMobileNumber;
 import static com.example.task.Session.SaveSharedPreference.setStatus;
@@ -124,7 +125,14 @@ public class MainActivity extends AppCompatActivity {
                             String city = response.body().data.city;
                             String email = response.body().data.email;
                             String number = response.body().data.mobile_number;
-
+                            String image;
+                            if (response.body().data.image ==null)
+                            {
+                                 image="0";
+                            }
+                            else {
+                                 image = response.body().data.image;
+                            }
 
                             setFirstName(context, firstName);
                             setLastName(context, lastname);
@@ -132,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
                             setEmail(context, email);
                             setCity(context, city);
                             setStatus(context, "0");
+                            setImageUrl(context,image);
 
 
                             Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+1:00"));

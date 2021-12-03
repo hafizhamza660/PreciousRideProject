@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,6 +57,7 @@ public class Message extends AppCompatActivity {
     List<Chat> mChat;
     SharedPreferences sharedpreferences;
     TextView client_name_txt;
+    ImageView back_button;
     public static final String MyPREFERENCES = "MyPrefs" ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,7 @@ public class Message extends AppCompatActivity {
         message = findViewById(R.id.message);
         button_gchat_send = findViewById(R.id.button_gchat_send);
         client_name_txt = findViewById(R.id.client_name);
+        back_button = findViewById(R.id.back_button);
 
         apiServices = Client.getClient("http://fcm.googleapis.com/").create(APIServices.class);
 
@@ -172,6 +175,14 @@ public class Message extends AppCompatActivity {
 //        seenMessage(driver_id);
 
         seenMessage(driver_id);
+
+
+        back_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
 //    public void messageSend(String driver_id, String client_id, String text) {

@@ -1,8 +1,13 @@
 package com.example.task;
 
+import static com.example.task.Session.SaveSharedPreference.getClientId;
+
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -30,6 +36,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.task.Models.LocationModel;
 import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.DataSendFiles.RequestDataSend;
 import com.example.task.DataSendFiles.ResponseDataSend;
@@ -51,7 +58,11 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONObject;
 
@@ -71,7 +82,7 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
     ConstraintLayout bottomSheetLayout;
     FloatingActionButton floatingMessage;
     String driver_id, client_id, end_long, start_lat, start_long, end_lat,client_name;
-    double flat, flng, tlat, tlng,live_lat,live_lng;
+    double flat, flng, tlat, tlng,live_lat,live_lng,loc_lat,loc_lng;
 
     private GoogleMap mMap;
     private MarkerOptions place1, place2;
@@ -96,6 +107,12 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
     int id_To_Update = 0;
     TextView direction_up,distance_up;
 
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference;
+    CoordinatorLayout parentLayout;
+    CardView start_ride_btn;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,6 +128,9 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
         distance_txt = findViewById(R.id.distance);
         direction_up = findViewById(R.id.direction_up);
         distance_up = findViewById(R.id.distance_up);
+        parentLayout = findViewById(R.id.parentLayout);
+        start_ride_btn = findViewById(R.id.start_ride_btn);
+
 
         Intent intent = getIntent();
         driver_id = intent.getStringExtra("driver_id");
@@ -140,6 +160,8 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
         tlng = Double.parseDouble(end_long);
 
 
+        loc_lat = flat;
+        loc_lng = flng;
 //        addRideRequest(startLat, startLng, endLat, endLng);
 
         mapFragment = (MapFragment) getFragmentManager()
@@ -199,36 +221,68 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
                 startActivity(intent);
             }
         });
+        start_ride_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loc_lat = tlat;
+                loc_lng = tlng;
+                start_ride_btn.setVisibility(View.GONE);
+            }
+        });
 
         recyclerViewRideRequest = findViewById(R.id.recycler_view_rideSteps);
         linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         recyclerViewRideRequest.setLayoutManager(linearLayoutManager);
 
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference("Location");
+
 
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                String pickup = getStringAddres(flat, flng);
 
-                String dropoff = getStringAddres(tlat, tlng);
+                runOnUiThread(new  Runnable() {
 
-                place1 = new MarkerOptions().position(new LatLng(flat, flng)).title(pickup);
-                place2 = new MarkerOptions().position(new LatLng(live_lat, live_lng)).title(dropoff);
-
-//                Log.d("DataLatLong",""+flat+"\n"+flng+"\n"+location.getLatitude()+"\n"+location.getLongitude());
-
-                new FetchURL(HomeOnlineBookingDetailsGotopickup.this).execute(getUrl(place2.getPosition(),place1.getPosition(), "driving"), "driving");
+                    public void run() {
+                        double distance = getKmFromLatLong(loc_lat, loc_lng, live_lat, live_lng);
 
 
+                        if (distance<0.01){
+                            btnshow();
 
-                JSONObject object= (JSONObject) getPreferenceObjectJson(context,"mapObject");
-                datasend(object);
+                        }
+
+
+
+                        String pickup = getStringAddres(flat, flng);
+
+                        String dropoff = getStringAddres(tlat, tlng);
+
+                        place1 = new MarkerOptions().position(new LatLng(loc_lat, loc_lng)).title(pickup);
+                        place2 = new MarkerOptions().position(new LatLng(live_lat, live_lng)).title(dropoff);
+
+
+                        new FetchURL(HomeOnlineBookingDetailsGotopickup.this).execute(getUrl(place2.getPosition(), place1.getPosition(), "driving"), "driving");
+
+
+                        JSONObject object = (JSONObject) getPreferenceObjectJson(context, "mapObject");
+                        datasend(object);
+
+                    }
+                });
+
+
             }
         }, 0, 1000);
     }
 
     public void back_button(View view) {
 //        onBackPressed();
+    }
+    public void btnshow()
+    {
+        start_ride_btn.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -354,6 +408,11 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
         live_lat=location.getLatitude();
         live_lng=location.getLongitude();
         mapFragment.getMapAsync(this);
+
+        LocationModel locationModel = new LocationModel(String.valueOf(live_lat),String.valueOf(live_lng));
+        databaseReference.child(getClientId(context)).setValue(locationModel);
+
+
 //        getTasks();
 
 //        Log.d("Ridedatatable","Ride Data: "+rideDataTables.get(0).getEnd_address());
@@ -479,12 +538,25 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
 
             @Override
             public void onFailure(Call<ResponseDataSend> call, Throwable t) {
+                Snackbar snackbar = Snackbar
+                        .make(parentLayout, "Please change your internet connection and try again", Snackbar.LENGTH_LONG);
+                snackbar.show();
 //                Toast.makeText(SignUp.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
             }
         });
     }
 
+    public static double getKmFromLatLong(double lat1, double lng1, double lat2, double lng2) {
+        Location loc1 = new Location("");
+        loc1.setLatitude(lat1);
+        loc1.setLongitude(lng1);
+        Location loc2 = new Location("");
+        loc2.setLatitude(lat2);
+        loc2.setLongitude(lng2);
+        double distanceInMeters = loc1.distanceTo(loc2);
+        return distanceInMeters / 1000;
+    }
 
 
 

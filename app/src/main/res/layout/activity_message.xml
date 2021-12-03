@@ -9,14 +9,14 @@
         android:id="@+id/container_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-       android:layout_alignParentTop="true"
-        >
+        android:layout_alignParentTop="true">
 
-       <ImageView
-           android:layout_width="38dp"
-           android:layout_height="38dp"
-           android:src="@drawable/back_icon"
-           android:padding="8dp"/>
+        <ImageView
+            android:id="@+id/back_button"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:padding="8dp"
+            android:src="@drawable/back_icon" />
 
         <TextView
             android:id="@+id/client_name"
@@ -28,6 +28,14 @@
             android:textColor="@color/Secondary"
             android:textSize="20dp"
             android:textStyle="bold" />
+
+        <ImageView
+            android:padding="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_phone"
+            android:layout_alignParentRight="true"
+            app:tint="@color/black" />
 
 
     </RelativeLayout>

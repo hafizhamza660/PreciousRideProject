@@ -45,7 +45,7 @@ public class StackAdapter extends ArrayAdapter {
     int size;
     CardView card_stack;
     Button accept, ignore_btn;
-    TextView timer, pickup_location, dropoff_location, price, client_price,name_client;
+    TextView timer, pickup_location, dropoff_location, price,name_client;
     double picklat, picklng, droplat, droplng;
     String pickup, dropoff;
     ImageView client_image;
@@ -77,14 +77,7 @@ public class StackAdapter extends ArrayAdapter {
         }
 
         final Data data = dataList.get(position);
-//
-//        double lat1, lat2, long1, long2,total;
-//        lat1 = Float.parseFloat(getLocationLat(c));
-//        long1 = Float.parseFloat(getLocaitonLng(c));
-//        lat2 = Double.parseDouble(data.start_lat);
-//        long2 = Double.parseDouble(data.start_long);
-//        total = getKmFromLatLong(lat1, long1, lat2, long2);
-//        if (total<1.0) {
+
         picklat = Double.parseDouble(data.start_lat);
         picklng = Double.parseDouble(data.start_long);
         pickup = getStringAddres(picklat, picklng);
@@ -100,7 +93,7 @@ public class StackAdapter extends ArrayAdapter {
         pickup_location = convertView.findViewById(R.id.pickup_location);
         dropoff_location = convertView.findViewById(R.id.dropoff_location);
         price = convertView.findViewById(R.id.price);
-        client_price = convertView.findViewById(R.id.client_price);
+
         name_client = convertView.findViewById(R.id.name_client);
         client_image = convertView.findViewById(R.id.client_image);
         timer.setVisibility(View.GONE);
@@ -110,7 +103,7 @@ public class StackAdapter extends ArrayAdapter {
         pickup_location.setText(pickup);
         dropoff_location.setText(dropoff);
         price.setText("$"+data.price);
-        client_price.setText("$"+data.client_price);
+
         name_client.setText(data.client_details.name);
         String url= "http://precious-ride.ragzon.com/"+data.client_details.image;
         Picasso.get().load(url).into(client_image);
@@ -118,19 +111,7 @@ public class StackAdapter extends ArrayAdapter {
             @Override
             public void onClick(View v) {
 
-//                Intent intent = new Intent(c, HomeOnlineBookingDetails.class);
-//                intent.putExtra("id", data.id);
-//                intent.putExtra("start_lat", data.start_lat);
-//                intent.putExtra("start_long", data.start_long);
-//                intent.putExtra("end_lat", data.end_lat);
-//                intent.putExtra("end_long", data.end_long);
-//                intent.putExtra("price", data.price);
-//                intent.putExtra("negotiated_price", data.negotiated_price);
-//                intent.putExtra("distance", data.distance);
-//                intent.putExtra("status", data.status);
-//                intent.putExtra("client_id", data.client_id);
-//                intent.putExtra("driver_id", data.driver_id);
-//                c.startActivity(intent);
+
                 String image = data.client_details.image.toString();
 
 
@@ -141,7 +122,6 @@ public class StackAdapter extends ArrayAdapter {
                 intent.putExtra("end_lat", data.end_lat);
                 intent.putExtra("end_long", data.end_long);
                 intent.putExtra("price", data.price);
-                intent.putExtra("client_price", data.client_price);
                 intent.putExtra("negotiated_price", data.negotiated_price);
                 intent.putExtra("distance", data.distance);
                 intent.putExtra("status", data.status);

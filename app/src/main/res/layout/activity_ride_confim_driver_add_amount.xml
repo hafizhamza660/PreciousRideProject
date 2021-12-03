@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     >
 
@@ -375,32 +376,7 @@
                             android:textSize="15sp" />
 
                     </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/se_ui_display"
-                            android:text="Client Price"
-                            android:textColor="@color/Secondary"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            android:id="@+id/client_price"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/se_ui_display"
-                            android:gravity="end"
-                            android:text="$25.00"
-                            android:textColor="@color/Secondary"
-                            android:textSize="15sp" />
-
-                    </LinearLayout>
                 </LinearLayout>
 
                 <View
@@ -411,24 +387,7 @@
                     android:background="@drawable/line_dot" />
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="16sp"
-                    android:orientation="vertical">
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Price"
-                        >
-                        <EditText
-                            android:id="@+id/driver_price"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="numberDecimal"
-                            />
-                    </com.google.android.material.textfield.TextInputLayout>
-                </LinearLayout>
+
 
 
 
@@ -478,6 +437,23 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/AVLoadingIndicatorView"
+        android:visibility="gone"
+        android:translationZ="999dp"
+        android:layout_centerInParent="true"
+        fab:indicatorName="BallBeatIndicator"
+        fab:indicatorColor="@color/Primary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
