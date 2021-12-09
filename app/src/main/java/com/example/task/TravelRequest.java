@@ -283,6 +283,7 @@ public class TravelRequest extends AppCompatActivity {
             public void onFailure(Call<RideRequestResponse> call, Throwable t) {
 //                Toast.makeText(TravelRequest.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
+                Toast.makeText(TravelRequest.this, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -349,6 +350,7 @@ public class TravelRequest extends AppCompatActivity {
             public void onFailure(Call<ResponseLogoutStatus> call, Throwable t) {
 //                Toast.makeText(TravelRequest.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
+                Toast.makeText(TravelRequest.this, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
             }
         });
     }

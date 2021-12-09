@@ -305,8 +305,10 @@ public class AddNewDocument extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseDocumentUpload> call, Throwable t) {
-//                Toast.makeText(SignUp.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddNewDocument.this, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(AddNewDocument.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
+
             }
         });
     }

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.ResetPasswordFiles.RequestResetPassword;
@@ -99,6 +100,7 @@ public class ResetPassword extends AppCompatActivity {
             public void onFailure(Call<ResponseResetPassword> call, Throwable t) {
 //                Toast.makeText(SignUp.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
+                Toast.makeText(ResetPassword.this, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
             }
         });
     }

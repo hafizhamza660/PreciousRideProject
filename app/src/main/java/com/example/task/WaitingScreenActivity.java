@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.task.CheckRideStatusFiles.CheckRideStatusRequest;
 import com.example.task.CheckRideStatusFiles.CheckRideStatusResponse;
@@ -137,6 +138,7 @@ public class WaitingScreenActivity extends AppCompatActivity {
             public void onFailure(Call<CheckRideStatusResponse> call, Throwable t) {
 //                Toast.makeText(History.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
+                Toast.makeText(WaitingScreenActivity.this, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
             }
         });
     }

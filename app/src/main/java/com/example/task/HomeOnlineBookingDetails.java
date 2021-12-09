@@ -201,6 +201,7 @@ public class HomeOnlineBookingDetails extends AppCompatActivity {
             public void onFailure(Call<ResponseRideNegotiate> call, Throwable t) {
 //                Toast.makeText(context, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
+                Toast.makeText(HomeOnlineBookingDetails.this, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -229,6 +230,7 @@ public class HomeOnlineBookingDetails extends AppCompatActivity {
             public void onFailure(Call<RideCancelResponse> call, Throwable t) {
 //                Toast.makeText(context, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
+                Toast.makeText(HomeOnlineBookingDetails.this, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -270,6 +272,7 @@ public class HomeOnlineBookingDetails extends AppCompatActivity {
             public void onFailure(Call<ResponseRideAccept> call, Throwable t) {
 //                Toast.makeText(context, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
+                Toast.makeText(HomeOnlineBookingDetails.this, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -316,6 +319,7 @@ public class HomeOnlineBookingDetails extends AppCompatActivity {
             public void onFailure(Call<ResponseClientData> call, Throwable t) {
 //                Toast.makeText(TravelRequest.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
+                Toast.makeText(HomeOnlineBookingDetails.this, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
             }
         });
     }

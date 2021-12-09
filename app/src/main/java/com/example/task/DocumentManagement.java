@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.AllDocumentFiles.RequestAllDocument;
@@ -138,6 +139,7 @@ public class DocumentManagement extends AppCompatActivity {
             @Override
             public void onFailure(Call<ResponseAllDocument> call, Throwable t) {
                 Log.d("TAG", "Error " + t);
+                Toast.makeText(context, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
             }
         });
     }

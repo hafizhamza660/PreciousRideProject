@@ -277,6 +277,7 @@ public class InterCityRequests extends AppCompatActivity {
             public void onFailure(Call<InterCityRideRequestResponse> call, Throwable t) {
 //                Toast.makeText(InterCityRequests.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
+                Toast.makeText(InterCityRequests.this, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -340,6 +341,7 @@ public class InterCityRequests extends AppCompatActivity {
             public void onFailure(Call<ResponseLogoutStatus> call, Throwable t) {
 //                Toast.makeText(InterCityRequests.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
+                Toast.makeText(InterCityRequests.this, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
             }
         });
     }

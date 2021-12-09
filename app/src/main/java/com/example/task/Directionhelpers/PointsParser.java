@@ -6,7 +6,9 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.example.task.AddNewDocument;
 import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.DataSendFiles.RequestDataSend;
 import com.example.task.DataSendFiles.ResponseDataSend;
@@ -149,6 +151,7 @@ public class PointsParser extends AsyncTask<String, Integer, List<List<HashMap<S
             public void onFailure(Call<ResponseDataSend> call, Throwable t) {
 //                Toast.makeText(SignUp.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
+                Toast.makeText(context, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
                     signIn.setEnabled(true);
                     Toast.makeText(MainActivity.this, "" + response.body().message, Toast.LENGTH_SHORT).show();
                     if (response.body().message.equals("Login Successfully")) {
+                        signIn.setEnabled(true);
                         String idClient = response.body().data.id;
                         setClientId(context, idClient);
                         if (response.body().data.f_name != null) {
@@ -175,8 +176,10 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseLogin> call, Throwable t) {
+                signIn.setEnabled(true);
 //                Toast.makeText(MainActivity.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
+                Toast.makeText(MainActivity.this, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
                 stopAnim();
             }
         });
@@ -208,6 +211,7 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Call<ResponseLoginValues> call, Throwable t) {
 //                Toast.makeText(MainActivity.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
+                Toast.makeText(MainActivity.this, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
             }
         });
     }

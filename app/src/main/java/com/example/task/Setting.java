@@ -320,6 +320,7 @@ RelativeLayout container_2,currency_button,bank_button,campaign_button;
             public void onFailure(Call<ResponseLogoutStatus> call, Throwable t) {
 //                Toast.makeText(Setting.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
+                Toast.makeText(Setting.this, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -165,6 +165,7 @@ public class RideConfimDriverAddAmount extends AppCompatActivity {
             public void onFailure(Call<AcceptRideWithPriceResponse> call, Throwable t) {
 //                Toast.makeText(SignUp.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
+                Toast.makeText(RideConfimDriverAddAmount.this, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -215,6 +216,7 @@ public class RideConfimDriverAddAmount extends AppCompatActivity {
                 stopAnim();
 //                Toast.makeText(getApplicationContext(), "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
+                Toast.makeText(RideConfimDriverAddAmount.this, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
             }
         });
     }

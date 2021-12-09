@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.task.Service.InternetSpeedService;
 import com.example.task.Service.ServiceClass;
 
 public class WelcomeScreen extends AppCompatActivity {
@@ -17,7 +16,7 @@ public class WelcomeScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_screen);
         stopService(new Intent(WelcomeScreen.this, ServiceClass.class));
-        startService(new Intent(WelcomeScreen.this, InternetSpeedService.class));
+
     }
 
     public void sign_in(View view) {

@@ -128,6 +128,7 @@ public class EditInformation extends AppCompatActivity {
             public void onFailure(Call<ResponseUpdate> call, Throwable t) {
 //                Toast.makeText(EditInformation.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
+                Toast.makeText(context, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
             }
         });
     }

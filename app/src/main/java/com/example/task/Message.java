@@ -437,7 +437,7 @@ public class Message extends AppCompatActivity {
 
             @Override
             public void onFailure(retrofit2.Call<ResponseBody> call, Throwable t) {
-
+                Toast.makeText(Message.this, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
             }
         });
     }

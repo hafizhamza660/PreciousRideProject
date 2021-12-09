@@ -16,11 +16,13 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
 
+import com.example.task.HomeOnlineBookingDetails;
 import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.HomeOnlineBookingDetailsGotopickup;
 import com.example.task.NotificationFiles.NotificationRequest;
@@ -111,6 +113,7 @@ public class ServiceClass extends Service {
             @Override
             public void onFailure(Call<NotificationResponse> call, Throwable t) {
                 Log.d("TAG", "Error " + t);
+                Toast.makeText(ServiceClass.this, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
             }
         });
     }

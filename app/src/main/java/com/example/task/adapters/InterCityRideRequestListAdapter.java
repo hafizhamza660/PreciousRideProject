@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.task.TravelRequest;
 import com.example.task.UserServiceInterface.ApiClass;
 
 import com.example.task.InterCityNegotiate.RequestRideNegotiateInterCity;
@@ -238,6 +239,7 @@ public class InterCityRideRequestListAdapter extends RecyclerView.Adapter<InterC
             public void onFailure(Call<ResponseRideAcceptInterCity> call, Throwable t) {
 //                Toast.makeText(context, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
+                Toast.makeText(context, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
             }
         });
     }

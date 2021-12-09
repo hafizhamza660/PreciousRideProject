@@ -84,6 +84,7 @@ public class ForgetPassword extends AppCompatActivity {
             public void onFailure(Call<ResponseForgetPassword> call, Throwable t) {
 //                Toast.makeText(SignUp.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
+                Toast.makeText(ForgetPassword.this, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
             }
         });
     }

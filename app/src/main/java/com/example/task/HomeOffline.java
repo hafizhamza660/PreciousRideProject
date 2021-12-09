@@ -55,6 +55,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.task.Service.RealtimeLocation;
 import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.Dialog.Rules;
 import com.example.task.LogoutStatusFiles.RequestLogoutStatus;
@@ -198,7 +199,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreat");
-
+        startService(new Intent(this, RealtimeLocation.class));
 //        if (SaveSharedPreference.getClientId(HomeOffline.this).length() == 0) {
 //            startActivity(new Intent(HomeOffline.this, WelcomeScreen.class));
 //            finish();
@@ -1094,6 +1095,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
             public void onFailure(Call<ResponseLogoutStatus> call, Throwable t) {
 //                Toast.makeText(HomeOffline.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
+                Toast.makeText(HomeOffline.this, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
             }
         });
     }

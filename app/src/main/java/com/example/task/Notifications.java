@@ -263,6 +263,7 @@ public class Notifications extends AppCompatActivity {
             public void onFailure(Call<AllNotificationResponse> call, Throwable t) {
 //                Toast.makeText(Notifications.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
+                Toast.makeText(Notifications.this, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -301,6 +302,7 @@ public class Notifications extends AppCompatActivity {
             public void onFailure(Call<ResponseLogoutStatus> call, Throwable t) {
 //                Toast.makeText(Notifications.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
+                Toast.makeText(Notifications.this, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
             }
         });
     }

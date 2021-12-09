@@ -309,6 +309,7 @@ public class SignUp extends AppCompatActivity {
             public void onFailure(Call<ResponseSignUp> call, Throwable t) {
 //                Toast.makeText(SignUp.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
+                Toast.makeText(SignUp.this, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -337,6 +338,7 @@ public class SignUp extends AppCompatActivity {
             public void onFailure(Call<ResponseLoginValues> call, Throwable t) {
 //                Toast.makeText(MainActivity.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
+                Toast.makeText(SignUp.this, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -376,6 +378,7 @@ public class SignUp extends AppCompatActivity {
             public void onFailure(Call<CountryNameResponse> call, Throwable t) {
 //                Toast.makeText(getActivity(), "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
+                Toast.makeText(SignUp.this, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
             }
         });
     }

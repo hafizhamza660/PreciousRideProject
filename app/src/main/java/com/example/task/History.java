@@ -533,6 +533,7 @@ public class History extends AppCompatActivity {
             public void onFailure(Call<ResponseLogoutStatus> call, Throwable t) {
 //                Toast.makeText(History.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
+                Toast.makeText(History.this, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
             }
         });
     }

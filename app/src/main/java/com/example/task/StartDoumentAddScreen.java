@@ -128,7 +128,7 @@ public class StartDoumentAddScreen extends AppCompatActivity implements Document
 
             @Override
             public void onFailure(Call<ResponseDocumentCountrywise> call, Throwable t) {
-
+                Toast.makeText(StartDoumentAddScreen.this, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
             }
         });
@@ -164,6 +164,7 @@ public class StartDoumentAddScreen extends AppCompatActivity implements Document
             public void onFailure(Call<ResponseDocumentStartSend> call, Throwable t) {
 //                Toast.makeText(SignUp.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
+                Toast.makeText(StartDoumentAddScreen.this, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
             }
         });
     }

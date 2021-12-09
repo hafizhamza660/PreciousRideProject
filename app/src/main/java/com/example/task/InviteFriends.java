@@ -234,6 +234,7 @@ public class InviteFriends extends AppCompatActivity {
             public void onFailure(Call<ResponseLogoutStatus> call, Throwable t) {
 //                Toast.makeText(InviteFriends.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
                 Log.d("TAG", "Error " + t);
+                Toast.makeText(InviteFriends.this, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
             }
         });
     }
