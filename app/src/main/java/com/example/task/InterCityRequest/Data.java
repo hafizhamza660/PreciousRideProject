@@ -2,56 +2,39 @@ package com.example.task.InterCityRequest;
 
 public class Data {
     public String id;
-    public String start_lat;
-    public String start_long;
-    public String end_lat;
-    public String end_long;
-
-    public String getNegotiated_price() {
-        return negotiated_price;
-    }
-
-    public void setNegotiated_price(String negotiated_price) {
-        this.negotiated_price = negotiated_price;
-    }
-
-    public String negotiated_price;
-    public String price;
-    public String distance;
+    public String client_id;
+    public String driver_id;
+    public String route_id;
+    public String vehicle_type_id;
+    public String minimum_price;
+    public String maximum_price;
+    public String client_price;
+    public String done_price;
     public String status;
     public String time;
     public String date;
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String description;
-    public String client_id;
-    public String driver_id;
     public String created_at;
     public String updated_at;
+    public String client_name;
+    public String client_image;
+    public String client_gender;
+    public String route_name;
 
+    public String getRoute_name() {
+        return route_name;
+    }
+
+    public void setRoute_name(String route_name) {
+        this.route_name = route_name;
+    }
+
+    public String getClient_gender() {
+        return client_gender;
+    }
+
+    public void setClient_gender(String client_gender) {
+        this.client_gender = client_gender;
+    }
 
     public String getId() {
         return id;
@@ -59,62 +42,6 @@ public class Data {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getStart_lat() {
-        return start_lat;
-    }
-
-    public void setStart_lat(String start_lat) {
-        this.start_lat = start_lat;
-    }
-
-    public String getStart_long() {
-        return start_long;
-    }
-
-    public void setStart_long(String start_long) {
-        this.start_long = start_long;
-    }
-
-    public String getEnd_lat() {
-        return end_lat;
-    }
-
-    public void setEnd_lat(String end_lat) {
-        this.end_lat = end_lat;
-    }
-
-    public String getEnd_long() {
-        return end_long;
-    }
-
-    public void setEnd_long(String end_long) {
-        this.end_long = end_long;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public String getDistance() {
-        return distance;
-    }
-
-    public void setDistance(String distance) {
-        this.distance = distance;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
     }
 
     public String getClient_id() {
@@ -133,6 +60,78 @@ public class Data {
         this.driver_id = driver_id;
     }
 
+    public String getRoute_id() {
+        return route_id;
+    }
+
+    public void setRoute_id(String route_id) {
+        this.route_id = route_id;
+    }
+
+    public String getVehicle_type_id() {
+        return vehicle_type_id;
+    }
+
+    public void setVehicle_type_id(String vehicle_type_id) {
+        this.vehicle_type_id = vehicle_type_id;
+    }
+
+    public String getMinimum_price() {
+        return minimum_price;
+    }
+
+    public void setMinimum_price(String minimum_price) {
+        this.minimum_price = minimum_price;
+    }
+
+    public String getMaximum_price() {
+        return maximum_price;
+    }
+
+    public void setMaximum_price(String maximum_price) {
+        this.maximum_price = maximum_price;
+    }
+
+    public String getClient_price() {
+        return client_price;
+    }
+
+    public void setClient_price(String client_price) {
+        this.client_price = client_price;
+    }
+
+    public String getDone_price() {
+        return done_price;
+    }
+
+    public void setDone_price(String done_price) {
+        this.done_price = done_price;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     public String getCreated_at() {
         return created_at;
     }
@@ -147,5 +146,21 @@ public class Data {
 
     public void setUpdated_at(String updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public String getClient_name() {
+        return client_name;
+    }
+
+    public void setClient_name(String client_name) {
+        this.client_name = client_name;
+    }
+
+    public String getClient_image() {
+        return client_image;
+    }
+
+    public void setClient_image(String client_image) {
+        this.client_image = client_image;
     }
 }

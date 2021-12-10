@@ -29,6 +29,7 @@ import com.example.task.ForgetPasswordFiles.RequestForgetPassword;
 import com.example.task.ForgetPasswordFiles.ResponseForgetPassword;
 import com.example.task.InterCityNegotiate.RequestRideNegotiateInterCity;
 import com.example.task.InterCityNegotiate.ResponseRideNegotiateInterCity;
+import com.example.task.InterCityRequest.InterCityRideRequest;
 import com.example.task.InterCityRequest.InterCityRideRequestResponse;
 import com.example.task.InterCityRequestAccept.RequestRideAcceptInterCity;
 import com.example.task.InterCityRequestAccept.ResponseRideAcceptInterCity;
@@ -92,7 +93,7 @@ public interface UserServiceAPI {
     Call<RideRequestResponse> userGetDriverRideRequest();
 
     @POST("intercity-ride-history")
-    Call<InterCityRideRequestResponse> userInterCityRideHistory();
+    Call<InterCityRideRequestResponse> userInterCityRideHistory(@Body InterCityRideRequest interCityRideRequest);
 
     @POST("driver-accept-ride")
     Call<ResponseRideAccept> userDriverAcceptRide(@Body RequestRideAccept requestRideAccept);

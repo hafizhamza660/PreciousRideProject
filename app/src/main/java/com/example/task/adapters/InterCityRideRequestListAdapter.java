@@ -4,14 +4,18 @@ import static com.example.task.Session.SaveSharedPreference.getClientId;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.task.InterStatePriceEnterActivity;
 import com.example.task.TravelRequest;
 import com.example.task.UserServiceInterface.ApiClass;
 
@@ -29,6 +34,7 @@ import com.example.task.InterCityRequest.Data;
 import com.example.task.InterCityRequestAccept.RequestRideAcceptInterCity;
 import com.example.task.InterCityRequestAccept.ResponseRideAcceptInterCity;
 import com.example.task.R;
+import com.squareup.picasso.Picasso;
 
 
 import java.io.IOException;
@@ -63,93 +69,40 @@ public class InterCityRideRequestListAdapter extends RecyclerView.Adapter<InterC
     public void onBindViewHolder(InterCityRideRequestListAdapter.MyViewHolder holder, final int position) {
         final Data data = dataList.get(position);
 
-        double picklat = Double.parseDouble(data.start_lat);
-        double picklng = Double.parseDouble(data.start_long);
-        String pickup = getStringAddres(picklat,picklng);
-
-        double droplat = Double.parseDouble(data.end_lat);
-        double droplng = Double.parseDouble(data.end_long);
-        String dropoff = getStringAddres(droplat,droplng);
-
-        holder.pickup_location.setText(pickup);
-        holder.dropoff_location.setText(dropoff);
-        holder.price.setText(data.price);
-        holder.time.setText(data.time);
-        holder.date.setText(data.date);
-        holder.description.setText(data.description);
-
-        if(data.negotiated_price==null)
+        if (data.client_image==null)
         {
 
         }
-        else{
-            holder.nego_price.setText(data.negotiated_price);
-            holder.nego_price.setVisibility(View.VISIBLE);
+        else
+        {
+            String url= "http://precious-ride.ragzon.com/"+data.client_image;
+            Picasso.get().load(url).into(holder.client_image);
         }
 
-        holder.card_offer.setOnClickListener(new View.OnClickListener() {
+        holder.route.setText(data.route_name);
+        holder.client_name.setText(data.client_name);
+        holder.date.setText(data.date);
+        holder.time.setText(data.time);
+        holder.minimum_price_txt.setText("$"+data.minimum_price);
+        holder.maximum_price_txt.setText("$"+data.maximum_price);
+        holder.client_price_txt.setText("$"+data.client_price);
+        holder.client_gender.setText(data.client_gender);
+
+        holder.setpriceBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (holder.nego_layout.getVisibility()==View.VISIBLE) {
-                    holder.nego_layout.setVisibility(View.GONE);
-                }
-                else
-                {
-                    if (data.status.equals("REQUESTED")) {
-
-                        if (data.negotiated_price==null)
-                        {
-                            holder.nego_layout.setVisibility(View.VISIBLE);
-                            holder.req_type.setText("REQUESTED");
-                        }
-                        else {
-                            holder.nego_layout.setVisibility(View.VISIBLE);
-                            holder.negotiate_btn.setVisibility(View.GONE);
-                            holder.req_type.setText("Negotiated");
-//                            holder.accept_btn.setVisibility(View.GONE);
-                        }
-
-                    }
-                    else if (data.status.equals("ACCEPTED")) {
-                        holder.nego_layout.setVisibility(View.GONE);
-                        holder.req_type.setText("ACCEPTED");
-//                        holder.negotiate_btn.setVisibility(View.GONE);
-//                        holder.accept_btn.setVisibility(View.GONE);
-                    }
-                    else {
-                        holder.nego_layout.setVisibility(View.VISIBLE);
-                    }
-                }
-
-            }
-        });
-
-        holder.accept_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String id = getClientId(context);
-                rideaccept(id,data.id);
-            }
-        });
-
-        holder.negotiate_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                    holder.nego_layout.setVisibility(View.GONE);
-                    holder.nego_enter_layout.setVisibility(View.VISIBLE);
-
-
-            }
-        });
-
-        holder.enter_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String id = getClientId(context);
-                ridenegotiate(id,data.id,holder.negotiate_edt.getText().toString());
-                holder.nego_layout.setVisibility(View.VISIBLE);
-                holder.nego_enter_layout.setVisibility(View.GONE);
+                Intent intent = new Intent(activity, InterStatePriceEnterActivity.class);
+                intent.putExtra("id",data.id);
+                intent.putExtra("client_id",data.client_id);
+                intent.putExtra("route",data.route_name);
+                intent.putExtra("client_name",data.client_name);
+                intent.putExtra("date",data.date);
+                intent.putExtra("time",data.time);
+                intent.putExtra("minimum_price",data.minimum_price);
+                intent.putExtra("maximum_price",data.maximum_price);
+                intent.putExtra("client_gender",data.client_gender);
+                intent.putExtra("client_price",data.client_price);
+                activity.startActivity(intent);
             }
         });
     }
@@ -160,28 +113,24 @@ public class InterCityRideRequestListAdapter extends RecyclerView.Adapter<InterC
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView pickup_location,dropoff_location,price,time,date,description,nego_price,req_type;
-        LinearLayout nego_layout,nego_enter_layout;
-        Button negotiate_btn,accept_btn,enter_btn;
-        CardView card_offer;
-        EditText negotiate_edt;
+        TextView route,minimum_price_txt,maximum_price_txt,date,time,client_name,client_gender,client_price_txt;
+
+        Button setpriceBtn;
+
+        ImageView client_image;
         public MyViewHolder(View itemView) {
             super(itemView);
-            pickup_location = itemView.findViewById(R.id.pickup_location);
-            dropoff_location = itemView.findViewById(R.id.dropoff_location);
-            price = itemView.findViewById(R.id.price);
-            nego_layout = itemView.findViewById(R.id.nego_layout);
-            card_offer = itemView.findViewById(R.id.card_offer);
-            accept_btn = itemView.findViewById(R.id.accept_btn);
-            negotiate_btn = itemView.findViewById(R.id.negotiate_btn);
-            nego_enter_layout = itemView.findViewById(R.id.nego_enter_layout);
-            enter_btn = itemView.findViewById(R.id.enter_btn);
-            negotiate_edt = itemView.findViewById(R.id.negotiate_edt);
-            time = itemView.findViewById(R.id.time);
+            route = itemView.findViewById(R.id.route);
+            minimum_price_txt = itemView.findViewById(R.id.minimum_price_txt);
+            maximum_price_txt = itemView.findViewById(R.id.maximum_price_txt);
             date = itemView.findViewById(R.id.date);
-            description = itemView.findViewById(R.id.desciption);
-            nego_price = itemView.findViewById(R.id.nego_price);
-            req_type = itemView.findViewById(R.id.req_type);
+            time = itemView.findViewById(R.id.time);
+            client_name = itemView.findViewById(R.id.client_name);
+            client_gender = itemView.findViewById(R.id.client_gender);
+            client_price_txt = itemView.findViewById(R.id.client_price_txt);
+            client_image = itemView.findViewById(R.id.client_image);
+            setpriceBtn = itemView.findViewById(R.id.setpriceBtn);
+
         }
     }
 
