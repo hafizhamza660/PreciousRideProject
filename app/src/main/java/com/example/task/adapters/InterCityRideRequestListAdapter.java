@@ -24,6 +24,13 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.task.CheckRideStatusFiles.CheckRideStatusRequest;
+import com.example.task.CheckRideStatusFiles.CheckRideStatusResponse;
+import com.example.task.CheckStatusFiles.CheckStatusRequest;
+import com.example.task.CheckStatusFiles.CheckStatusRespone;
+import com.example.task.InterCityRequest.InterCityRideRequest;
+import com.example.task.InterCityRequest.InterCityRideRequestResponse;
+import com.example.task.InterCityRequests;
 import com.example.task.InterStatePriceEnterActivity;
 import com.example.task.TravelRequest;
 import com.example.task.UserServiceInterface.ApiClass;
@@ -49,6 +56,7 @@ public class InterCityRideRequestListAdapter extends RecyclerView.Adapter<InterC
     private List<Data> dataList;
     Context context;
     Activity activity;
+    String r;
     public InterCityRideRequestListAdapter(Activity activity, Context context, List<Data> dataList)
     {
         this.activity=activity;
@@ -91,18 +99,26 @@ public class InterCityRideRequestListAdapter extends RecyclerView.Adapter<InterC
         holder.setpriceBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(activity, InterStatePriceEnterActivity.class);
-                intent.putExtra("id",data.id);
-                intent.putExtra("client_id",data.client_id);
-                intent.putExtra("route",data.route_name);
-                intent.putExtra("client_name",data.client_name);
-                intent.putExtra("date",data.date);
-                intent.putExtra("time",data.time);
-                intent.putExtra("minimum_price",data.minimum_price);
-                intent.putExtra("maximum_price",data.maximum_price);
-                intent.putExtra("client_gender",data.client_gender);
-                intent.putExtra("client_price",data.client_price);
-                activity.startActivity(intent);
+
+                checStatusRide(data.id,data.client_id,data.route_name,data.client_name,data.date,data.time,data.minimum_price,data.maximum_price,data.client_gender,data.client_price);
+//                String re = r;
+//                if (re.equals("2")) {
+//                    Intent intent = new Intent(activity, InterStatePriceEnterActivity.class);
+//                    intent.putExtra("id", data.id);
+//                    intent.putExtra("client_id", data.client_id);
+//                    intent.putExtra("route", data.route_name);
+//                    intent.putExtra("client_name", data.client_name);
+//                    intent.putExtra("date", data.date);
+//                    intent.putExtra("time", data.time);
+//                    intent.putExtra("minimum_price", data.minimum_price);
+//                    intent.putExtra("maximum_price", data.maximum_price);
+//                    intent.putExtra("client_gender", data.client_gender);
+//                    intent.putExtra("client_price", data.client_price);
+//                    activity.startActivity(intent);
+//                }
+//                else{
+//
+//                }
             }
         });
     }
@@ -191,6 +207,62 @@ public class InterCityRideRequestListAdapter extends RecyclerView.Adapter<InterC
                 Toast.makeText(context, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void checStatusRide(String id,String client_id,String route, String client_name,String date,String time, String minimum_price,String maximum_price,String client_gender,String client_price) {
+
+        CheckStatusRequest checkRideStatusRequest = new CheckStatusRequest();
+        checkRideStatusRequest.setDriver_id(getClientId(context));
+        checkRideStatusRequest.setRide_id(id);
+
+
+        Call<CheckStatusRespone> signUpResponseCall = ApiClass.getUserServiceAPI().userCheckStatusRide(checkRideStatusRequest);
+        signUpResponseCall.enqueue(new Callback<CheckStatusRespone>() {
+            @Override
+            public void onResponse(Call<CheckStatusRespone> call, Response<CheckStatusRespone> response) {
+                if (response.isSuccessful()) {
+
+                    if (response.body().status.equals("0"))
+                    {
+                        Toast.makeText(context, "The ride is canceled or deleted", Toast.LENGTH_SHORT).show();
+                        r="0";
+                    }
+                    else if(response.body().status.equals("1"))
+                    {
+                        Toast.makeText(context, "You already requested this ride", Toast.LENGTH_SHORT).show();
+                        r="1";
+                    }
+                    else if (response.body().status.equals("2")){
+//                        Toast.makeText(context, "The ride is canceled or deleted", Toast.LENGTH_SHORT).show();
+                        r="2";
+
+                        Intent intent = new Intent(activity, InterStatePriceEnterActivity.class);
+                        intent.putExtra("id", id);
+                        intent.putExtra("client_id", client_id);
+                        intent.putExtra("route", route);
+                        intent.putExtra("client_name", client_name);
+                        intent.putExtra("date", date);
+                        intent.putExtra("time", time);
+                        intent.putExtra("minimum_price", minimum_price);
+                        intent.putExtra("maximum_price", maximum_price);
+                        intent.putExtra("client_gender", client_gender);
+                        intent.putExtra("client_price", client_price);
+                        activity.startActivity(intent);
+                    }
+//
+                } else {
+//                    Toast.makeText(InterCityRequests.this, "Not Successful", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CheckStatusRespone> call, Throwable t) {
+//                Toast.makeText(InterCityRequests.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
+                Log.d("TAG", "Error " + t);
+                Toast.makeText(context, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
+            }
+        });
+//        return r;
     }
 
 

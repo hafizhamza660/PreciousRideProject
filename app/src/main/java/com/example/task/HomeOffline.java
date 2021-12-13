@@ -699,7 +699,8 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
                                 add_range.setEnabled(true);
                             }
                             stopAnim();
-                        } else {
+                        }
+                        else {
                             counter = Float.parseFloat(response.body().range);
                             setRange(context, String.valueOf(counter));
                             km_range.setText(counter + " KM");

@@ -295,7 +295,7 @@ public class InterCityRequests extends AppCompatActivity {
     public void riderequest(String country) {
         InterCityRideRequest interCityRideRequest = new InterCityRideRequest();
         interCityRideRequest.setCountry(country);
-        interCityRideRequest.setVehicle_type_id("2");
+        interCityRideRequest.setVehicle_type_id("3");
 
 
         Call<InterCityRideRequestResponse> signUpResponseCall = ApiClass.getUserServiceAPI().userInterCityRideHistory(interCityRideRequest);

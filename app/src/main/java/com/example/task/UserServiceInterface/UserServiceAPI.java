@@ -8,6 +8,8 @@ import com.example.task.AllNotificiationFiles.AllNotificationRequest;
 import com.example.task.AllNotificiationFiles.AllNotificationResponse;
 import com.example.task.CheckRideStatusFiles.CheckRideStatusRequest;
 import com.example.task.CheckRideStatusFiles.CheckRideStatusResponse;
+import com.example.task.CheckStatusFiles.CheckStatusRequest;
+import com.example.task.CheckStatusFiles.CheckStatusRespone;
 import com.example.task.ClientDataFiles.RequestClientData;
 import com.example.task.ClientDataFiles.ResponseClientData;
 import com.example.task.CountryNameFiles.CountryNameResponse;
@@ -172,4 +174,7 @@ public interface UserServiceAPI {
 
     @POST("driver-accept-ride")
     Call<AcceptRideResponse> userAcceptRide(@Body AcceptRideRequest acceptRideRequest);
+
+    @POST("check_ride_status")
+    Call<CheckStatusRespone> userCheckStatusRide(@Body CheckStatusRequest checkRideStatusRequest);
 }
