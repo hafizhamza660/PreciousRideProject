@@ -1,20 +1,27 @@
 package com.example.task;
 
+import static androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
 import static com.example.task.Session.SaveSharedPreference.clearClientId;
 import static com.example.task.Session.SaveSharedPreference.getClientId;
 import static com.example.task.Session.SaveSharedPreference.getFirstName;
 import static com.example.task.Session.SaveSharedPreference.getInterCity;
 import static com.example.task.Session.SaveSharedPreference.getStatus;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -31,6 +38,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.task.Fragment.AcceptInterStateFragment;
+import com.example.task.Fragment.RequestInterStateFragment;
 import com.example.task.InterCityRequest.InterCityRideRequest;
 import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.InterCityRequest.InterCityRideRequestResponse;
@@ -39,8 +48,10 @@ import com.example.task.LogoutStatusFiles.ResponseLogoutStatus;
 import com.example.task.RideRequestFiles.Data;
 import com.example.task.adapters.InterCityRideRequestListAdapter;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -54,13 +65,17 @@ public class InterCityRequests extends AppCompatActivity {
     private ActionBarDrawerToggle drawerToggle;
     InterCityRequests activity;
     Context context;
-    RecyclerView recyclerViewRideRequest;
-    LinearLayoutManager linearLayoutManager;
-    private InterCityRideRequestListAdapter rideRequestListAdapter;
+
     private List<Data> dataList;
     Switch switchbtn;
     public static final String TAG ="HomeONline";
     String val,status_s;
+
+    private TabLayout tabs;
+    private ViewPager viewpager;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,6 +121,12 @@ public class InterCityRequests extends AppCompatActivity {
         nvDrawer.getMenu().getItem(3).setChecked(true);
 
         switchbtn = findViewById(R.id.switchbtn);
+
+        tabs = (TabLayout) findViewById(R.id.tabs);
+        viewpager = (ViewPager) findViewById(R.id.viewpager);
+
+        setupViewPager(viewpager);
+        tabs.setupWithViewPager(viewpager);
 //        if (status_s.equals("0"))
 //        {
 //            switchbtn.setChecked(false);
@@ -130,11 +151,9 @@ public class InterCityRequests extends AppCompatActivity {
 //            }
 //        });
 
-        recyclerViewRideRequest = findViewById(R.id.recycler_view_rideRequest);
-        linearLayoutManager = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false);
-        recyclerViewRideRequest.setLayoutManager(linearLayoutManager);
 
-        countryName();
+
+
 
     }
 
@@ -148,6 +167,50 @@ public class InterCityRequests extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         val = getInterCity(context);
+    }
+
+    private void setupViewPager(ViewPager viewPager) {
+
+
+        ViewPagerAdapter adapter = new ViewPagerAdapter(activity.getSupportFragmentManager(), BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+
+
+        adapter.addFragment(new RequestInterStateFragment(), "Request");
+        adapter.addFragment(new AcceptInterStateFragment(), "Accept");
+
+        viewPager.setAdapter(adapter);
+
+    }
+
+
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        ViewPagerAdapter(FragmentManager fm, int behavior) {
+            super(fm, behavior);
+        }
+
+        @NonNull
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
     }
 
     @Override
@@ -169,38 +232,7 @@ public class InterCityRequests extends AppCompatActivity {
                 });
     }
 
-    public void countryName() {
-        String country_name = null;
-        LocationManager lm = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-        Geocoder geocoder = new Geocoder(getApplicationContext());
-        for (String provider : lm.getAllProviders()) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return;
-            }
-            @SuppressWarnings("ResourceType") Location location = lm.getLastKnownLocation(provider);
-            if(location!=null) {
-                try {
-                    List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                    if(addresses != null && addresses.size() > 0) {
-                        country_name = addresses.get(0).getCountryName();
-                        break;
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-//        Toast.makeText(getApplicationContext(), country_name, Toast.LENGTH_LONG).show();
-//        citiesNamesGet(country_name);
-        riderequest(country_name);
-    }
+
 
 
 
@@ -292,41 +324,7 @@ public class InterCityRequests extends AppCompatActivity {
     }
 
 
-    public void riderequest(String country) {
-        InterCityRideRequest interCityRideRequest = new InterCityRideRequest();
-        interCityRideRequest.setCountry(country);
-        interCityRideRequest.setVehicle_type_id("3");
 
-
-        Call<InterCityRideRequestResponse> signUpResponseCall = ApiClass.getUserServiceAPI().userInterCityRideHistory(interCityRideRequest);
-        signUpResponseCall.enqueue(new Callback<InterCityRideRequestResponse>() {
-            @Override
-            public void onResponse(Call<InterCityRideRequestResponse> call, Response<InterCityRideRequestResponse> response) {
-                if (response.isSuccessful()) {
-//                    Toast.makeText(InterCityRequests.this, ""+response.body().data, Toast.LENGTH_LONG).show();
-//                    Log.d(TAG,"Data : "+response.body().data.get(0).id);
-                    if (response.body().data.equals(null))
-                    {
-
-                    }
-                    else {
-                        rideRequestListAdapter = new InterCityRideRequestListAdapter(activity, context, response.body().data);
-                        recyclerViewRideRequest.setAdapter(rideRequestListAdapter);
-                    }
-//
-                } else {
-//                    Toast.makeText(InterCityRequests.this, "Not Successful", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<InterCityRideRequestResponse> call, Throwable t) {
-//                Toast.makeText(InterCityRequests.this, "Throwable " + t, Toast.LENGTH_SHORT).show();
-                Log.d("TAG", "Error " + t);
-                Toast.makeText(InterCityRequests.this, "Please change your internet connection and try again", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
 
 //    public void status() {

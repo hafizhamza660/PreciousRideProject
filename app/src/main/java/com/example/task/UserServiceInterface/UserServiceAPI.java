@@ -1,5 +1,7 @@
 package com.example.task.UserServiceInterface;
 
+import com.example.task.AcceptedInterStateRideFiles.AcceptedInterStateRideRequest;
+import com.example.task.AcceptedInterStateRideFiles.AcceptedInterStateRideResponse;
 import com.example.task.AccountDetailsFiles.RequestAccountDetails;
 import com.example.task.AccountDetailsFiles.ResponseAccountDetails;
 import com.example.task.AllDocumentFiles.RequestAllDocument;
@@ -177,4 +179,7 @@ public interface UserServiceAPI {
 
     @POST("check_ride_status")
     Call<CheckStatusRespone> userCheckStatusRide(@Body CheckStatusRequest checkRideStatusRequest);
+
+    @POST("get_driver_accepted_rides")
+    Call<AcceptedInterStateRideResponse> userAcceptedInterStateRide(@Body AcceptedInterStateRideRequest acceptedInterStateRideRequest);
 }
