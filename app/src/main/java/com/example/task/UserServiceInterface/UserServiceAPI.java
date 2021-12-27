@@ -8,6 +8,8 @@ import com.example.task.AllDocumentFiles.RequestAllDocument;
 import com.example.task.AllDocumentFiles.ResponseAllDocument;
 import com.example.task.AllNotificiationFiles.AllNotificationRequest;
 import com.example.task.AllNotificiationFiles.AllNotificationResponse;
+import com.example.task.ArrivalRiderFiles.ArrivalRiderRequest;
+import com.example.task.ArrivalRiderFiles.ArrivalRiderResponse;
 import com.example.task.CheckRideStatusFiles.CheckRideStatusRequest;
 import com.example.task.CheckRideStatusFiles.CheckRideStatusResponse;
 import com.example.task.CheckStatusFiles.CheckStatusRequest;
@@ -182,4 +184,7 @@ public interface UserServiceAPI {
 
     @POST("get_driver_accepted_rides")
     Call<AcceptedInterStateRideResponse> userAcceptedInterStateRide(@Body AcceptedInterStateRideRequest acceptedInterStateRideRequest);
+
+    @POST("arrival_notification")
+    Call<ArrivalRiderResponse> userArrivalRider(@Body ArrivalRiderRequest arrivalRiderRequest);
 }

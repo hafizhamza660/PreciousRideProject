@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/Secondary"
+    >
+
+    <TextView
+        android:id="@+id/container_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Settings"
+        android:gravity="center"
+        android:fontFamily="@font/se_ui_display"
+        android:textColor="@color/Primary"
+        android:textSize="20sp"
+        android:padding="10dp"/>
+    <View
+        android:layout_below="@id/container_1"
+        android:id="@+id/container_1_space"
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:layout_height="8dp"/>
+
+    <Button
+        android:id="@+id/contact_client_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/container_1_space"
+        android:background="#80FFFFFF"
+        android:drawableLeft="@drawable/ic_person"
+        android:drawablePadding="20dp"
+        android:fontFamily="@font/se_ui_display"
+        android:gravity="center_vertical"
+        android:text="Contact Client"
+        android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/cancel_ride_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/contact_client_btn"
+        android:layout_marginTop="8dp"
+        android:background="#80FFFFFF"
+        android:drawableLeft="@drawable/ic_cancel_ride"
+        android:drawablePadding="20dp"
+        android:fontFamily="@font/se_ui_display"
+        android:gravity="center_vertical"
+        android:text="Cancel Ride"
+        android:textColor="@android:color/holo_red_light" />
+
+    <View
+        android:layout_below="@id/cancel_ride_btn"
+        android:id="@+id/container_2_space"
+        android:layout_width="match_parent"
+        android:padding="10dp"
+        android:layout_height="8dp"/>
+
+    <Button
+        android:layout_marginTop="8dp"
+        android:id="@+id/close_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/container_2_space"
+        android:background="@android:color/transparent"
+        android:gravity="center_vertical"
+        android:text="Close menu"
+        android:textAllCaps="false"
+        android:layout_margin="20dp"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/white"
+        android:fontFamily="@font/se_ui_display"/>
+</RelativeLayout>

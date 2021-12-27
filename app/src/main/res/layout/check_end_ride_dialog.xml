@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/Secondary"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/container_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/se_ui_display"
+        android:gravity="center"
+        android:text="You are far from the destination, click end ride if you want to finish the ride."
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/container_1"
+        android:id="@+id/container_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+        <Button
+            android:layout_margin="4dp"
+            android:id="@+id/cancel_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="CANCEL"
+            android:layout_weight="1"
+            android:background="@android:color/holo_red_light"
+            android:textColor="@color/Secondary"
+            />
+        <Button
+            android:layout_margin="4dp"
+            android:id="@+id/end_ride"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="END RIDE"
+            android:layout_weight="1"
+            android:background="@color/Primary"
+            android:textColor="@color/Secondary"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

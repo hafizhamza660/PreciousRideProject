@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:onClick="back_button"
+           android:onClick="back_button"
             android:padding="8dp"
             android:scaleType="fitCenter"
             android:src="@drawable/back_icon" />
@@ -428,7 +428,7 @@
             android:layout_centerInParent="true"
             android:fontFamily="@font/se_ui_display"
             android:gravity="center"
-            android:text="SEND"
+            android:text="CONFIRM"
             android:textColor="@color/Secondary"
             android:textSize="20sp"
             android:textStyle="bold"

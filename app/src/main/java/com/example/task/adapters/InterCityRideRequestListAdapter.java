@@ -83,7 +83,7 @@ public class InterCityRideRequestListAdapter extends RecyclerView.Adapter<InterC
         }
         else
         {
-            String url= "http://precious-ride.ragzon.com/"+data.client_image;
+            String url= "http://precious-ride.thefastech.com/"+data.client_image;
             Picasso.get().load(url).into(holder.client_image);
         }
 

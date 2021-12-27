@@ -230,4 +230,7 @@ public class RideConfimDriverAddAmount extends AppCompatActivity {
         // or avi.smoothToHide();
     }
 
+    public void back_button(View view) {
+        onBackPressed();
+    }
 }

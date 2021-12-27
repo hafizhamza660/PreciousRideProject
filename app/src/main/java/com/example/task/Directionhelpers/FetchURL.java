@@ -1,6 +1,7 @@
 package com.example.task.Directionhelpers;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -38,9 +39,16 @@ public class FetchURL extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        PointsParser parserTask = new PointsParser(mContext, directionMode);
-        // Invokes the thread for parsing the JSON data
-        parserTask.execute(s);
+        if(isNetworkAvailable(mContext)) {
+            PointsParser parserTask = new PointsParser(mContext, directionMode);
+            // Invokes the thread for parsing the JSON data
+            parserTask.execute(s);
+        }
+    }
+
+    public boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
 
     private String downloadUrl(String strUrl) throws IOException {

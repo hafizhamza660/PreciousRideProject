@@ -138,6 +138,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/refreshRides"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_refresh"
+                app:backgroundTint="@color/white"
+                android:tint="@color/Secondary"
+                android:layout_centerInParent="true"
+
+                />
+
             <LinearLayout
                 android:background="@drawable/background_card_color_white"
                 android:padding="16dp"

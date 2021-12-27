@@ -167,6 +167,7 @@ public class RealtimeLocation extends Service implements GoogleApiClient.Connect
 
         latitude = String.valueOf(location.getLatitude());
         longitude = String.valueOf(location.getLongitude());
+        float locationbearing = location.getBearing();
 
         if (latitude.equalsIgnoreCase("0.0") && longitude.equalsIgnoreCase("0.0")) {
 
@@ -174,7 +175,7 @@ public class RealtimeLocation extends Service implements GoogleApiClient.Connect
         } else {
             firebaseDatabase = FirebaseDatabase.getInstance();
             databaseReference = firebaseDatabase.getReference("LocationAll");
-            LocationModel locationModel = new LocationModel(latitude,longitude);
+            LocationModel locationModel = new LocationModel(latitude,longitude,locationbearing);
             databaseReference.child(getClientId(context)).setValue(locationModel);
             Log.e(TAG_LOCATION, "Latitude : " + location.getLatitude() + "\tLongitude : " + location.getLongitude());
         }

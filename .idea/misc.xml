@@ -9,6 +9,10 @@
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/drawable-ldpi/number_round_fill_bg.xml" value="0.18802083333333333" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/drawable-mdpi/textview_background_light.xml" value="0.258974358974359" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/drawable-xxxhdpi/ic_close.xml" value="0.2611111111111111" />
+        <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/drawable/ic_black_car.xml" value="0.2630208333333333" />
+        <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/drawable/ic_cancel_ride.xml" value="0.2630208333333333" />
+        <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/drawable/ic_person.xml" value="0.2630208333333333" />
+        <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/drawable/ic_start_ride.xml" value="0.2630208333333333" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/drawable/ic_worldwide.xml" value="0.18802083333333333" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/drawable/textview_background.xml" value="0.258974358974359" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/drawable/unchecked.xml" value="0.2526041666666667" />
@@ -62,8 +66,11 @@
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/activity_welcome_screen.xml" value="0.2033514492753623" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/bottom_layout.xml" value="0.6526162790697675" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/bottom_layout_map_info.xml" value="0.2033514492753623" />
+        <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/cancel_ride_bottom_sheet_dialog.xml" value="0.4" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/chat_incoming.xml" value="0.2033514492753623" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/chat_right.xml" value="0.2" />
+        <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/check_end_ride_dialog.xml" value="0.4366438356164384" />
+        <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/chekc_dialog_ride_start.xml" value="0.23645833333333333" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/custom_info_contents.xml" value="0.18931159420289856" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/customdialog.xml" value="0.2033514492753623" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/design_layout.xml" value="0.2033514492753623" />
@@ -82,6 +89,8 @@
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/notification_layout.xml" value="0.2033514492753623" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/onboarding_single_item.xml" value="0.2033514492753623" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/payment_item.xml" value="0.2033514492753623" />
+        <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/price_dialog.xml" value="0.23645833333333333" />
+        <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/setting_bottom_sheet_dialogw.xml" value="0.246875" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/travel_request_item.xml" value="0.16799999999999998" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/layout/vehicle_management_item.xml" value="0.2033514492753623" />
         <entry key="..\:/Fastech Android/TaxiAppDriver/app/src/main/res/menu/main_menu_inter_city.xml" value="0.23645833333333333" />

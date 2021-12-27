@@ -58,7 +58,7 @@ public class RegisterScreen extends AppCompatActivity {
             webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         }
 
-        webView.loadUrl("http://precious-ride.ragzon.com/signup");
+        webView.loadUrl("http://precious-ride.thefastech.com/signup");
 
     }
 

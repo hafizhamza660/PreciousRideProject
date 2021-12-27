@@ -50,6 +50,8 @@ public class StackAdapter extends ArrayAdapter {
     String pickup, dropoff;
     ImageView client_image;
 
+
+
     public StackAdapter(List<Data> dataList, Context context, int resource) {
         super(context, resource, dataList);
         this.dataList = dataList;
@@ -105,7 +107,7 @@ public class StackAdapter extends ArrayAdapter {
         price.setText("$"+data.price);
 
         name_client.setText(data.client_details.name);
-        String url= "http://precious-ride.ragzon.com/"+data.client_details.image;
+        String url= "http://precious-ride.thefastech.com/"+data.client_details.image;
         Picasso.get().load(url).into(client_image);
         accept.setOnClickListener(new View.OnClickListener() {
             @Override

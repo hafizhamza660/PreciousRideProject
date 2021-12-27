@@ -25,7 +25,7 @@ public class WelcomeScreen extends AppCompatActivity {
     }
 
     public void sign_up(View view) {
-        String url = "http://precious-ride.ragzon.com/signup";
+        String url = "http://precious-ride.thefastech.com/signup";
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
         startActivity(i);

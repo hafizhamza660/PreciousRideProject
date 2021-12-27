@@ -8,6 +8,7 @@ import static com.example.task.Session.SaveSharedPreference.getInterCity;
 import static com.example.task.Session.SaveSharedPreference.getLocaitonLng;
 import static com.example.task.Session.SaveSharedPreference.getLocationLat;
 
+import static com.example.task.Session.SaveSharedPreference.getRideId;
 import static com.example.task.Session.SaveSharedPreference.getStatus;
 import static com.example.task.Session.SaveSharedPreference.setLocaionLat;
 import static com.example.task.Session.SaveSharedPreference.setLocaitonLng;
@@ -55,6 +56,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.task.Models.RideModel;
 import com.example.task.Service.RealtimeLocation;
 import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.Dialog.Rules;
@@ -92,6 +94,11 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.wang.avi.AVLoadingIndicatorView;
 import com.wenchao.cardstack.CardStack;
@@ -101,6 +108,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
@@ -113,11 +122,13 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer, nvDrawer2;
+    StackAdapter adapter;
 
     Switch switchbtn;
     LinearLayout homeOnline;
     RelativeLayout homeOffline;
     CardStack stackView;
+    FloatingActionButton refreshRides;
     TextView toolbar_title;
 
     ImageView minus_range, add_range, driver_image;
@@ -292,12 +303,13 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
         floatingActionButton_online = findViewById(R.id.floatingActionButton_online);
         driver_image = findViewById(R.id.driver_image);
         parentLayout = findViewById(R.id.parentLayout);
+        refreshRides = findViewById(R.id.refreshRides);
 
 
         if (getImageUrl(context).equals("0") || getImageUrl(context).equals("123.jpg")) {
 
         } else {
-            String url = "http://precious-ride.ragzon.com/" + getImageUrl(context);
+            String url = "http://precious-ride.thefastech.com/" + getImageUrl(context);
             Picasso.get().load(url).into(profile_dp);
             Picasso.get().load(url).into(driver_image);
         }
@@ -385,13 +397,15 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
         add_range = findViewById(R.id.add_range);
         km_range = findViewById(R.id.km_range);
         id_name = findViewById(R.id.id_name);
+
+
 //        driver_name = findViewById(R.id.driver_name);
 
 
 //        km_range.setText(counter + " KM");
 
 //            Toast.makeText(this, "" + "\n" + getFirstName(context) + "\n" + getCity(context) + "\n" + getLastName(context) + "\n" + getEmail(context) + "\n" + getClientId(context) + "\n" + getMobileNumber(context), Toast.LENGTH_SHORT).show();
-
+        checkRideOn();
 
         id_name.setText(getFirstName(context));
 
@@ -454,6 +468,34 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
             floatingActionButton.setVisibility(View.GONE);
 //            floatingActionButton_online.setVisibility(View.VISIBLE);
         }
+
+//      new Timer().scheduleAtFixedRate(new TimerTask() {
+//            @Override
+//            public void run() {
+//
+//                runOnUiThread(new Runnable() {
+//
+//                    public void run() {
+//                        data.clear();
+//                        ridehistoryrequest();
+//
+//                    }
+//                });
+//
+//
+//            }
+//        }, 5000, 3000);
+
+        refreshRides.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                data.clear();
+                data.clear();
+                adapter = new StackAdapter(data, HomeOffline.this, R.layout.item_stack);
+                ridehistoryrequest();
+
+            }
+        });
 
 //        recyclerViewRideRequest = findViewById(R.id.recycler_view_rideRequest);
 //        linearLayoutManager = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false);
@@ -530,7 +572,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
                 .strokeColor(Color.BLUE)
                 .strokeWidth(5);
 
-        if (mCircleList.size() < 8) {
+        if (mCircleList.size() < 20) {
             Circle mCircle = map.addCircle(circleOptions);
             mCircleList.add(mCircle);
 
@@ -604,8 +646,10 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onResponse(Call<RideRequestHistoryResponse> call, Response<RideRequestHistoryResponse> response) {
                 if (response.isSuccessful()) {
+//                    adapter.clear();
 //                    Toast.makeText(TravelRequest.this, ""+response.body().data, Toast.LENGTH_LONG).show();
 //                    Log.d(TAG,"Data : "+response.body().data.get(0).id);
+//                    data.clear();
                     if (response.body().status.equals("0")) {
 
                     } else {
@@ -627,7 +671,8 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
                             }
                         }
 
-                        StackAdapter adapter = new StackAdapter(data, HomeOffline.this, R.layout.item_stack);
+                         adapter = new StackAdapter(data, HomeOffline.this, R.layout.item_stack);
+
 
                         stackView.setAdapter(adapter);
                         YourListner yourListner = new YourListner();
@@ -699,8 +744,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
                                 add_range.setEnabled(true);
                             }
                             stopAnim();
-                        }
-                        else {
+                        } else {
                             counter = Float.parseFloat(response.body().range);
                             setRange(context, String.valueOf(counter));
                             km_range.setText(counter + " KM");
@@ -1493,6 +1537,40 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
         loc2.setLongitude(lng2);
         double distanceInMeters = loc1.distanceTo(loc2);
         return distanceInMeters / 1000;
+    }
+
+    public void checkRideOn() {
+        if (getRideId(context) == "" || getRideId(context) == "3256") {
+
+        } else {
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Rides").child(getRideId(context));
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        RideModel ridesModel = snapshot.getValue(RideModel.class);
+                        Intent intent = new Intent(HomeOffline.this, HomeOnlineBookingDetailsGotopickup.class);
+                        intent.putExtra("ride_id", ridesModel.getRide_id());
+                        intent.putExtra("client_id", ridesModel.getClient_id());
+                        intent.putExtra("driver_id", ridesModel.getDriver_id());
+                        intent.putExtra("start_lat", ridesModel.getStart_lat());
+                        intent.putExtra("start_long", ridesModel.getStart_long());
+                        intent.putExtra("end_lat", ridesModel.getEnd_lat());
+                        intent.putExtra("end_long", ridesModel.getEnd_long());
+                        intent.putExtra("client_name", ridesModel.getClient_name());
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                        intent.putExtra("ride_id",response.body().data.ride_id);
+                        startActivity(intent);
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
     }
 
 

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/Secondary"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fontFamily="@font/se_ui_display"
+        android:gravity="center"
+        android:text="Price"
+        android:textColor="@color/white"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fontFamily="@font/se_ui_display"
+        android:gravity="center"
+        android:text="Price"
+        android:textColor="@color/Primary"
+        android:textSize="30sp" />
+
+    <Button
+        android:id="@+id/collect_payment"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_yellow_background"
+        android:fontFamily="@font/se_ui_display"
+        android:text="Collect"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Not collectted why?"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/se_ui_display"/>
+</LinearLayout>
