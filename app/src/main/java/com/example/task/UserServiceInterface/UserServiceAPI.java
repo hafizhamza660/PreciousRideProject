@@ -10,6 +10,8 @@ import com.example.task.AllNotificiationFiles.AllNotificationRequest;
 import com.example.task.AllNotificiationFiles.AllNotificationResponse;
 import com.example.task.ArrivalRiderFiles.ArrivalRiderRequest;
 import com.example.task.ArrivalRiderFiles.ArrivalRiderResponse;
+import com.example.task.CancelRideFiles.CancelRideRequest;
+import com.example.task.CancelRideFiles.CancelRideResponse;
 import com.example.task.CheckRideStatusFiles.CheckRideStatusRequest;
 import com.example.task.CheckRideStatusFiles.CheckRideStatusResponse;
 import com.example.task.CheckStatusFiles.CheckStatusRequest;
@@ -187,4 +189,9 @@ public interface UserServiceAPI {
 
     @POST("arrival_notification")
     Call<ArrivalRiderResponse> userArrivalRider(@Body ArrivalRiderRequest arrivalRiderRequest);
+
+    @POST("driver_cancellation")
+    Call<CancelRideResponse> userCancelRide(@Body CancelRideRequest cancelRideRequest);
+
+
 }

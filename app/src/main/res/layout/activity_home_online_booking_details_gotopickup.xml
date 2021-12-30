@@ -124,11 +124,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            android:visibility="visible"
+            android:visibility="gone"
             app:cardBackgroundColor="@color/Secondary"
             app:cardElevation="4dp">
 
             <TextView
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="20dp"

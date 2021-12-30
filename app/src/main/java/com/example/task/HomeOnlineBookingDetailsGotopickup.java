@@ -7,6 +7,7 @@ import static com.example.task.Session.SaveSharedPreference.getRideId;
 import static com.example.task.Session.SaveSharedPreference.setRideId;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -46,6 +47,8 @@ import com.example.task.AcceptedInterStateRideFiles.AcceptedInterStateRideReques
 import com.example.task.AcceptedInterStateRideFiles.AcceptedInterStateRideResponse;
 import com.example.task.ArrivalRiderFiles.ArrivalRiderRequest;
 import com.example.task.ArrivalRiderFiles.ArrivalRiderResponse;
+import com.example.task.CancelRideFiles.CancelRideRequest;
+import com.example.task.CancelRideFiles.CancelRideResponse;
 import com.example.task.Models.LocationModel;
 import com.example.task.UserServiceInterface.ApiClass;
 import com.example.task.DataSendFiles.RequestDataSend;
@@ -74,8 +77,13 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -181,6 +189,7 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
             }
 
             public void onFinish() {
+                arrive_btn.setVisibility(View.VISIBLE);
                 stopAnim();
 
             }
@@ -372,6 +381,16 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
 //        onBackPressed();
     }
 
+
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
+    }
+
     public void startRideSave(String ride_id, String driver_id, String client_id, String start_lat, String start_long, String end_lat, String end_long, String client_name){
         DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("Rides");
         Map<String,Object> map= new HashMap<>();
@@ -394,6 +413,57 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
         DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("Rides").child(getRideId(context));
         databaseReference.removeValue();
     }
+    public void removeChat() {
+//        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Chats");
+//        databaseReference.orderByChild("sender").equalTo(driver_id).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for (DataSnapshot postsnapshot :snapshot.getChildren()) {
+//
+//                    String key = postsnapshot.getKey();
+//                    snapshot.getRef().removeValue();
+//                    Log.w("RemoveTag",""+key);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        Query applesQuery = ref.child("Chats").orderByChild("sender").equalTo(driver_id);
+        Query applesQuery2 = ref.child("Chats").orderByChild("receiver").equalTo(driver_id);
+
+        applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                    appleSnapshot.getRef().removeValue();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "onCancelled", databaseError.toException());
+            }
+        });
+
+        applesQuery2.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                    appleSnapshot.getRef().removeValue();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "onCancelled", databaseError.toException());
+            }
+        });
+    }
 
     private void calculate(){
         totalBill=100;
@@ -407,7 +477,7 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
 
             }
         }
-        totalBill=totaldistance*totalBill;
+        totalBill=round((totaldistance*totalBill),2) ;
         priceBottomSheetDialog();
 
 
@@ -473,10 +543,44 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
         bottomSheetDialog.setContentView(R.layout.cancel_ride_bottom_sheet_dialog);
 
-//        Button contact_client_btn = bottomSheetDialog.findViewById(R.id.contact_client_btn);
-//        LinearLayout share = bottomSheetDialog.findViewById(R.id.shareLinearLayout);
-//        LinearLayout upload = bottomSheetDialog.findViewById(R.id.uploadLinearLayout);
-//        LinearLayout download = bottomSheetDialog.findViewById(R.id.download);
+        Button reason_1 = bottomSheetDialog.findViewById(R.id.reason_1);
+        Button reason_2 = bottomSheetDialog.findViewById(R.id.reason_2);
+        Button reason_3 = bottomSheetDialog.findViewById(R.id.reason_3);
+        Button reason_4 = bottomSheetDialog.findViewById(R.id.reason_4);
+
+        reason_1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startAnim();
+                cancelRide(reason_1.getText().toString());
+                bottomSheetDialog.dismiss();
+            }
+        });
+        reason_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startAnim();
+                cancelRide(reason_2.getText().toString());
+                bottomSheetDialog.dismiss();
+            }
+        });
+        reason_3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startAnim();
+                cancelRide(reason_3.getText().toString());
+                bottomSheetDialog.dismiss();
+            }
+        });
+        reason_4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startAnim();
+                cancelRide(reason_4.getText().toString());
+                bottomSheetDialog.dismiss();
+            }
+        });
+
 //        LinearLayout delete = bottomSheetDialog.findViewById(R.id.delete);
 
 //        contact_client_btn.setOnClickListener(new View.OnClickListener() {
@@ -572,6 +676,7 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
         collect_payment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                removeChat();
                 removeRide();
                 Intent intent = new Intent(HomeOnlineBookingDetailsGotopickup.this, HomeOffline.class);
                 startActivity(intent);
@@ -859,6 +964,31 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
             JSONObject object = gson.fromJson(json, JSONObject.class);
 //        JsonObjectC selectedUser=gson.fromJson(json, JsonObjectC.class);
             return object;
+        }
+
+        public void cancelRide(String reason){
+            CancelRideRequest cancelRideRequest= new CancelRideRequest();
+            cancelRideRequest.setRide_id(ride_id);
+            cancelRideRequest.setClient_id(client_id);
+            cancelRideRequest.setDriver_id(driver_id);
+            cancelRideRequest.setReason(reason);
+
+            Call<CancelRideResponse> cancelRideResponseCall = ApiClass.getUserServiceAPI().userCancelRide(cancelRideRequest);
+            cancelRideResponseCall.enqueue(new Callback<CancelRideResponse>() {
+                @Override
+                public void onResponse(Call<CancelRideResponse> call, Response<CancelRideResponse> response) {
+                    if (response.isSuccessful())
+                    {
+                        stopAnim();
+                        endrideCheckBottomSheetDialog();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<CancelRideResponse> call, Throwable t) {
+
+                }
+            });
         }
 
 

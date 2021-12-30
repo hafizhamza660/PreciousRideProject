@@ -41,6 +41,7 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.MenuItem;
@@ -122,6 +123,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private NavigationView nvDrawer, nvDrawer2;
+    private long mLastClickTime = 0;
     StackAdapter adapter;
 
     Switch switchbtn;
@@ -415,6 +417,10 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
         minus_range.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 startAnim();
                 minus_range.setEnabled(false);
                 add_range.setEnabled(false);
@@ -434,6 +440,10 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
         add_range.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 startAnim();
                 minus_range.setEnabled(false);
                 add_range.setEnabled(false);
@@ -489,6 +499,10 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
         refreshRides.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
 //                data.clear();
                 data.clear();
                 adapter = new StackAdapter(data, HomeOffline.this, R.layout.item_stack);
@@ -504,6 +518,10 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
         switchbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 if (isChecked) {
                     setStatus(context, "1");
                     status_s = "1";
@@ -549,12 +567,18 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 getDeviceLocation();
             }
         });
 
 
     }
+
+
 //    }
 
 
@@ -709,6 +733,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
             public void onResponse(Call<ResponseRange> call, Response<ResponseRange> response) {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
+                        stopAnim();
                         if (typebtn.equals("add")) {
                             counter = Float.parseFloat(response.body().range);
                             setRange(context, String.valueOf(counter));
@@ -726,7 +751,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
                                 minus_range.setEnabled(true);
                                 add_range.setEnabled(true);
                             }
-                            stopAnim();
+
 
                         } else if (typebtn.equals("minus")) {
                             counter = Float.parseFloat(response.body().range);
@@ -743,7 +768,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
                                 minus_range.setEnabled(true);
                                 add_range.setEnabled(true);
                             }
-                            stopAnim();
+//                            stopAnim();
                         } else {
                             counter = Float.parseFloat(response.body().range);
                             setRange(context, String.valueOf(counter));
@@ -759,7 +784,7 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
                                 minus_range.setEnabled(true);
                                 add_range.setEnabled(true);
                             }
-                            stopAnim();
+//                            stopAnim();
                         }
 
                     } else {
