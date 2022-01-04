@@ -45,6 +45,7 @@ import android.widget.TextView;
 
 import com.example.task.AcceptedInterStateRideFiles.AcceptedInterStateRideRequest;
 import com.example.task.AcceptedInterStateRideFiles.AcceptedInterStateRideResponse;
+import com.example.task.AcceptedInterStateRideFiles.Data;
 import com.example.task.ArrivalRiderFiles.ArrivalRiderRequest;
 import com.example.task.ArrivalRiderFiles.ArrivalRiderResponse;
 import com.example.task.CancelRideFiles.CancelRideRequest;
@@ -409,9 +410,28 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
 
     public void removeRide()
     {
-        setRideId(context,"");
+//
         DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("Rides").child(getRideId(context));
+//        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReference("Rides");
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for (DataSnapshot snapshot1:snapshot.getChildren())
+//                {
+////                    if (snapshot1.getValue().equals(getRideId(context))){
+//                        Log.w("Found",""+snapshot1.getValue());
+//                        Log.w("Found",""+snapshot1.getValue());
+////                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
         databaseReference.removeValue();
+        setRideId(context,"");
     }
     public void removeChat() {
 //        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Chats");
@@ -466,7 +486,7 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
     }
 
     private void calculate(){
-        totalBill=100;
+        totalBill=5;
         for (int i=0;i<totalLatlng.size();i++)
         {
             if (i<totalLatlng.size()-1) {
@@ -615,9 +635,11 @@ public class HomeOnlineBookingDetailsGotopickup extends AppCompatActivity implem
                 startAnim();
                 loc_lat = tlat;
                 loc_lng = tlng;
+                bottomSheetDialog.dismiss();
                 start_ride_btn.setVisibility(View.GONE);
                 end_ride_btn.setVisibility(View.VISIBLE);
                 stopAnim();
+
             }
         });
 

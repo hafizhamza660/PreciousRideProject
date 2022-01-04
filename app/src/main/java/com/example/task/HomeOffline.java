@@ -518,10 +518,10 @@ public class HomeOffline extends AppCompatActivity implements OnMapReadyCallback
         switchbtn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
-                    return;
-                }
-                mLastClickTime = SystemClock.elapsedRealtime();
+//                if (SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
+//                    return;
+//                }
+//                mLastClickTime = SystemClock.elapsedRealtime();
                 if (isChecked) {
                     setStatus(context, "1");
                     status_s = "1";
